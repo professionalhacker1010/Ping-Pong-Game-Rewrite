@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6817697128098043298
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1780701075532725740, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725742, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: characterControls
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725745, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075532725751, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_Name
+      value: Player Imposter
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780701075864651914, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1780701075532725747, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+    - {fileID: 1780701075532725742, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+    - {fileID: 1780701075532725746, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+    - {fileID: 1780701075864651908, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+    - {fileID: 1780701075998176828, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+--- !u!1 &5056136497010616405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1780701075532725751, guid: b8ac232a602e27849b0bcfafba1315cb, type: 3}
+  m_PrefabInstance: {fileID: 6817697128098043298}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8489467645193001714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5056136497010616405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc631f36e053e34e8df8e0557e6aa01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  oppHitFrame: 0
+  hitFlashPrefab: {fileID: 0}
+  ballPath: {fileID: 0}
+  hitPattern: {fileID: 0}
+  servePosition: {x: 0, y: 0, z: 0}
+  serveTime: 2
+  gameModeOverride: {fileID: 0}
+  missHit: {x: 0, y: 0, z: 0}
+  weakPointColliders: []
+  playerBallPath: {fileID: 0}
+  isDefeated: 0

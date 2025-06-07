@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5572091176724378430
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_Name
+      value: Game Speedy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7761664933611727919}
+  m_SourcePrefab: {fileID: 100100000, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+--- !u!95 &9019535853349054675 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3494757529961602029, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+  m_PrefabInstance: {fileID: 5572091176724378430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9019535854417014714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+  m_PrefabInstance: {fileID: 5572091176724378430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7761664933611727919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019535854417014714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ff02f7710cf5948a35c38a001a27a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 9019535853349054675}
+  oppHitFrame: 2
+  hitFlashPrefab: {fileID: 7728308091490909087, guid: e0daedf6e68127b41bedf77c33110c42, type: 3}
+  ballPath: {fileID: 11400000, guid: 65abf9d582bd1404ba8bfbf2ed2f8c3c, type: 2}
+  hitPattern: {fileID: 11400000, guid: 4b46c0c665447f84da0faafa061f9d51, type: 2}
+  servePosition: {x: 0, y: 2.7, z: 0}
+  serveTime: 2
+  gameModeOverride: {fileID: 11400000, guid: 791b8b6ce29ca8d4d8b4f95269d4da1d, type: 2}
+  ballSpeeds:
+  - 1.5
+  - 2
+  - 2.5
+  - 3
+  hitOutDistance: 6
+  leftOut: {x: -11, y: 1, z: 1}
+  rightOut: {x: 11, y: 1, z: 1}

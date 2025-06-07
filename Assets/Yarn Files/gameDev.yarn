@@ -1,0 +1,207 @@
+﻿title: preGame1
+tags:
+---
+<<start_speaker GameDev>>
+...
+...
+<<change_emotion GameDev sitStill>>
+oh hi
+im not much of a physical movement person
+so im making a ping pong game
+but it's not ready yet
+sorry
+<<change_emotion GameDev typing>>
+<<end_speaker>>
+===
+
+
+
+title: preGame2
+tags:
+---
+<<start_speaker GameDev>>
+...
+<<end_speaker>>
+===
+
+
+
+title: preGame3
+tags:
+---
+<<start_speaker GameDev>>
+...
+...ok
+<<change_emotion GameDev sitStill>>
+perfect timing
+i think its done
+FINALLY
+this is the only thing ive thought about
+ever since i got here
+i even took a nap
+and had a dream about being stranded on an island with just this game to play
+and being surprisingly cool with it
+anyways lets play it
+pick up the controller when youre ready
+
+<<end_speaker>>
+===
+
+
+
+title: gameIntro
+tags:
+---
+<<start_speaker GameDevSpeaker>>
+uh.
+sorry i havent actually tested this before
+just keep going...
+<<end_speaker>>
+===
+
+
+
+title: gameOutro
+tags:
+---
+<<start_speaker GameDevSpeaker>>
+what!!!!!!!
+<<end_speaker>>
+===
+
+
+
+title: postGame1
+tags:
+---
+<<change_emotion GameDev sitStill>>
+<<start_speaker GameDev>>
+...
+<<disable_bubble CutsceneDB>>
+<<wait 3>>
+<<enable_bubble CutsceneDB>>
+so... what did you think...
+[[I liked it! | postGame1_liked]]
+[[I did not like it | postGame1_disliked]]
+===
+
+title: postGame1_liked
+---
+<<change_speaker Player>>
+It REALLY surprised me!!
+Even if I couldn't tell what was intentional or not.
+But like the button mashing at the end? That was different! It was cool.
+
+<<change_speaker GameDev>>
+ok... i appreciate your feedback...
+[[postGame1_end]]
+===
+
+title: postGame1_disliked
+---
+<<change_speaker Player>>
+It was kind of a trashfire.
+There were multiple glitches that made it very hard to play.
+And somehow it crashed your computer.
+I was excited to see what the button mashing would do though!
+
+<<change_speaker GameDev>>
+ok... i appreciate your honesty...
+[[postGame1_end]]
+===
+
+title: postGame1_end
+---
+yeah the button mashing was supposed to connect you to a random server
+where you and a bunch of other players are button mashing together
+and you all have to power up this thing
+and then you win and become part of each others team
+forever
+kind of simulating how you can't choose the family you're born into
+and have to learn how to deal with them
+<<disable_bubble CutsceneDB>>
+
+<<wait 2>>
+
+<<enable_bubble CutsceneDB>>
+actually
+eh
+thanks for playing though
+<<change_emotion GameDev typing>>
+<<end_speaker>>
+===
+
+
+
+title: postGame2
+tags:
+---
+<<start_speaker GameDev>>
+...
+you wanna play my game again
+[[Sure! | postGame_startGame]]
+[[Ask a question | postGame2_question]]
+<<end_speaker>>
+===
+
+title: postGame_startGame
+---
+<<end_speaker>>
+===
+
+title: postGame2_question
+---
+<<change_speaker Player>>
+Actually I have a question.
+Do you like fried {$item}??
+
+<<change_speaker GameDev>>
+not really why
+
+<<change_speaker Player>>
+I don't know. I feel like I'm the only one.
+
+<<change_speaker GameDev>>
+i think you are.
+i don't know why anyone would legitimately like that stuff
+unless you really liked {$item}
+even then maybe you would like it as a fun gimmick
+but not actually to eat it
+why do YOU like it?
+
+<<change_speaker Player>>
+Well I've never had it before but
+I'll eat anything honestly!
+And I come here like every day.
+I trust them to make something good.
+
+<<change_speaker GameDev>>
+interesting
+what do you usually order
+
+<<change_speaker Player>>
+-> Fried chicken
+-> Chicken sandwich
+
+<<change_speaker GameDev>>
+nice.
+<<end_speaker>>
+===
+
+
+
+title: postGame3
+tags:
+---
+<<start_speaker GameDev>>
+...
+you wanna play my game again
+[[Sure! | postGame_startGame]]
+[[Nah | postGame3_no]]
+<<end_speaker>>
+===
+
+title: postGame3_no
+---
+<<end_speaker>>
+===
