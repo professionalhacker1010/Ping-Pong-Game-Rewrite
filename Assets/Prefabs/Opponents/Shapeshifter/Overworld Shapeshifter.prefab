@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8041789778340343188, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8041789778340343190, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -163,13 +167,12 @@ MonoBehaviour:
   dialogueSequences:
   - id: 10
     nodePrefix: preGame
-    numNodes: 1
+    numNodes: 3
   - id: 11
     nodePrefix: postGame
     numNodes: 3
   turnsToPlayer: 0
   facingLeft: 0
-  table: {fileID: 0}
   level: 1
   shapeshiftAnimator: {fileID: 2462856704240535933}
   phasePrefabs:

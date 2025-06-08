@@ -20,21 +20,17 @@ public class OverworldShapeshifter : OverworldCharacter
         {
             dialogueRunner.AddCommandHandler("shapeshift", Shapeshift);
             dialogueRunner.AddCommandHandler("shapeshifterIntro", Intro);
-            dialogueRunner.AddCommandHandler("shapeshifterOutro", Outro);
             initialized = true;
         }
 
-        if (!LevelManager.IsLevelPlayed(level)) //gonna have an intro where you interact with the shapeshifter's hitbox (but you think it's the table), then the shapeshifter poofs in, then you start the game
+        if (!LevelManager.IsLevelPlayed(level))
         {
             shapeshiftAnimator.SetTrigger("idle");
-
             shapeshiftAnimator.gameObject.SetActive(false);
-            transform.position = new Vector3(transform.position.x, 12f); //move out of the way so that the interact key prompt doesn't show up
         }
         else
         {
             shapeshiftAnimator.SetTrigger("idle");
-            table.UnlockThisTable();
         }
     }
 
@@ -132,31 +128,56 @@ public class OverworldShapeshifter : OverworldCharacter
         OverworldManager.Instance.MoveToGameScene(poofObj);
         poofObj.GetComponent<SpriteRenderer>().sortingLayerID = spriteRenderer.sortingLayerID;
     }
-
-    public void Outro(string[] parameters, System.Action onComplete)
-    {
-        StartCoroutine(OutroHelper(onComplete));
-    }
-
-    private IEnumerator OutroHelper(System.Action onComplete)
-    {
-        shapeshiftAnimator.SetTrigger("shapeshift");
-        yield return new WaitForSeconds(22 / 24f);
-
-        onComplete();
-        TableSelectManager.Instance.TransitionToGame(level);
-        yield return new WaitForSeconds(4 / 24f);
-
-        shapeshiftAnimator.speed = 0f;
-    }
     #endregion
+
+    public override void OnSelect()
+    {
+        if (!LevelManager.IsLevelPlayed(level) && !IsDialoguePlayed(DialogueSequenceID.PREGAME, 1))
+        {
+            if (TableSelectManager.Instance) TableSelectManager.Instance.SelectTable(level);
+        }
+        else
+        {
+            base.OnSelect();
+        }
+    }
+
+    public override void OnDeselect()
+    {
+        if (!LevelManager.IsLevelPlayed(level) && !IsDialoguePlayed(DialogueSequenceID.PREGAME, 1))
+        {
+            if (TableSelectManager.Instance) TableSelectManager.Instance.DeselectTable(level);
+        }
+        else
+        {
+            base.OnDeselect();
+        }
+    }
 
     public override void OnInteract()
     {
-        if (!LevelManager.IsLevelPlayed(level))
+        base.OnInteract();
+
+        if (!IsDialoguePlayed(DialogueSequenceID.PREGAME, 1) && !LevelManager.IsLevelPlayed(level) && TableSelectManager.Instance)
         {
-            base.OnInteract();
+            TableSelectManager.Instance.UnlockTable(level);
+            TableSelectManager.Instance.AddBeforeTransitionToGameCoroutine(OnTableInteractCoroutine, level);
         }
+    }
+
+    private IEnumerator OnTableInteractCoroutine()
+    {
+        shapeshiftAnimator.SetTrigger("shapeshift");
+        yield return new WaitForSeconds(22 / 24f);
+        shapeshiftAnimator.speed = 0f;
+        Poof();
+        yield return new WaitForSeconds(4 / 24f);
+        shapeshiftAnimator.gameObject.SetActive(false);
+    }
+
+    protected override string GetNextDialogue()
+    {
+        return base.GetNextDialogue();
     }
 
     public override void OnHit()

@@ -2,15 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OverworldSpeedy : OverworldCharacter
+public class OverworldGameDev : OverworldCharacter
 {
-    private static bool hadEnergyDrink = false;
-
-    public override void OnHit()
-    {
-        base.OnHit();
-    }
-
     protected override string GetNextDialogue()
     {
         return base.GetNextDialogue();
@@ -20,9 +13,10 @@ public class OverworldSpeedy : OverworldCharacter
     {
         base.OnInteract();
 
-        if (hadEnergyDrink && TableSelectManager.Instance)
+        if (!LevelManager.IsLevelPlayed(level) && IsDialoguePlayed(DialogueSequenceID.PREGAME, 3) && TableSelectManager.Instance)
         {
             TableSelectManager.Instance.UnlockTable(level);
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;//add this
 
@@ -16,51 +17,91 @@ public class TableSelectManager : MonoBehaviour
             return _instance;
         }
     }
+    #endregion
+
+    private List<TableSelect> tables;
+    private Dictionary<int, Func<IEnumerator>> beforeTransitionToGame;
+    public static bool selectable = true;
+    private static int locks = 0;
 
     private void Awake()
     {
         _instance = this;
-    }
-    #endregion
-
-    [SerializeField] private List<GameObject> tables;
-    public static bool firstGameStarted = false;
-    public bool selectable = true;
-    private int locks = 0;
-   
-    // Start is called before the first frame update
-    private void Start()
-    {
-        StartCoroutine(TransitionIn());
-    }
-
-    public float TableTransformX()
-    {
-        return tables[LevelManager.chosenOpponent].transform.position.x;
+        tables = new List<TableSelect>();
+        beforeTransitionToGame = new Dictionary<int, Func<IEnumerator>>();
+        Conditions.SetCondition("firstGameStarted", false);
     }
 
     public void TransitionToGame(int level)
     {
-        if (level == 0) firstGameStarted = true;
+        StartCoroutine(TransitionToGameHelper(level));
+    }
+
+    private IEnumerator TransitionToGameHelper(int level)
+    {
+        if (beforeTransitionToGame.ContainsKey(level))
+        {
+            yield return beforeTransitionToGame[level]();
+        }
+        if (level == 0) Conditions.SetCondition("firstGameStarted", true);
         TransitionManager.Instance.QuickOut("Game");
         LevelManager.chosenOpponent = level;
     }
-   
-    public void LockSelection()
+
+    public void AddTable(TableSelect tableSelect)
+    {
+        tables.Add(tableSelect);
+    }
+
+    public void LockTable(int level)
+    {
+        tables.ForEach(table =>
+        {
+            if (table.Level == level) table.LockThisTable();
+        });
+    }
+
+    public void UnlockTable(int level)
+    {
+        tables.ForEach(table =>
+        {
+            if (table.Level == level) table.UnlockThisTable();
+        });
+    }
+
+    //Shows select table indicator, doesn't actually select it
+    public void SelectTable(int level)
+    {
+        tables.ForEach(table =>
+        {
+            if (table.Level == level) table.OnSelect();
+        });
+    }
+
+    public void DeselectTable(int level)
+    {
+        tables.ForEach(table =>
+        {
+            if (table.Level == level) table.OnDeselect();
+        });
+    }
+
+    public void AddBeforeTransitionToGameCoroutine(Func<IEnumerator> coroutine, int level)
+    {
+        beforeTransitionToGame.Add(level, coroutine);
+    }
+
+    public void ClearBeforeTransitionToGameCoroutine(int level) { beforeTransitionToGame.Remove(level); }
+
+    public static void LockSelection()
     {
         locks++;
         selectable = false;
     }
 
-    public void UnlockSelection()
+    public static void UnlockSelection()
     {
         locks--;
         if (locks == 0) selectable = true;
-    }
-
-    private IEnumerator TransitionIn()
-    {
-        yield return new WaitForSeconds(0.5f);
-        TransitionManager.Instance.QuickIn();
     }
 }

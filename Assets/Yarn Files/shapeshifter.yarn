@@ -16,7 +16,7 @@ Whoa!!! Nice entrance!
 
 <<change_speaker Player>>
 [[:3 | preGame1_next1]]
-[[(*^_^)~ | next2]]
+[[(*^_^)~ | preGame1_next2]]
 ===
 
 title: preGame1_next1
@@ -24,8 +24,7 @@ tags:
 ---
 :3
 
-<<disable_bubble CutsceneDB>>
-<<shapeshifterOutro>>
+<<preGame1_end>>
 ===
 
 title: preGame1_next2
@@ -33,8 +32,48 @@ tags:
 ---
 (*^_^)~
 
-<<disable_bubble CutsceneDB>>
-<<shapeshifterOutro>>
+<<preGame1_end>>
+===
+
+title: preGame1_end
+---
+<<change_speaker Player>>
+
+I'll come see you when I'm ready!
+
+<<end_speaker>>
+===
+
+
+
+title: preGame2
+---
+<<start_speaker Player>>
+I guess you're gonna use magic against me? Is that allowed?
+
+<<change_speaker Shapeshifter>>
+... :)
+
+<<start_speaker Player>>
+Well I don't know any magic so...
+Any tips?
+
+<<change_speaker Shapeshifter>>
+...
+
+<<start_speaker Player>>
+A magician never reveals their secrets...
+===
+
+
+
+title: preGame3
+---
+<<start_speaker Shapeshifter>>
+...
+
+<<change_speaker Player>>
+Maybe I should ask someone else for tips on how to beat this guy.
 ===
 
 
@@ -69,20 +108,16 @@ tags:
 ---
 <<start_speaker Player>>
 Can I ask you something?
-[[Can you do the thing? | postGame2_shapeshift]]
+[[Can you do the thing? | postGame2_end]]
 [[Nevermind. | postGame_exit]]
-===
-
-title: postGame2_shapeshift
-tags:
----
-[[postGame_shapeshift]]
-[[postGame2_end]]
 ===
 
 title: postGame2_end
 tags:
 ---
+<<disable_bubble CutsceneDB>>
+<<shapeshift>>
+<<enable_bubble CutsceneDB>>
 So cool!!!
 ===
 
@@ -93,13 +128,11 @@ tags:
 ---
 <<start_speaker Player>>
 Hey.
-[[Can you do the thing? | postGame_shapeshift]]
+[[Can you do the thing? | postGame3_shapeshift]]
 [[Nevermind. | postGame_exit]]
 ===
 
-
-
-title: postGame_shapeshift
+title: postGame3_shapeshift
 tags:
 ---
 <<disable_bubble CutsceneDB>>
@@ -107,6 +140,10 @@ tags:
 <<enable_bubble CutsceneDB>>
 ===
 
+
+
 title: postGame_exit
 ---
+<<disable_bubble CutsceneDB>>
+<<wait 0.2>>
 ===

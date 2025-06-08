@@ -21,7 +21,7 @@ public class IntroCutscene : MonoBehaviour
         spacePrompt = KeyPressPromptManager.Instance.GetKeyPressPrompt("space");
         spacePrompt.SetConditions(() => playerControls.OverlapsRightHitBox(doorSlamBoxCollider) || playerControls.OverlapsLeftHitBox(doorSlamBoxCollider), spacePromptPosition);
 
-        if (!TableSelectManager.firstGameStarted) StartCoroutine(IntroCutScene());
+        if (!Conditions.GetCondition("firstGameStarted")) StartCoroutine(IntroCutScene());
         else Destroy(this.gameObject);
     }
 

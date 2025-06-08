@@ -145,18 +145,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
-      propertyPath: opponentPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 9019535854417014714, guid: 59dd31350affcee43930f3c8e94f49d9, type: 3}
-    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
-      propertyPath: opponentPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 6560104883441580518, guid: 9c5eb8c223c6d9f46824e507b5fa9036, type: 3}
-    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
-      propertyPath: opponentPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 4366197742057743190, guid: ebf88977881289e4aaa576ff1b7554f3, type: 3}
     - target: {fileID: 8641875249295143539, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -490,14 +478,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2850858640364178457, guid: c8a06d7fe29dfd34bbdcce7c59248e73, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: caa637e3475c57a449c461aaf7c9c4ce, type: 2}
-    - target: {fileID: 2850858641568218812, guid: c8a06d7fe29dfd34bbdcce7c59248e73, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2850858641568218812, guid: c8a06d7fe29dfd34bbdcce7c59248e73, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

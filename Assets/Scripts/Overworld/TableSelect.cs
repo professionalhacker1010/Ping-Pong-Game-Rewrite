@@ -5,23 +5,42 @@ using UnityEngine;
 public class TableSelect : MonoBehaviour, ICanInteract
 {
     [SerializeField] private int level;
-    [SerializeField] private BoxCollider2D playerCollider;
-    private BoxCollider2D boxCollider;
     private Vector3 selectedTransform = new Vector3(0f, 0.5f, 0f);
-    private bool indicatorPlaying = false, thisSelectable = true;
+    private string selectableCondition;
+
+    public int Level { get => level; }
 
     //ICanInteract
     public int InteractPriority { get => 0; }
     public Vector2 InteractPos { get => transform.position; }
-    
+    public bool IsInteractable { 
+        get {
+            return Conditions.GetCondition(selectableCondition);
+        } 
+    }
+
+    private void Awake()
+    {
+        selectableCondition = "table" + level.ToString() + "_selectable";
+        Conditions.SetCondition(selectableCondition, false);
+    }
+
+    private void Start()
+    {
+        if (TableSelectManager.Instance)
+        {
+            TableSelectManager.Instance.AddTable(this);
+        }
+    }
+
     public void LockThisTable()
     {
-        thisSelectable = false;
+        Conditions.SetCondition(selectableCondition, false);
     }
 
     public void UnlockThisTable()
     {
-        thisSelectable = true;
+        Conditions.SetCondition(selectableCondition, true);
     }
 
     public void OnInteract()

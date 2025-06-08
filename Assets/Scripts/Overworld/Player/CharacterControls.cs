@@ -14,6 +14,7 @@ public class CharacterControls : MonoBehaviour
     [SerializeField] public CharacterPositionAdjustment characterPositionAdjustment;
     private BoxCollider2D hitBox;
     private bool movementHalted;
+    private static float spawnPos;
 
     List<IHittable> candidateHittables;
     ICanInteract prevInteractableCandidate, currInteractableCandidate;
@@ -33,7 +34,7 @@ public class CharacterControls : MonoBehaviour
     private void Start()
     {
         //spawn at the correct table, only starts when you've played your first game
-        if (TableSelectManager.firstGameStarted) transform.position = new Vector3(TableSelectManager.Instance.TableTransformX()-1.0f, transform.position.y);
+        if (Conditions.GetCondition("firstGameStarted")) transform.position = new Vector3(spawnPos, transform.position.y);
 
         OnNodeStart += (string nodeName) => { if (nodeName == "Start") DeselectInteractable(); };
         if (DialogueManager.Instance)
@@ -153,7 +154,7 @@ public class CharacterControls : MonoBehaviour
             }
 
             ICanInteract interactable = item.GetComponent<ICanInteract>();
-            if (interactable != null)
+            if (interactable != null && interactable.IsInteractable)
             {            
                 if (currInteractableCandidate == null ||
                     (interactable.InteractPriority > currInteractableCandidate.InteractPriority) ||
@@ -191,29 +192,32 @@ public class CharacterControls : MonoBehaviour
     private void SelectInteractable() { if (currInteractableCandidate != null) currInteractableCandidate.OnSelect(); }
     private void DeselectInteractable() { if (prevInteractableCandidate != null) prevInteractableCandidate.OnDeselect(); }
 
-    public IEnumerator ReadjustPlayer(GameObject target, float minDistance, System.Action onAdjustFinished)
+    public IEnumerator ReadjustPlayer(GameObject target, float minDistance, bool standLeft, System.Action onAdjustFinished)
     {
-        float distance = Vector2.Distance(target.transform.position, transform.position);
-        float horizontalAxis;
-        if (distance >= 0f) //face right and move until reaching -minDist
+        float horizontalInput;
+        if (!standLeft) //face right and move until reaching -minDist
         {
             FaceRight();
-            horizontalAxis = -1f;
+            horizontalInput = 1f;
         }
         else // face left and move until reaching +minDist
         {
             FaceLeft();
-            horizontalAxis = 1f;
+            horizontalInput = -1f;
         }
 
         characterPositionAdjustment.enabled = true;
-        characterPositionAdjustment.InitializeAdjustment(horizontalAxis);
-        while (Mathf.Abs(target.transform.position.x - transform.position.x) < minDistance)
-        {
-            yield return new WaitForSeconds(1 / 60f);
-        }
+        characterPositionAdjustment.InitializeAdjustment(horizontalInput);
+
+        if (!standLeft)
+            while (transform.position.x - target.transform.position.x < minDistance) yield return new WaitForSeconds(1 / 60f);
+        else
+            while (target.transform.position.x - transform.position.x < minDistance) yield return new WaitForSeconds(1 / 60f);
 
         characterPositionAdjustment.enabled = false; //set idle
+
+        if (!standLeft) FaceLeft();
+        else FaceRight();
 
         if (onAdjustFinished != null) onAdjustFinished();
     }
@@ -253,6 +257,7 @@ public class CharacterControls : MonoBehaviour
 
     private void OnDestroy()
     {
+        spawnPos = transform.position.x;
         if (DialogueManager.Instance)
         {
             DialogueManager.Instance.DialogueRunner.onDialogueComplete.RemoveListener(SelectInteractable);

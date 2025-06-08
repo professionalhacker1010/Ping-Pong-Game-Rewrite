@@ -127,7 +127,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.3897667, y: 5.550232}
+  m_Size: {x: 4.46, y: 5.550232}
   m_EdgeRadius: 0
 --- !u!114 &4430768837029270317
 MonoBehaviour:
@@ -149,9 +149,7 @@ MonoBehaviour:
   - id: 11
     nodePrefix: postGame
     numNodes: 2
-  conditionPrefix: kevin
   turnsToPlayer: 1
   facingLeft: 1
-  table: {fileID: 0}
   level: 0
   watchingVideosPosition: {x: 6.41, y: -1.94}

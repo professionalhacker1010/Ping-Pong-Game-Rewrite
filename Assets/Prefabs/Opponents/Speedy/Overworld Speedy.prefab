@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3494757529961602027, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
@@ -29,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       propertyPath: m_Name
-      value: Speedy
+      value: Overworld Speedy
       objectReference: {fileID: 0}
     - target: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       propertyPath: m_RootOrder
@@ -76,6 +77,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -568513209518227562}
+    - targetCorrespondingSourceObject: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8080818888576219888}
   m_SourcePrefab: {fileID: 100100000, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
 --- !u!1 &1067710699473145744 stripped
 GameObject:
@@ -92,6 +102,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -120,15 +149,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c2988868833a54294ed4a27f8451f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preGameDialogue:
-  - {fileID: 2480198943629176163, guid: 99437c8d38d551749869584979ce5d5c, type: 3}
-  - {fileID: 2480198943629176163, guid: 2b8d00f3736bc6d4a87e5690bedafdbd, type: 3}
-  - {fileID: 2480198943629176163, guid: df1700943c22b7a44a66ac636da38cab, type: 3}
-  - {fileID: 2480198943629176163, guid: 620cf7133be297147a209e07e6a4ddb4, type: 3}
-  - {fileID: 2480198943629176163, guid: 8b2ec222795c57e4eb4fa925bf4b6ca3, type: 3}
-  postGameDialogue:
-  - {fileID: 2480198943629176163, guid: 4c354192ce7f43a498b87873031598b7, type: 3}
-  turnsToPlayer: 1
+  dialogue: {fileID: 2480198943629176163, guid: 75dfd1cd7025dd548bb0ad6dac8ec7f3, type: 3}
+  dialogueSequences:
+  - id: 10
+    nodePrefix: preGame
+    numNodes: 3
+  - id: 12
+    nodePrefix: preGame_hasDrink
+    numNodes: 1
+  - id: 11
+    nodePrefix: postGame
+    numNodes: 2
+  turnsToPlayer: 0
   facingLeft: 0
   table: {fileID: 0}
   level: 2

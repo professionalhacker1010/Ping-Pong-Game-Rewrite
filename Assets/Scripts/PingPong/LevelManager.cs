@@ -22,6 +22,11 @@ public class LevelManager : MonoBehaviour
         _instance = this;
         levelsPlayed = new List<bool>(new bool[opponentPrefabs.Count]);
         levelsWon = new List<bool>(new bool[opponentPrefabs.Count]);
+        for (int i = 0; i < opponentPrefabs.Count; i++)
+        {
+            Conditions.SetCondition("LevelManager_Played_Level" + i.ToString(), false);
+            Conditions.SetCondition("LevelManager_Won_Level" + i.ToString(), false);
+        }
     }
     #endregion
 
@@ -39,9 +44,15 @@ public class LevelManager : MonoBehaviour
     }
 
     public static bool IsLevelPlayed(int level) => levelsPlayed[level];
-    public static void SetLevelPlayed(int level) { levelsPlayed[level] = true;}
+    public static void SetLevelPlayed(int level) { 
+        levelsPlayed[level] = true;
+        Conditions.SetCondition("LevelManager_Played_Level" + level.ToString(), true);
+    }
     public static bool IsLevelWon(int level) => levelsWon[level];
-    public static void SetLevelWon(int level) { levelsWon[level] = true;}
+    public static void SetLevelWon(int level) { 
+        levelsWon[level] = true;
+        Conditions.SetCondition("LevelManager_Won_Level" + level.ToString(), true);
+    }
 
     public GameObject CreateChosenOpponent() => Instantiate(opponentPrefabs[chosenOpponent]);
 }

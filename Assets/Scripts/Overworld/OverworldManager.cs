@@ -34,6 +34,13 @@ public class OverworldManager : MonoBehaviour
     private void Start()
     {
         TransitionManager.Instance.activeScene = gameScene;
+        StartCoroutine(TransitionIn());
+    }
+
+    private IEnumerator TransitionIn()
+    {
+        yield return new WaitForSeconds(0.5f);
+        TransitionManager.Instance.QuickIn();
     }
 
     public void MoveToGameScene(GameObject go)

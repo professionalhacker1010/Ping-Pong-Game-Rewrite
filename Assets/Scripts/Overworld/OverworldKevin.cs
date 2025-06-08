@@ -20,29 +20,14 @@ public class OverworldKevin : OverworldCharacter
     {
         base.OnInteract();
 
-        if (DialoguePlayed(DialogueSequenceID.PREGAME, 1) && !LevelManager.IsLevelPlayed(level))
+        if (!IsDialoguePlayed(DialogueSequenceID.PREGAME, 1) && !LevelManager.IsLevelPlayed(level) && TableSelectManager.Instance)
         {
-            table.UnlockThisTable();
+            TableSelectManager.Instance.UnlockTable(level);
         }
     }
 
     protected override string GetNextDialogue()
     {
-        if (!LevelManager.IsLevelPlayed(level))
-        {
-            return GetNextNodeInSequence(DialogueSequenceID.PREGAME);
-        }
-        else
-        {
-            return GetNextNodeInSequence(DialogueSequenceID.POSTGAME);
-        }
-    }
-
-    protected override void OnOutroDialogueComplete()
-    {
-        base.OnOutroDialogueComplete();
-        //move kevin to the corner
-        transform.position = watchingVideosPosition;
-        watchingVideos = true;
+        return base.GetNextDialogue();
     }
 }
