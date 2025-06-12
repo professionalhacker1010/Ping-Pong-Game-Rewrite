@@ -146,7 +146,6 @@ public class DialogueBubble : MonoBehaviour
 
     public IEnumerator EnterBubbleHelper()
     {
-        //print("enter bubble");
         TransparentStaticBubble();
         yield return SetUpText();
         float widthAdjustment = calcWidthAdjustment();
@@ -280,5 +279,12 @@ public class DialogueBubble : MonoBehaviour
         {
             return (-2 * Mathf.Pow(x - 1f, 2f)) + 1f;
         }
+    }
+
+    public void OnLineUpdate(string text)
+    {
+        string finalText = dialogueUI.preText;
+        finalText = finalText.Substring(0, text.Length) + "<color=#FFFFFF00>" + finalText.Substring(text.Length, finalText.Length-text.Length);
+        shownText.text = finalText;
     }
 }
