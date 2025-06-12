@@ -25,7 +25,6 @@ public class ShapeShifterPhase : Opponent
 
     protected IEnumerator WeakSpotAnimation(string trigger)
     {
-        Debug.Log("weak spot animation");
         yield return new WaitForSeconds(playerBallPath.endFrame / 24f);
         animator.SetBool(trigger, true);
     }

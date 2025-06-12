@@ -75,7 +75,7 @@ public class PaddleControls : MonoBehaviour
         //hit ball with spacebar
         if (KeyCodes.Hit())
         {
-            Debug.Log("inputs locked: " + lockedInputs.ToString() + " locks: " + locks.ToString());
+            //Debug.Log("inputs locked: " + lockedInputs.ToString() + " locks: " + locks.ToString());
             playerHitDown = true;
             playerHitHeld = true;
         }
@@ -166,7 +166,7 @@ public class PaddleControls : MonoBehaviour
         //Debug.Log("lock inputs");
         lockedInputs = true;
         locks++;
-        Debug.Log("locks " + locks.ToString());
+        //Debug.Log("locks " + locks.ToString());
     }
 
     public static void UnlockInputs()
@@ -174,7 +174,7 @@ public class PaddleControls : MonoBehaviour
         //Debug.Log("unlock inputs");
         locks = Mathf.Max(locks - 1, 0);
         if (locks == 0)
-            lockedInputs = false; Debug.Log("inputs unlocked");
+            lockedInputs = false; //Debug.Log("inputs unlocked");
     }
 
     public static void ResetLockInputs()

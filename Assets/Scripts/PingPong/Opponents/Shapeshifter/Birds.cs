@@ -40,7 +40,7 @@ public class Birds : ShapeShifterPhase
 
     public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
     {
-        Vector2 hit = new Vector2(X, Y);
+        Vector3 hit = new Vector3(X, Y);
 
         //check that ball hit a bird
         if (!isServing)
@@ -49,6 +49,7 @@ public class Birds : ShapeShifterPhase
             {
                 if (Overlaps(i, hit))
                 {
+                    Debug.Log("Hit a bird");
                     shouldHit = false;
                     StartCoroutine(DeactivateBird(i)); //todo: bird getting hit animation? Or just a sound effect is good enough lol
                     return base.GetOpponentBallPath(X, Y, isServing);
@@ -57,15 +58,23 @@ public class Birds : ShapeShifterPhase
         }
 
         //otherwise the birds hit the ball back
+        List<int> candidates = new List<int>();
         for (int i = 0; i < birds.Count; i++)
         {
-            if (birds[i].GetComponent<Collider2D>().OverlapPoint(hit) && birds[i].activeSelf)
+            if (birds[i].GetComponent<BoxCollider2D>().OverlapPoint(hit) && birds[i].activeSelf)
             {
                 //make the first bird hit it. Otherwise make the other bird hit it
-                birdHitter = i;
-                return base.GetOpponentBallPath(X, Y, isServing);
+                Debug.Log("Bird hit ball");
+                candidates.Add(i);
+                
             }
         }
+        if (candidates.Count > 0)
+        {
+            birdHitter = candidates[Random.Range(0, candidates.Count)];
+            return base.GetOpponentBallPath(X, Y, isServing);
+        }
+        
 
         //otherwise yay u won
         isDefeated = true;

@@ -31,7 +31,7 @@ public class CuteCat : ShapeShifterPhase
 
     public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
     {
-        Vector2 hit = new Vector2(X, Y);
+        Vector3 hit = new Vector3(X, Y);
 
         if (Overlaps(currWeakPoint, hit))
         {

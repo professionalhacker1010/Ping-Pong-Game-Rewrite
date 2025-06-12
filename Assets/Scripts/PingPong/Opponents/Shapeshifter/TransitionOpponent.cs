@@ -7,12 +7,12 @@ public class TransitionOpponent : ShapeShifterPhase
     [Header("Transition Opponent")]
     [SerializeField] private List<Vector3> transitionCircleTransforms; //ordered from lowest X to highest X
     private int currTransitionCircleTransform = 1;
+    private int direction = 1;
 
     public override IEnumerator ChangeOpponentPosition(float startX, float startY)
     {
         if (shouldHit)
         {
-            Debug.Log("set trigger in");
             animator.SetTrigger("In");
             animator.SetTrigger("Out");
         }
@@ -34,27 +34,26 @@ public class TransitionOpponent : ShapeShifterPhase
     public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
     {
         int prevTransform = currTransitionCircleTransform;
-        Vector2 hit = new Vector2(X, Y);
-
-        transform.position = transitionCircleTransforms[prevTransform];
-
-        //check if player hit circle collider
-        if (Overlaps(currWeakPoint, hit))
-        {
-            return missHit;
-        }
+        Vector3 hit = new Vector3(X, Y);
 
         //the transition circle moves to the opposite side of the ball - ball on left side of table -> circle on right side and vice versa
         //y value is randomly picked from predeterminedHits
-        else if (X <= 0f)
+        if (currTransitionCircleTransform == 0)
         {
-            currTransitionCircleTransform++;
-            if (currTransitionCircleTransform >= transitionCircleTransforms.Count) currTransitionCircleTransform = transitionCircleTransforms.Count - 1;
+            direction = 1;
         }
-        else
+        else if (currTransitionCircleTransform == transitionCircleTransforms.Count - 1)
         {
-            currTransitionCircleTransform--;
-            if (currTransitionCircleTransform < 0) currTransitionCircleTransform = 0;
+            direction = -1;
+        }
+        currTransitionCircleTransform += direction;
+        transform.position = transitionCircleTransforms[currTransitionCircleTransform];
+
+        //check if player hit circle collider
+        if (Vector2.Distance(hit, transform.position) < 1.0f)
+        {
+            isDefeated = true;
+            return missHit;
         }
 
         return base.GetOpponentBallPath(X, Y, isServing);

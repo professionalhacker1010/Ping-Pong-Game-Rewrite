@@ -47,7 +47,7 @@ public class Drums : ShapeShifterPhase
 
     public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
     {
-        Vector2 hit = new Vector2(X, Y);
+        Vector3 hit = new Vector3(X, Y);
 
         if ((currWeakPoint <= 1 && (Overlaps(0, hit) || Overlaps(1, hit))) ||
                 (currWeakPoint == 2 && (Overlaps(2, hit) || Overlaps(4, hit) || Overlaps(5, hit))))
@@ -65,7 +65,7 @@ public class Drums : ShapeShifterPhase
         if (currWeakPoint == 3)
         {
             shouldHit = false;
-            isDefeated = false;
+            isDefeated = true;
             return missHit;
         }
 

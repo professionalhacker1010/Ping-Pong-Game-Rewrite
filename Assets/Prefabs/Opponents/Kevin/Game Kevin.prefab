@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6560104883441580518, guid: 04e3668f1beae094790f93b1180e5cfd, type: 3}
@@ -56,6 +57,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6560104883441580518, guid: 04e3668f1beae094790f93b1180e5cfd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 129521341648416218}
   m_SourcePrefab: {fileID: 100100000, guid: 04e3668f1beae094790f93b1180e5cfd, type: 3}
 --- !u!1 &4166045634797365754 stripped
 GameObject:
@@ -74,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c904f1979e211c041a724be0b59ce831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 6560104881772327724, guid: 9c5eb8c223c6d9f46824e507b5fa9036, type: 3}
+  animator: {fileID: 4166045635694732080}
   oppHitFrame: 9
   hitFlashPrefab: {fileID: 7728308091490909087, guid: e0daedf6e68127b41bedf77c33110c42, type: 3}
   ballPath: {fileID: 11400000, guid: 65abf9d582bd1404ba8bfbf2ed2f8c3c, type: 2}
@@ -86,3 +93,8 @@ MonoBehaviour:
   tutorialUI: {fileID: 6560104882511064556, guid: 9c5eb8c223c6d9f46824e507b5fa9036, type: 3}
   holdSpace: {fileID: 6560104881787278550, guid: 9c5eb8c223c6d9f46824e507b5fa9036, type: 3}
   releaseToSlam: {fileID: 6560104882254859776, guid: 9c5eb8c223c6d9f46824e507b5fa9036, type: 3}
+--- !u!95 &4166045635694732080 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6560104881772327724, guid: 04e3668f1beae094790f93b1180e5cfd, type: 3}
+  m_PrefabInstance: {fileID: 7123261727117856796}
+  m_PrefabAsset: {fileID: 0}

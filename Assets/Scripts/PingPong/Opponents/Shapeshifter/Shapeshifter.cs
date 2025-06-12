@@ -16,13 +16,14 @@ public class Shapeshifter : Opponent
 
     private ShapeShifterPhase currPhase;
     private int currPattern = 0;
+    private bool isShapeshifting = false;
 
     protected override void Start()
     {
         base.Start();
 
-        shapeShifterObject.SetActive(true);
-        animator.SetTrigger("idle");
+/*        shapeShifterObject.SetActive(true);
+        animator.SetTrigger("idle");*/
 
         TransitionManager.Instance.OnTransitionIn += ShapeShift;
         
@@ -30,9 +31,11 @@ public class Shapeshifter : Opponent
 
     public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
     {
-        Vector2 hit = currPhase.GetOpponentBallPath(X, Y, isServing);
-        if (currPhase.isDefeated)
+        Vector3 hit = new Vector3(X, Y);
+        if (!isShapeshifting) hit = currPhase.GetOpponentBallPath(X, Y, isServing);
+        if (currPhase.isDefeated && !isShapeshifting)
         {
+            Debug.Log(currPhase.gameObject.name + " defeated. Hit: " + hit.ToString());
             currPattern++;
             ShapeShift();
         }
@@ -60,18 +63,21 @@ public class Shapeshifter : Opponent
 
     private IEnumerator Shapeshift()
     {
-        yield return new WaitForEndOfFrame();
+        isShapeshifting = true;
+        Debug.Log("start shapeshift, currPattern=" + currPattern);
 
-        Debug.Log("shapeshift");
+        yield return new WaitForEndOfFrame();
 
         PaddleControls.LockInputs();
 
         if (currPattern == 0) //intro shapeshift animation
         {
+            animator.SetTrigger("idle");
             yield return new WaitForSeconds(startIntroWaitTime);
         }
         else //all other shapeshift animations
         {
+            Debug.Log("shapeshift out of prev phase start");
             yield return new WaitForSeconds(2.0f); //have to wait for player's hit to reach opponent and for ball to finish exploding
 
             yield return ShapeshiftAnimation(currPattern - 1, -1);
@@ -81,18 +87,23 @@ public class Shapeshifter : Opponent
             else animator.SetTrigger("idle");
 
             yield return new WaitForSeconds(0.5f); //linger on idle pose of shifter for a little
+            Debug.Log("shapeshift out of prev phase end");
         }
 
         if (currPattern < phasePrefabs.Count) //don't shift to new form after last phase
         {
+            Debug.Log("shapeshift into next phase start");
             animator.SetTrigger("shapeshift"); //start shapeshift animation
             yield return new WaitForSeconds(1 / 24f);
             yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length - (3 / 24f)); // wait for length of animation -2 frames
 
             yield return ShapeshiftAnimation(-1, currPattern);
+            Debug.Log("shapeshift into next phase end");
         }
 
         PaddleControls.UnlockInputs();
+        isShapeshifting= false;
+        Debug.Log("end shapeshift");
     }
 
     /// <summary>
@@ -103,14 +114,13 @@ public class Shapeshifter : Opponent
     /// <returns></returns>
     private IEnumerator ShapeshiftAnimation(int startForm, int endForm)
     {
-        Debug.Log("Shapeshift anim");
         var poofObj = Instantiate(poofPrefab, poofOffset, Quaternion.identity);
         GameManager.Instance.MoveToGameScene(poofObj);
         yield return new WaitForSeconds(4/24f);
 
         //destroy current form
         if (startForm == -1) shapeShifterObject.SetActive(false);
-        else Destroy(currPhase);
+        else Destroy(currPhase.gameObject);
         currPhase = null;
 
         //instantiate new form
@@ -126,6 +136,10 @@ public class Shapeshifter : Opponent
 
     public override IEnumerator PlayServeAnimation()
     {
+        Debug.Log("Wait until done shapeshifting. " + isShapeshifting);
+        yield return new WaitUntil(() => isShapeshifting == false);
+        Debug.Log("Shapeshifting done. " + isShapeshifting);
+
         //need to wait a bit longer if serving right after a shapeshift...
         yield return currPhase.PlayServeAnimation();
     }

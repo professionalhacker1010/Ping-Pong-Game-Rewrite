@@ -172,7 +172,7 @@ MonoBehaviour:
     nodePrefix: postGame
     numNodes: 3
   turnsToPlayer: 0
-  facingLeft: 0
+  facingLeft: 1
   level: 1
   shapeshiftAnimator: {fileID: 2462856704240535933}
   phasePrefabs:
