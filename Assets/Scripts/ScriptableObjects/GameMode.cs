@@ -9,5 +9,5 @@ public class GameMode : ScriptableObject
     public GameSprites gameSprites;
     public int winRounds;
     public GameObject paddleControls;
-    public GameObject pingPong;
+    public BallPath playerBallPath;
 }

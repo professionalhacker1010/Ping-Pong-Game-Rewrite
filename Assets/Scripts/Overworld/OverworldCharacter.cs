@@ -39,6 +39,15 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
 
     //interaction
     [SerializeField] protected bool turnsToPlayer, facingLeft;
+    [SerializeField] protected Facing facing;
+
+    [System.Serializable]
+    protected enum Facing
+    {
+        LEFT,
+        RIGHT,
+        FORWARD
+    }
     float minDistance = 2.5f; //not serializable cause I don't wanna adjust individually for each character lol
 
     //opponent info
@@ -104,9 +113,11 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
         bool readjusted = false;
 
         //check if player overlaps speaker awkwardly and readjust -- then start dialogue after readjustment
-        if (!turnsToPlayer && (Mathf.Abs(distance) < minDistance || (playerStartedLeft && !facingLeft) || (!playerStartedLeft && facingLeft)))
+        if (!turnsToPlayer && (Mathf.Abs(distance) < minDistance || (playerStartedLeft && facing == Facing.RIGHT) || 
+            (!playerStartedLeft && facing == Facing.LEFT) || facing == Facing.FORWARD))
         {
-            StartCoroutine(characterControls.ReadjustPlayer(gameObject, minDistance, facingLeft, StartDialogue));
+            bool standLeft = facing == Facing.LEFT || (playerStartedLeft && facing == Facing.FORWARD);
+            StartCoroutine(characterControls.ReadjustPlayer(gameObject, minDistance, standLeft, StartDialogue));
             readjusted = true;
         }
 
@@ -122,7 +133,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
         }
 
         //turn to face player, flip back once dialogue is complete
-        if (turnsToPlayer && ((playerStartedLeft && !facingLeft) || (!playerStartedLeft && facingLeft)))
+        if (turnsToPlayer && ((playerStartedLeft && facing == Facing.RIGHT) || (!playerStartedLeft && facing == Facing.LEFT)))
         {
             StartCoroutine(Util.VoidCallbackConditional(
                     () => dialogueRunner.Dialogue.IsActive,

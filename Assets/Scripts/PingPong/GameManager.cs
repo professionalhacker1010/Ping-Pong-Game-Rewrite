@@ -24,31 +24,32 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool DEBUG = false;
 
+    public int WinRounds { get => gameMode.winRounds; }
+    public BallPath PlayerBallPath { get => gameMode.playerBallPath; }
     [SerializeField] GameMode gameMode;
+
+    public Pingpong Pingpong { get => pingPong; }
     [SerializeField] Pingpong pingPong;
+
+    public PaddleControls PaddleControls { get => paddleControls; }
+    PaddleControls paddleControls;
+
+    public GameUI GameUI { get => gameUI; }
     [SerializeField] GameObject gameUIPrefab;
+    GameUI gameUI;
 
     [SerializeField] private SpriteRenderer BG;
     [SerializeField] private SpriteRenderer table;
 
-    [HideInInspector] public Opponent opponent;
-
-    int playerWins = 0, playedRounds = 0, opponentWins = 0;
-    bool playerHasWon = false;
-    string gameScene = "Game";
-    PaddleControls paddleControls;
-    GameUI gameUI;
-
     public int OpponentWins { get => opponentWins; }
     public int PlayerWins { get => playerWins; }
-    public int WinRounds { get => gameMode.winRounds; }
-    public GameMode GameMode { get => gameMode; }
-    public GameSprites GameSprites { get => gameMode.gameSprites; }
-    public Pingpong Pingpong { get => pingPong; }
-    public PaddleControls PaddleControls { get => paddleControls; }
-    public string GameScene { get => gameScene; }
-    [HideInInspector] public Player Player;
-    public GameUI GameUI { get => gameUI; }
+
+    int playerWins = 0, opponentWins = 0;
+
+    public static string GameScene { get => gameScene; }
+    static string gameScene = "Game";
+
+    [HideInInspector] public Opponent opponent;
 
     public event Action OnGameWon, OnGameLost, OnOpponentScore, OnPlayerScore;
 
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         _instance = this;
 
-        paddleControls = Instantiate(GameMode.paddleControls).GetComponent<PaddleControls>();
+        paddleControls = Instantiate(gameMode.paddleControls).GetComponent<PaddleControls>();
         MoveToGameScene(paddleControls.gameObject);
 
         gameUI = Instantiate(gameUIPrefab).GetComponent<GameUI>();
@@ -102,9 +103,10 @@ public class GameManager : MonoBehaviour
 
     public void GameOver(bool playerWon)
     {
+        LevelManager.SetLevelPlayed(LevelManager.chosenOpponent);
         if (playerWon)
         {
-            playerHasWon = true;
+            LevelManager.SetLevelWon(LevelManager.chosenOpponent);
             OnGameWon();
         }
         else
@@ -116,7 +118,6 @@ public class GameManager : MonoBehaviour
     public void AddOpponentWin()
     {
         opponentWins++;
-        playedRounds++;
 
         OnOpponentScore();
         //Debug.Log("OPPONENT WINS: " + opponentWins.ToString());
@@ -125,7 +126,6 @@ public class GameManager : MonoBehaviour
     public void AddPlayerWin()
     {
         playerWins++;
-        playedRounds++;
 
         OnPlayerScore();
        // Debug.Log("PLAYER WINS: " + playerWins.ToString());
@@ -134,18 +134,17 @@ public class GameManager : MonoBehaviour
     //use these checks in some UI script that manages the control access and animations
     public bool GameIsWon()
     {
-        return playerWins == gameMode.winRounds || playerHasWon;
+        return playerWins == gameMode.winRounds;
     }
 
     public bool GameIsLost()
     {
-        return opponentWins == gameMode.winRounds || playerHasWon;
+        return opponentWins == gameMode.winRounds;
     }
 
     public void ResetGame()
     {
         playerWins = 0;
-        playedRounds = 0;
         opponentWins = 0;
     }
 
@@ -164,7 +163,7 @@ public class GameManager : MonoBehaviour
             MoveToGameScene(paddleControls.gameObject);
         }
 
-        gameUI.SetSprites(GameSprites);
+        gameUI.SetSprites(gameMode.gameSprites);
     }
 
     public void MoveToGameScene(GameObject go)

@@ -18,7 +18,7 @@ public class SpaceToContinue : MonoBehaviour
             }
             else if (GameManager.Instance.GameIsLost())
             {
-                TransitionManager.Instance.QuickOut(GameManager.Instance.GameScene);
+                TransitionManager.Instance.QuickOut(GameManager.GameScene);
             }
         }
     }

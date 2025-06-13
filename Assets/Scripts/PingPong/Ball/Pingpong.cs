@@ -102,7 +102,7 @@ public class Pingpong : MonoBehaviour
 
         StopAllCoroutines();
 
-        currBallPath = GameManager.Instance.Player.ballPath;
+        currBallPath = GameManager.Instance.PlayerBallPath;
         CalcPlayerBallPath(playerHitHeight, playerHitLateral);
 
         //start ball animations, updating positions while animation is playing with setballpath coroutine

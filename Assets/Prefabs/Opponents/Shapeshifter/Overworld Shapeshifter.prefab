@@ -173,6 +173,7 @@ MonoBehaviour:
     numNodes: 3
   turnsToPlayer: 0
   facingLeft: 1
+  facing: 2
   level: 1
   shapeshiftAnimator: {fileID: 2462856704240535933}
   phasePrefabs:

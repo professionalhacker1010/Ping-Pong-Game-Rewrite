@@ -129,7 +129,7 @@ public class Shapeshifter : Opponent
         {
             currPhase = Instantiate(phasePrefabs[currPattern]).GetComponent<ShapeShifterPhase>();
             GameManager.Instance.MoveToGameScene(currPhase.gameObject);
-            currPhase.playerBallPath = GameManager.Instance.Player.ballPath;
+            currPhase.playerBallPath = GameManager.Instance.PlayerBallPath;
         }
         
     }

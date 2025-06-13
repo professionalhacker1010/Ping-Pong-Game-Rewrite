@@ -95,13 +95,13 @@ MonoBehaviour:
   dialogueSequences:
   - id: 10
     nodePrefix: preGame
-    numNodes: 3
+    numNodes: 4
   - id: 12
     nodePrefix: postGame
     numNodes: 3
   turnsToPlayer: 0
   facingLeft: 0
-  table: {fileID: 0}
+  facing: 2
   level: 3
 --- !u!1 &5996981454455591877
 GameObject:

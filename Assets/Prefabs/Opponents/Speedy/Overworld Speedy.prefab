@@ -162,5 +162,5 @@ MonoBehaviour:
     numNodes: 2
   turnsToPlayer: 0
   facingLeft: 0
-  table: {fileID: 0}
+  facing: 1
   level: 2

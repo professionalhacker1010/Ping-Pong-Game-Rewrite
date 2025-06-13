@@ -151,5 +151,6 @@ MonoBehaviour:
     numNodes: 2
   turnsToPlayer: 1
   facingLeft: 1
+  facing: 0
   level: 0
   watchingVideosPosition: {x: 6.41, y: -1.94}
