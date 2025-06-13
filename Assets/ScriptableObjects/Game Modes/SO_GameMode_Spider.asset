@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSprites: {fileID: 11400000, guid: d0aafeea8a8812149b9e1f3afe34ea9a, type: 2}
   winRounds: 1000
+  paddleControls: {fileID: 0}
+  playerBallPath: {fileID: 11400000, guid: b92f929d00671db40a5e41780609cdb6, type: 2}

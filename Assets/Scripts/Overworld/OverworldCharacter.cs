@@ -25,12 +25,18 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
         POSTGAME2
     }
 
+    protected enum DialogueSequenceEnd
+    {
+        REPEATLAST,
+        END,
+    }
     [System.Serializable]
     protected struct DialogueSequence
     {
         [SerializeField] public DialogueSequenceID id;
         [SerializeField] public string nodePrefix;
         [SerializeField] public int numNodes;
+        [SerializeField] public DialogueSequenceEnd endBehavior;
         public string GetNodeName(int n) => nodePrefix + n.ToString();
     }
 
@@ -182,7 +188,10 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     {
         //start dialogue
         string startNode = GetNextDialogue();
-        DialogueManager.Instance.StartDialogue(dialogue, GetNextDialogue());
+        
+        if (startNode == "") return;
+
+        DialogueManager.Instance.StartDialogue(dialogue, startNode);
         OnDeselect();
         StartCoroutine(Util.VoidCallbackNextFrameConditional(
                 () => !dialogueRunner.Dialogue.IsActive,
@@ -205,7 +214,10 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
                 nodeName = seq.GetNodeName(i);
                 break;
             }
-            if (nodeName == "") nodeName = seq.GetNodeName(seq.numNodes);
+            if (nodeName == "")
+            {
+                if (seq.endBehavior == DialogueSequenceEnd.REPEATLAST) nodeName = seq.GetNodeName(seq.numNodes);
+            }
         }
         return nodeName;
     }

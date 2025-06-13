@@ -15,4 +15,4 @@ MonoBehaviour:
   gameSprites: {fileID: 11400000, guid: 1685372defdb7184b8eb968e6e77d57d, type: 2}
   winRounds: 4
   paddleControls: {fileID: 6071274329273454971, guid: f716abb7de7648e40a8bef17066216a8, type: 3}
-  pingPong: {fileID: 0}
+  playerBallPath: {fileID: 11400000, guid: b92f929d00671db40a5e41780609cdb6, type: 2}
