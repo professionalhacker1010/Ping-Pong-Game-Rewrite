@@ -13,14 +13,18 @@ public class CharacterControls : MonoBehaviour
     [SerializeField] private BoxCollider2D rightHitBox, leftHitBox;
     [SerializeField] public CharacterPositionAdjustment characterPositionAdjustment;
     private BoxCollider2D hitBox;
+
+    private int movementLocks = 0;
     private bool movementHalted;
+
     private static float spawnPos;
 
     List<IHittable> candidateHittables;
     ICanInteract prevInteractableCandidate, currInteractableCandidate;
 
     public event Action OnFaceLeft, OnFaceRight, OnInteract, OnHit;
-    public UnityAction<string> OnNodeStart;
+    public UnityAction OnDialogueStart;
+    public UnityAction OnDialogueEnd;
 
     public float Velocity { get => rb.velocity.x; }
 
@@ -36,39 +40,41 @@ public class CharacterControls : MonoBehaviour
         //spawn at the correct table, only starts when you've played your first game
         if (Conditions.GetCondition("firstGameStarted")) transform.position = new Vector3(spawnPos, transform.position.y);
 
-        OnNodeStart += (string nodeName) => { if (nodeName == "Start") DeselectInteractable(); };
+        OnDialogueStart += () => {
+            DeselectInteractable();
+        };
+        OnDialogueEnd += () => {
+            SelectInteractable();
+        };
         if (DialogueManager.Instance)
         {
-            DialogueManager.Instance.DialogueRunner.onNodeStart.AddListener(OnNodeStart);
-            DialogueManager.Instance.DialogueRunner.onDialogueComplete.AddListener(SelectInteractable);
+            DialogueManager.Instance.DialogueUI.onDialogueStart.AddListener(OnDialogueStart);
+            DialogueManager.Instance.DialogueRunner.onDialogueComplete.AddListener(OnDialogueEnd);
         }
     }
 
     private void Update()
     {
-        if (DialogueManager.Instance.DialogueRunning() || PauseMenu.gameIsPaused) return;
+        if (PauseMenu.gameIsPaused) return;
 
-        float horizontalInput = Input.GetAxis("Horizontal");
+        if (DialogueManager.Instance.DialogueRunning() || movementHalted) { 
+            rb.velocity = new Vector2(0f, 0f); 
+            return; 
+        }
 
         //move character at correct velocity
-        if (!movementHalted)
+        //get keycode to set direction of animations
+        float horizontalInput = Input.GetAxis("Horizontal");
+        if (KeyCodes.Left())
         {
-            //get keycode to set direction of animations
-            if (KeyCodes.Left())
-            {
-                FaceLeft();
-            }
-            else if (KeyCodes.Right())
-            {
-                FaceRight();
-            }
+            FaceLeft();
+        }
+        else if (KeyCodes.Right())
+        {
+            FaceRight();
+        }
 
-            MoveCharacter(horizontalInput, normalSpeed);
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-        }
+        MoveCharacter(horizontalInput, normalSpeed);
 
         //evaluate candidates
         UpdateCandidates();
@@ -107,12 +113,15 @@ public class CharacterControls : MonoBehaviour
 
     public void LockCharacterControls()
     {
+        movementLocks++;
         movementHalted = true;
     }
 
     public void UnlockCharacterControls()
     {
-        movementHalted = false;
+        movementLocks--;
+        if (movementLocks == 0)
+            movementHalted = false;
     }
 
     public void FaceLeft()
@@ -260,8 +269,8 @@ public class CharacterControls : MonoBehaviour
         spawnPos = transform.position.x;
         if (DialogueManager.Instance)
         {
-            DialogueManager.Instance.DialogueRunner.onDialogueComplete.RemoveListener(SelectInteractable);
-            DialogueManager.Instance.DialogueRunner.onNodeStart.RemoveListener(OnNodeStart);
+            DialogueManager.Instance.DialogueUI.onDialogueStart.RemoveListener(OnDialogueStart);
+            DialogueManager.Instance.DialogueRunner.onDialogueComplete.RemoveListener(OnDialogueEnd);
         }
     }
 }

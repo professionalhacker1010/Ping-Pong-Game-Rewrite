@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour
     {
         get
         {
-            if (_instance == null) Debug.Log("The LevelSelectDialogueManager is NULL");
+            if (_instance == null) Debug.Log("The DialogueManager is NULL");
 
             return _instance;
         }
@@ -26,8 +26,10 @@ public class DialogueManager : MonoBehaviour
 
     //references to dialogue stuffs
     [SerializeField] DialogueRunner dialogueRunner;
+    [SerializeField] DialogueUI dialogueUI;
 
     public DialogueRunner DialogueRunner { get => dialogueRunner; }
+    public DialogueUI DialogueUI { get => dialogueUI; }
 
     // Start is called before the first frame update
     void Start()

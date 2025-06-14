@@ -1255,6 +1255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueRunner: {fileID: 4832654826384409038}
+  dialogueUI: {fileID: 4832654826384409035}
 --- !u!1 &4832654826039811058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,44 +1639,6 @@ MonoBehaviour:
   currBackground: {fileID: 0}
   currSprite: {fileID: 0}
   speechBubble: {fileID: 4832654826087227582}
-  importBackgrounds:
-  - {fileID: 21300000, guid: 91063b19ac144d24da608ccc81805bc8, type: 3}
-  - {fileID: 21300000, guid: 2fc9dfb5d4048444a846554fc648e0c7, type: 3}
-  - {fileID: 21300000, guid: 53127d478e155444e882e04fe420437b, type: 3}
-  - {fileID: 21300000, guid: 2a659bdd2dffbd94fb3ec2374b133d64, type: 3}
-  - {fileID: 21300000, guid: 145be1c69edca6640929bc4ee7a9d281, type: 3}
-  - {fileID: 21300000, guid: 192393cb2cf62a847abb02f2115f97ba, type: 3}
-  - {fileID: 21300000, guid: 4861f2e16a495a946b4eb99e4385f3e6, type: 3}
-  - {fileID: 21300000, guid: cf8b79f772a80fd4ea8e58ad14488798, type: 3}
-  importSprites:
-  - {fileID: 21300000, guid: bcb19b9253d181a4ca4fe7e8cd93e19b, type: 3}
-  - {fileID: 21300000, guid: caead58d185d8c045a252ea499619e27, type: 3}
-  importSpeechBubbleLocations:
-  - {x: 400, y: -280}
-  - {x: -500, y: 150}
-  - {x: -500, y: 150}
-  - {x: 550, y: -200}
-  - {x: 650, y: 300}
-  - {x: 0, y: 200}
-  - {x: -500, y: 150}
-  - {x: 500, y: 150}
-  - {x: -500, y: 150}
-  speechBubbleLocationNames:
-  - opening
-  - blanket
-  - announcer
-  - crowd
-  - fried
-  - fence
-  - character
-  - introSpeaker
-  - introPlayer
-  importSpriteLocations:
-  - {x: 0, y: 0, z: 0}
-  - {x: 5, y: 0, z: 0}
-  spriteLocationNames:
-  - middle
-  - x5y0
 --- !u!1 &4832654826325211657
 GameObject:
   m_ObjectHideFlags: 0
