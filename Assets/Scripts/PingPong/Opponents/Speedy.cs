@@ -19,7 +19,6 @@ public class Speedy : Opponent
 
         prevX = servePosition.x;
         StartCoroutine(StartGame());
-        //PaddleControls.hardHitActivated = true;
     }
 
     //speedy hits out if you hit the ball really far apart, one end then the other
@@ -49,11 +48,14 @@ public class Speedy : Opponent
 
     public override IEnumerator PlayServeAnimation()
     {
+        
         yield return ChangeSpeedyPosition(servePosition.x, (int) (serveTime * 24));
+        
     }
 
     private IEnumerator ChangeSpeedyPosition(float startX, float hitFrame)
     {
+        PaddleControls.LockInputs();
         int moveFrames = 4;
         float speed = ballSpeeds[GameManager.Instance.PlayerWins];
         float fps = 24 * speed;
@@ -71,6 +73,7 @@ public class Speedy : Opponent
 
         //increase speed if needed (ie if player's score has increased)
         GameManager.Instance.Pingpong.ballSpeed = ballSpeeds[GameManager.Instance.PlayerWins];
+        PaddleControls.UnlockInputs();
     }
 
     public override IEnumerator PlayLoseRoundAnimation()

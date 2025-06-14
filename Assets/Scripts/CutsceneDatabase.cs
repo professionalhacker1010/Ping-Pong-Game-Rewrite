@@ -16,19 +16,9 @@ public class CutsceneDatabase : MonoBehaviour
     [SerializeField] private SpriteRenderer currBackground;
     [SerializeField] private SpriteRenderer currSprite;
     [SerializeField] private GameObject speechBubble;
-    private RectTransform speechBubbleTransform;
 
     //storage of all the cutscene assets
-    [SerializeField] private List<Sprite> importBackgrounds;
-    [SerializeField] private List<Sprite> importSprites;
-    [SerializeField] private List<Vector2> importSpeechBubbleLocations;
-    [SerializeField] private List<string> speechBubbleLocationNames;
-    [SerializeField] private List<Vector3> importSpriteLocations;
-    [SerializeField] private List<string> spriteLocationNames;
     private Dictionary<string, Sprite> backgrounds;
-    private Dictionary<string, Sprite> sprites;
-    private Dictionary<string, Vector2> speechBubbleLocations;
-    private Dictionary<string, Vector3> spriteLocations;
 
     //static variables
     public static string item = "";
@@ -43,44 +33,13 @@ public class CutsceneDatabase : MonoBehaviour
         //update variables
         if (item != "") CVStore.SetValue("$item", item);
 
-        //get rect transform for speech bubble??
-        speechBubbleTransform = speechBubble.GetComponent<RectTransform>();
-
-        //put all data into dictionaries
-        backgrounds = new Dictionary<string, Sprite>();
-        for (int i = 0; i < importBackgrounds.Count; i++)
-        {
-            backgrounds.Add(importBackgrounds[i].name, importBackgrounds[i]);
-        }
-
-        sprites = new Dictionary<string, Sprite>();
-        for (int i = 0; i < importSprites.Count; i++)
-        {
-            sprites.Add(importSprites[i].name, importSprites[i]);
-        }
-
-        speechBubbleLocations = new Dictionary<string, Vector2>();
-        for (int i = 0; i< importSpeechBubbleLocations.Count; i++)
-        {
-            speechBubbleLocations.Add(speechBubbleLocationNames[i], importSpeechBubbleLocations[i]);
-        }
-
-        spriteLocations = new Dictionary<string, Vector3>();
-        for (int i = 0; i< importSpriteLocations.Count; i++)
-        {
-            spriteLocations.Add(spriteLocationNames[i], importSpriteLocations[i]);
-        }
-
         //create commands for yarn
-        dialogueRunner.AddCommandHandler("item_prompt", ItemPrompt);
-        dialogueRunner.AddCommandHandler("end_scene1", EndScene1);
         dialogueRunner.AddCommandHandler("change_speaker", ChangeSpeaker);
         dialogueRunner.AddCommandHandler("start_speaker", StartSpeaker);
         dialogueRunner.AddCommandHandler("end_speaker", EndSpeaker);
         dialogueRunner.AddCommandHandler("change_emotion", ChangeEmotion);
         dialogueRunner.AddCommandHandler("transition_out", TransitionOut);
         dialogueRunner.AddCommandHandler("transition_in", TransitionIn);
-
     }
 
     public void ChangeSpeaker(string[] parameters, System.Action onComplete) //first string = name of speaker
@@ -151,75 +110,6 @@ public class CutsceneDatabase : MonoBehaviour
         onComplete();
     }
 
-    //Cutscene 1 specific stuff
-    #region
-    [YarnCommand("pan_parkPicnic")]
-    public void PanParkPicnic()
-    {
-        speechBubble.SetActive(false);
-        StartCoroutine(PanParkPicnicHelper());
-    }
-
-    private IEnumerator PanParkPicnicHelper()
-    {
-        float[] positions = { -10f, -9.8f, -9.6f, -8.75f, -7.5f, -5f, 0f, 5f, 7.5f, 8.75f, 9.6f, 9.8f, 10f};
-        Debug.Log("coroutine called");
-        for (int i = 0; i < 13; i++)
-        {
-            currBackground.transform.position = new Vector3(0f, positions[i]);
-            yield return new WaitForSeconds(2 / 24f);
-        }
-        yield return new WaitForSeconds(22 / 24f);
-        speechBubble.SetActive(true);
-    }
-
-    [YarnCommand("reset_BG_transform")]
-    public void ResetBGTransform()
-    {
-        currBackground.transform.position = new Vector3(0f, 0f);
-    }
-
-    public void ItemPrompt(string[] parameters, System.Action onComplete)
-    {
-        itemInputObject.SetActive(true);
-        speechBubble.SetActive(false);
-        itemInput.Select();
-        StartCoroutine(waitUntilItemEntered(onComplete));
-    }
-
-    private IEnumerator waitUntilItemEntered(System.Action onComplete)
-    {
-        yield return new WaitUntil(()=> Input.GetKeyUp(KeyCode.Return)); //wait until user hits enter
-        yield return new WaitForSeconds(0.1f); //need some padding for variable to be assigned correctly
-        speechBubble.SetActive(true);
-        onComplete();
-    }
-
-    public void InputToItem(string input)
-    {
-        CVStore.SetValue("$item", input);
-        item = input;
-    }
-
-    public void EndScene1(string[] parameters, System.Action onComplete)
-    {
-        StartCoroutine(EndScene1Helper(onComplete));
-    }
-
-    private IEnumerator EndScene1Helper(System.Action onComplete)
-    {
-        speechBubble.SetActive(false);
-        yield return new WaitUntil(() => KeyCodes.InteractGetUp() || KeyCodes.HitGetUp());
-        EndCutscene();
-        yield return new WaitForSeconds(1f);
-        ChangeBG("transparent");
-        onComplete();
-    }
-    #endregion
-
-    //STUFF IM SCARED TO DELETE
-    //change image locations
-    #region
     [YarnCommand("transition")]
     public void PlayTransition(string name)
     {
@@ -238,47 +128,12 @@ public class CutsceneDatabase : MonoBehaviour
     [YarnCommand("disable_bubble")]
     public void DisableBubble()
     {
-        //speechBubble.SetActive(false);
         dialogueBubble.ExitBubble();
     }
 
     [YarnCommand("enable_bubble")]
     public void EnableBubble()
     {
-        //speechBubble.SetActive(true);
         dialogueBubble.EnterBubble();
     }
-    [YarnCommand("change_BG")]
-    public void ChangeBG(string name)
-    {
-        Debug.Log("change BG called");
-        currBackground.sprite = backgrounds[name];
-    }
-
-    [YarnCommand("change_bubble_loc")]
-    public void ChangeBubbleLocation(string name)
-    {
-        Debug.Log("change bubble loc called");
-        speechBubbleTransform.anchoredPosition = speechBubbleLocations[name];
-    }
-
-    [YarnCommand("change_sprite")]
-    public void ChangeSprite(string name)
-    {
-        Debug.Log("change sprite called");
-        currSprite.sprite = sprites[name];
-    }
-
-    [YarnCommand("change_sprite_loc")]
-    public void ChangeSpriteLocation(string name)
-    {
-        currSprite.transform.position = spriteLocations[name];
-    }
-
-    [YarnCommand("end_cutscene")] //this is put at the end of all cutscenes except the first one
-    public void EndCutscene()
-    {
-        StartCoroutine(CutsceneManager.Instance.ChangeScene());
-    }
-    #endregion
 }

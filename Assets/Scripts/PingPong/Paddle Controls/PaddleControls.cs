@@ -11,7 +11,13 @@ public class PaddleControls : MonoBehaviour
     [SerializeField] private float factorPaddleY = 0.6f, factorPaddleX = 0.4f;
 
     //lock
-    private static bool lockedInputs = false;
+    public static bool LockedInputs
+    {
+        get
+        {
+            return locks > 0;
+        }
+    }
     private static int locks = 0;
 
     //input
@@ -43,7 +49,7 @@ public class PaddleControls : MonoBehaviour
     protected virtual void Start()
     {
         TransitionManager.Instance.OnTransitionOut += LockInputs;
-        TransitionManager.Instance.OnTransitionIn += ResetLockInputs;
+        TransitionManager.Instance.OnTransitionIn += UnlockInputs;
     }
 
     protected virtual void Update()
@@ -58,7 +64,7 @@ public class PaddleControls : MonoBehaviour
 
         ProcessMovement();
 
-        if (PauseMenu.gameIsPaused || lockedInputs) return;
+        if (PauseMenu.gameIsPaused || LockedInputs) return;
 
         ProcessInput();
     }
@@ -164,7 +170,6 @@ public class PaddleControls : MonoBehaviour
     public static void LockInputs()
     {
         //Debug.Log("lock inputs");
-        lockedInputs = true;
         locks++;
         //Debug.Log("locks " + locks.ToString());
     }
@@ -173,15 +178,12 @@ public class PaddleControls : MonoBehaviour
     {
         //Debug.Log("unlock inputs");
         locks = Mathf.Max(locks - 1, 0);
-        if (locks == 0)
-            lockedInputs = false; //Debug.Log("inputs unlocked");
     }
 
     public static void ResetLockInputs()
     {
         Debug.Log("reset inputs");
         locks = 0;
-        lockedInputs = false;
     }
     #endregion
 
@@ -230,7 +232,7 @@ public class PaddleControls : MonoBehaviour
         if (TransitionManager.Instance)
         {
             TransitionManager.Instance.OnTransitionOut -= LockInputs;
-            TransitionManager.Instance.OnTransitionIn -= ResetLockInputs;
+            TransitionManager.Instance.OnTransitionIn -= UnlockInputs;
         }
     }
 }

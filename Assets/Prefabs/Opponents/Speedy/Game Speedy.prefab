@@ -96,9 +96,9 @@ MonoBehaviour:
   gameModeOverride: {fileID: 11400000, guid: 791b8b6ce29ca8d4d8b4f95269d4da1d, type: 2}
   ballSpeeds:
   - 1.5
-  - 2
-  - 2.5
-  - 3
+  - 1.8
+  - 2.1
+  - 2.4
   hitOutDistance: 6
   leftOut: {x: -11, y: 1, z: 1}
   rightOut: {x: 11, y: 1, z: 1}

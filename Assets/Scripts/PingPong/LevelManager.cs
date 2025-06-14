@@ -20,8 +20,6 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-        levelsPlayed = new List<bool>(new bool[opponentPrefabs.Count]);
-        levelsWon = new List<bool>(new bool[opponentPrefabs.Count]);
         for (int i = 0; i < opponentPrefabs.Count; i++)
         {
             Conditions.SetCondition("LevelManager_Played_Level" + i.ToString(), false);
@@ -35,22 +33,17 @@ public class LevelManager : MonoBehaviour
 
     public static int chosenOpponent = 0; //opponent chosen from level select screen or from game's progression
 
-    static List<bool> levelsPlayed;
-    static List<bool> levelsWon;
-
     private void Start()
     {
 
     }
 
-    public static bool IsLevelPlayed(int level) => levelsPlayed[level];
+    public static bool IsLevelPlayed(int level) => Conditions.GetCondition("LevelManager_Played_Level" + level.ToString());
     public static void SetLevelPlayed(int level) { 
-        levelsPlayed[level] = true;
         Conditions.SetCondition("LevelManager_Played_Level" + level.ToString(), true);
     }
-    public static bool IsLevelWon(int level) => levelsWon[level];
+    public static bool IsLevelWon(int level) => Conditions.GetCondition("LevelManager_Won_Level" + level.ToString());
     public static void SetLevelWon(int level) { 
-        levelsWon[level] = true;
         Conditions.SetCondition("LevelManager_Won_Level" + level.ToString(), true);
     }
 

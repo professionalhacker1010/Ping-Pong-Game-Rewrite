@@ -29,7 +29,7 @@ public class TableSelectManager : MonoBehaviour
         _instance = this;
         tables = new List<TableSelect>();
         beforeTransitionToGame = new Dictionary<int, Func<IEnumerator>>();
-        Conditions.SetCondition("firstGameStarted", false);
+        if (!Conditions.HasCondition("firstGameStarted")) Conditions.SetCondition("firstGameStarted", false);
     }
 
     public void TransitionToGame(int level)

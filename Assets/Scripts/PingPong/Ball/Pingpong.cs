@@ -83,6 +83,18 @@ public class Pingpong : MonoBehaviour
         else ballAnimation.SetTrigger("opponentWaitServe");
     }
 
+    private void Update()
+    {
+        if (PaddleControls.LockedInputs)
+        {
+            ballAnimation.GetComponent<SpriteRenderer>().color = Color.black;
+        }
+        else
+        {
+            ballAnimation.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
+
     /// <summary>
     /// Hit the ball as the player
     /// </summary>
