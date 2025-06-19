@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;//add this
-using Yarn.Unity;
 
 public class GameDev : Opponent
 {
@@ -19,9 +18,6 @@ public class GameDev : Opponent
 
     //gameobjects
     [SerializeField] private GameObject buttonMash, desktopScreen, glitchOutAnimation, opponentSprite;
-
-    //intro
-    [SerializeField] YarnProgram introDialogue;
 
     //state tracking
     private bool playerHit = false;
@@ -127,7 +123,8 @@ public class GameDev : Opponent
         PaddleControls.LockInputs();
         print("locked");
 
-        //DialogueManager.Instance.StartDialogue(introDialogue);
+        
+        DialogueManager.Instance.StartDialogue("gameDev_gameIntro");
         yield return new WaitUntil(() => DialogueManager.Instance.DialogueRunning());
         yield return new WaitUntil(() => !DialogueManager.Instance.DialogueRunning());
 

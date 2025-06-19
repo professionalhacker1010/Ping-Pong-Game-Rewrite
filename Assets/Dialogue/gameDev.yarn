@@ -1,0 +1,200 @@
+﻿title: gameDev_preGame1
+tags:
+---
+<<start_speaker GameDev>>
+... #line:0245bc7 
+... #line:0d67ed5 
+<<change_emotion GameDev sitStill>>
+oh hi #line:05e4336 
+im not much of a physical movement person #line:0ea17cf 
+so im making a ping pong game #line:013685e 
+but it's not ready yet #line:096b5b2 
+sorry #line:0da2b2e 
+<<change_emotion GameDev typing>>
+<<end_speaker>>
+===
+
+
+
+title: gameDev_preGame2
+tags:
+---
+<<start_speaker GameDev>>
+... #line:014ef80 
+<<end_speaker>>
+===
+
+
+
+title: gameDev_preGame3
+tags:
+---
+<<start_speaker GameDev>>
+... #line:07ae1fc 
+<<end_speaker>>
+===
+
+
+
+title: gameDev_preGame4
+tags:
+---
+<<start_speaker GameDev>>
+... #line:0456576 
+...ok #line:0e71636 
+<<change_emotion GameDev sitStill>>
+you keep checking on me and it's stressing me out #line:0a4038d 
+so fine you can play it as is #line:03a84c8 
+gosh #line:02d140c 
+this is the only thing ive thought about #line:052e23d 
+ever since i got here #line:0014794 
+i even took a nap #line:03a99ae 
+and had a dream about being stranded on an island with just this game to play #line:0802f7a 
+and being surprisingly cool with it #line:070f942 
+anyways lets do this #line:0a3bd24 
+pick up the controller when you're ready #line:0039853 
+
+<<end_speaker>>
+<<unlock_table 3>>
+===
+
+
+
+title: gameDev_gameIntro
+tags:
+---
+<<start_speaker GameDevSpeaker>>
+uh. #line:05a5222 
+sorry i havent actually tested this before #line:09800cb 
+just keep going... #line:0ddf878 
+<<end_speaker>>
+===
+
+
+
+title: gameDev_gameOutro
+tags:
+---
+<<start_speaker GameDevSpeaker>>
+what!!!!!!! #line:012e959 
+<<end_speaker>>
+===
+
+
+
+title: gameDev_postGame_start1
+tags:
+---
+<<change_emotion GameDev sitStill>>
+<<start_speaker GameDev>>
+... #line:04f510e 
+<<disable_bubble>>
+<<wait 3>>
+<<enable_bubble>>
+so... what did you think... #line:0389b5b 
+[[I liked it! | postGame_start1_liked]] #line:0cdbe8b 
+[[I did not like it | postGame_start1_disliked]] #line:0ffbaa3 
+===
+
+title: gameDev_postGame_start1_liked
+---
+<<change_speaker Player>>
+It REALLY surprised me!! #line:0be58da 
+Even if I couldn't tell what was intentional or not. #line:0586a12 
+But like the button mashing at the end? That was different! It was cool. #line:0daf51d 
+
+<<change_speaker GameDev>>
+ok... i appreciate your feedback... #line:05d9f3c 
+[[postGame_start1_end]] #line:0e20ffc 
+===
+
+title: gameDev_postGame_start1_disliked
+---
+<<change_speaker Player>>
+It was kind of weird. #line:0a9b47b 
+There were multiple glitches that made it very hard to play. #line:0d449bb 
+And somehow it crashed your computer. #line:08e8d00 
+I was excited to see what the button mashing would do though! #line:0e3833c 
+
+<<change_speaker GameDev>>
+ok... i appreciate your honesty... #line:063ae8e 
+[[postGame_start1_end]] #line:09787de 
+===
+
+title: gameDev_postGame_start1_end
+---
+yeah the button mashing was supposed to connect you to a random server #line:0f237d1 
+where you and a bunch of other players are button mashing together #line:0f2b164 
+and you all have to power up this thing #line:06f8e1b 
+and then you win and become part of each others team #line:014cb59 
+forever #line:0d30c40 
+kind of simulating how you can't choose the family you're born into #line:08f6dd5 
+and have to learn how to deal with them #line:09cef37 
+<<disable_bubble>>
+
+<<wait 2>>
+
+<<enable_bubble>>
+actually #line:0d5b3b1 
+eh #line:0470e07 
+thanks for playing though #line:030aee8 
+<<change_emotion GameDev typing>>
+<<end_speaker>>
+===
+
+
+
+title: gameDev_postGame1
+tags:
+---
+<<start_speaker GameDev>>
+... #line:0a81e6d 
+you wanna play my game again #line:08fb7b9 
+[[Sure! | postGame_startGame]] #line:04216b2 
+[[Ask a question | postGame1_question]] #line:01ab8cd 
+<<end_speaker>>
+===
+
+title: gameDev_postGame_startGame
+---
+<<end_speaker>>
+===
+
+title: gameDev_postGame1_question
+---
+<<change_speaker Player>>
+Actually I have a question. #line:00eac6c 
+Do you like fried chicken?? #line:0ca09a4 
+
+<<change_speaker GameDev>>
+not really why #line:03e7e0a 
+
+<<change_speaker Player>>
+I don't know. I feel like I'm the only one. #line:0804abe 
+
+<<change_speaker GameDev>>
+i think you are. #line:0d72e75 
+i don't know why anyone would legitimately like that stuff #line:0c41750 
+unless you really liked chicken #line:05e1a56 
+even then maybe you would like it as a fun gimmick #line:00c6ca2 
+but not actually to eat it #line:01534dd 
+why do YOU like it? #line:0bc8921 
+
+<<change_speaker Player>>
+Well I've never had it before but #line:0ecfb64 
+I'll eat anything honestly! #line:00c2118 
+And I come here like every day. #line:0466451 
+I trust them to make something good. #line:05874cb 
+
+<<change_speaker GameDev>>
+interesting #line:0835f90 
+what do you usually order #line:07e9881 
+
+<<change_speaker Player>>
+-> Fried chicken #line:072ba93 
+-> Chicken sandwich #line:0571672 
+
+<<change_speaker GameDev>>
+good to know. #line:01c80eb 
+<<end_speaker>>
+===

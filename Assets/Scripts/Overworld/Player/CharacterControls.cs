@@ -17,7 +17,7 @@ public class CharacterControls : MonoBehaviour
     private int movementLocks = 0;
     private bool movementHalted;
 
-    private static float spawnPos;
+    private static float spawnPos = -4.84f;
 
     List<IHittable> candidateHittables;
     ICanInteract prevInteractableCandidate, currInteractableCandidate;
@@ -38,7 +38,7 @@ public class CharacterControls : MonoBehaviour
     private void Start()
     {
         //spawn at the correct table, only starts when you've played your first game
-        if (Conditions.GetCondition("firstGameStarted")) transform.position = new Vector3(spawnPos, transform.position.y);
+        if (Conditions.Get("intro_played")) transform.position = new Vector3(spawnPos, transform.position.y);
 
         OnDialogueStart += () => {
             DeselectInteractable();
@@ -48,7 +48,7 @@ public class CharacterControls : MonoBehaviour
         };
         if (DialogueManager.Instance)
         {
-            DialogueManager.Instance.DialogueUI.onDialogueStart.AddListener(OnDialogueStart);
+            DialogueManager.Instance.DialogueRunner.onDialogueStart.AddListener(OnDialogueStart);
             DialogueManager.Instance.DialogueRunner.onDialogueComplete.AddListener(OnDialogueEnd);
         }
     }
@@ -269,7 +269,7 @@ public class CharacterControls : MonoBehaviour
         spawnPos = transform.position.x;
         if (DialogueManager.Instance)
         {
-            DialogueManager.Instance.DialogueUI.onDialogueStart.RemoveListener(OnDialogueStart);
+            DialogueManager.Instance.DialogueRunner.onDialogueStart.RemoveListener(OnDialogueStart);
             DialogueManager.Instance.DialogueRunner.onDialogueComplete.RemoveListener(OnDialogueEnd);
         }
     }

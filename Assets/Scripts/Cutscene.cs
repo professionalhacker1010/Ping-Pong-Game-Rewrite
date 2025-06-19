@@ -5,5 +5,5 @@ using Yarn.Unity;
 
 public class Cutscene : MonoBehaviour
 {
-    public YarnProgram yarnFile; //yarn file contains code for positions and transitions of sprites as well?
+    public YarnProject yarnFile; //yarn file contains code for positions and transitions of sprites as well?
 }

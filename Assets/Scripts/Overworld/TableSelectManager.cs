@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;//add this
+using Yarn.Unity;
 
 public class TableSelectManager : MonoBehaviour
 {
@@ -29,7 +30,6 @@ public class TableSelectManager : MonoBehaviour
         _instance = this;
         tables = new List<TableSelect>();
         beforeTransitionToGame = new Dictionary<int, Func<IEnumerator>>();
-        if (!Conditions.HasCondition("firstGameStarted")) Conditions.SetCondition("firstGameStarted", false);
     }
 
     public void TransitionToGame(int level)
@@ -43,7 +43,6 @@ public class TableSelectManager : MonoBehaviour
         {
             yield return beforeTransitionToGame[level]();
         }
-        if (level == 0) Conditions.SetCondition("firstGameStarted", true);
         TransitionManager.Instance.QuickOut("Game");
         LevelManager.chosenOpponent = level;
     }
@@ -67,6 +66,16 @@ public class TableSelectManager : MonoBehaviour
         {
             if (table.Level == level) table.UnlockThisTable();
         });
+    }
+
+    public Vector3 GetTablePosition(int level)
+    {
+        Vector3 pos = Vector3.zero;
+        tables.ForEach(table =>
+        {
+            if (table.Level == level) pos = table.transform.position;
+        });
+        return pos;
     }
 
     //Shows select table indicator, doesn't actually select it

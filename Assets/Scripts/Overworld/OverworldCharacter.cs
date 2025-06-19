@@ -3,28 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
 {
     //dialogue
-    protected enum DialogueSequenceID
+    protected enum DialogueEvent
     {
-        SEQ0,
-        SEQ1,
-        SEQ2,
-        SEQ3,
-        SEQ4,
-        SEQ5,
-        SEQ6,
-        SEQ7,
-        SEQ8,
-        SEQ9,
-        PREGAME,
-        POSTGAME,
-        PREGAME2,
-        POSTGAME2
+        INTERACT,
+        START,
     }
-
     protected enum DialogueSequenceEnd
     {
         REPEATLAST,
@@ -33,14 +21,15 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     [System.Serializable]
     protected struct DialogueSequence
     {
-        [SerializeField] public DialogueSequenceID id;
+        //[SerializeField] public DialogueSequenceID id;
         [SerializeField] public string nodePrefix;
         [SerializeField] public int numNodes;
+        [SerializeField] public string condition;
+        [SerializeField] public DialogueEvent trigger;
         [SerializeField] public DialogueSequenceEnd endBehavior;
         public string GetNodeName(int n) => nodePrefix + n.ToString();
     }
 
-    [SerializeField] protected YarnProgram dialogue;
     [SerializeField] protected List<DialogueSequence> dialogueSequences;
 
     //interaction
@@ -60,7 +49,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     [SerializeField] protected int level;
 
     //interact key prompt is always a C above their heads
-    private KeyPressPrompt cKeyPrompt;
+    protected KeyPressPrompt cKeyPrompt;
     private float cKeyPromptHeight = .5f;
 
     //refs
@@ -72,29 +61,26 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     //events
     public event Action OnHitEvent;
 
-    private string conditionPrefix;
+    [SerializeField] protected string conditionPrefix;
 
     //ICanInteract
     public int InteractPriority { get => 1; }
     public Vector2 InteractPos { get => transform.position; }
-    public bool IsInteractable { get => GetIsInteractable(); }
+    public bool IsInteractable { get => isInteractable; }
+    private bool isInteractable = true;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         collider2d = GetComponent<Collider2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
-        conditionPrefix = gameObject.name;
 
         foreach (var seq in dialogueSequences)
         {
             for (int i = 1; i <= seq.numNodes; i++)
             {
                 string conditionName = conditionPrefix + "_" + seq.GetNodeName(i);
-                if (!Conditions.HasCondition(conditionName))
-                {
-                    Conditions.SetCondition(conditionName, false);
-                }
+                Conditions.Initialize(conditionName, false);
             }
         }
     }
@@ -103,12 +89,13 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     {
         characterControls = OverworldManager.Instance.PlayerController;
 
-        if (!IsDialoguePlayed(DialogueSequenceID.POSTGAME, 1) && LevelManager.IsLevelWon(level))
-        {
-            OnInteract();
-        }
-
         cKeyPrompt = KeyPressPromptManager.Instance.GetKeyPressPrompt("C");
+
+        if (FindNextNode(DialogueEvent.START) != "")
+        {
+            StartDialogue(DialogueEvent.START);
+            FacePlayerForDialogue();
+        }
     }
 
     #region Overridable functions
@@ -123,22 +110,29 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
             (!playerStartedLeft && facing == Facing.LEFT) || facing == Facing.FORWARD))
         {
             bool standLeft = facing == Facing.LEFT || (playerStartedLeft && facing == Facing.FORWARD);
-            StartCoroutine(characterControls.ReadjustPlayer(gameObject, minDistance, standLeft, StartDialogue));
+            StartCoroutine(characterControls.ReadjustPlayer(gameObject, minDistance, standLeft, () => StartDialogue(DialogueEvent.INTERACT)));
             readjusted = true;
         }
 
         if (turnsToPlayer && Mathf.Abs(distance) < minDistance)
         {
-            StartCoroutine(characterControls.ReadjustPlayer(gameObject, minDistance, playerStartedLeft, StartDialogue));
+            StartCoroutine(characterControls.ReadjustPlayer(gameObject, minDistance, playerStartedLeft, () => StartDialogue(DialogueEvent.INTERACT)));
             readjusted = true;
         }
         
         if (!readjusted)
         {
-            StartDialogue();
+            StartDialogue(DialogueEvent.INTERACT);
         }
 
-        //turn to face player, flip back once dialogue is complete
+        FacePlayerForDialogue();
+    }
+
+    //turn to face player, flip back once dialogue is complete
+    private void FacePlayerForDialogue()
+    {
+        float distance = transform.position.x - characterControls.transform.position.x; // - player right, + player left
+        bool playerStartedLeft = distance >= 0;
         if (turnsToPlayer && ((playerStartedLeft && facing == Facing.RIGHT) || (!playerStartedLeft && facing == Facing.LEFT)))
         {
             StartCoroutine(Util.VoidCallbackConditional(
@@ -155,6 +149,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
 
     public virtual void OnSelect()
     {
+        if (FindNextNode(DialogueEvent.INTERACT) == "") return;
         cKeyPrompt.Show(new Vector3(transform.position.x, collider2d.bounds.center.y + collider2d.bounds.extents.y + cKeyPromptHeight));
     }
 
@@ -163,74 +158,59 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
         cKeyPrompt.Hide();
     }
 
-    protected virtual string GetNextDialogue()
-    {
-        if (!LevelManager.IsLevelPlayed(level))
-        {
-            return GetNextNodeInSequence(DialogueSequenceID.PREGAME);
-        }
-        else
-        {
-            return GetNextNodeInSequence(DialogueSequenceID.POSTGAME);
-        }
-    }
-
     public virtual void OnHit()
     {
         if (OnHitEvent != null) OnHitEvent();
     }
 
-    protected virtual bool GetIsInteractable() { return true;  }
     #endregion
 
-    #region Sandbox dialogue functions
-    protected void StartDialogue()
+    #region dialogue functions
+    protected void StartDialogue(DialogueEvent trigger)
     {
         //start dialogue
-        string startNode = GetNextDialogue();
-        
+        string startNode = FindNextNode(trigger);
         if (startNode == "") return;
 
-        DialogueManager.Instance.StartDialogue(dialogue, startNode);
+        DialogueManager.Instance.StartDialogue(conditionPrefix + "_" + startNode);
         OnDeselect();
         StartCoroutine(Util.VoidCallbackNextFrameConditional(
                 () => !dialogueRunner.Dialogue.IsActive,
                 () =>
                 {
-                    Conditions.SetCondition(conditionPrefix + '_' + startNode, true);
+                    Conditions.Set(conditionPrefix + '_' + startNode, true);
                 })
             );
     }
 
-    protected string GetNextNodeInSequence(DialogueSequenceID id)
+    private string FindNextNode(DialogueEvent trigger)
     {
-        string nodeName = "";
-        foreach (var seq in dialogueSequences)
+        string startNode = "";
+        for (int i = 0; i < dialogueSequences.Count; i++)
         {
-            if (seq.id != id) continue;
-            for (int i = 1; i <= seq.numNodes; i++)
+            DialogueSequence seq = dialogueSequences[i];
+            if (seq.trigger != trigger) continue;
+            if (Conditions.Evaluate(seq.condition))
             {
-                if (IsDialoguePlayed(id, i)) continue;
-                nodeName = seq.GetNodeName(i);
+                for (int j = 1; j <= seq.numNodes; j++)
+                {
+                    if (Conditions.Get(conditionPrefix + "_" + seq.GetNodeName(j))) continue;
+                    startNode = seq.GetNodeName(j);
+                    break;
+                }
+                if (startNode == "")
+                {
+                    if (seq.endBehavior == DialogueSequenceEnd.REPEATLAST) startNode = seq.GetNodeName(seq.numNodes);
+                }
                 break;
             }
-            if (nodeName == "")
-            {
-                if (seq.endBehavior == DialogueSequenceEnd.REPEATLAST) nodeName = seq.GetNodeName(seq.numNodes);
-            }
         }
-        return nodeName;
+        return startNode;
     }
 
-    protected bool IsDialoguePlayed(DialogueSequenceID id, int seqNum)
+    protected bool IsDialoguePlayed(string nodePrefix, int seqNum)
     {
-        foreach (var seq in dialogueSequences)
-        {
-            if (seq.id != id) continue;
-            return Conditions.GetCondition(conditionPrefix + "_" + seq.GetNodeName(seqNum));
-        }
-        Debug.Log("Invalid DialogueSequenceID or sequence number");
-        return false;
+        return Conditions.Get(conditionPrefix + "_" + nodePrefix + seqNum);
     }
     #endregion
 }

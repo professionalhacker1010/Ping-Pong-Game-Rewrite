@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 public class IntroCutscene : MonoBehaviour
 {
@@ -11,18 +12,27 @@ public class IntroCutscene : MonoBehaviour
     [SerializeField] private CharacterControls playerControls;
     [SerializeField] private CameraFollower cameraFollower;
     [SerializeField] private GameObject door;
-    [SerializeField] private YarnProgram yarnFile;
+    [SerializeField] private string dialogueNode;
     [SerializeField] private Vector3 spacePromptPosition;
     private KeyPressPrompt spacePrompt;
+
+    private void Awake()
+    {
+        Conditions.Initialize("intro_played", false);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        if (Conditions.Get("intro_played"))
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         spacePrompt = KeyPressPromptManager.Instance.GetKeyPressPrompt("space");
         spacePrompt.SetConditions(() => playerControls.OverlapsRightHitBox(doorSlamBoxCollider) || playerControls.OverlapsLeftHitBox(doorSlamBoxCollider), spacePromptPosition);
-
-        if (!Conditions.GetCondition("firstGameStarted")) StartCoroutine(IntroCutScene());
-        else Destroy(this.gameObject);
+        StartCoroutine(IntroCutScene());
     }
 
     private IEnumerator IntroCutScene()
@@ -53,11 +63,12 @@ public class IntroCutscene : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-        DialogueManager.Instance.StartDialogue(yarnFile, "Start"); //to do: wait for player to make some determined expression
+        DialogueManager.Instance.StartDialogue(dialogueNode); //to do: wait for player to make some determined expression
 
         playerControls.UnlockCharacterControls();
         cameraFollower.UnlockNormalBehaviour();
         cameraFollower.UnlockNormalBehaviour();
+        Conditions.Set("intro_played", true);
     }
 
 

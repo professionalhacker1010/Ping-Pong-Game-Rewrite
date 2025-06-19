@@ -93,16 +93,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 2480198943629176163, guid: fd580481a7a189146bc46e953ddc3449, type: 3}
   dialogueSequences:
-  - id: 10
-    nodePrefix: preGame
+  - nodePrefix: preGame
     numNodes: 4
-  - id: 12
-    nodePrefix: postGame
-    numNodes: 3
+    condition: '!level_won_3'
+    trigger: 0
+    endBehavior: 1
+  - nodePrefix: postGame_start
+    numNodes: 1
+    condition: level_won_3
+    trigger: 1
+    endBehavior: 1
+  - nodePrefix: postGame
+    numNodes: 1
+    condition: level_won_3
+    trigger: 0
+    endBehavior: 0
   turnsToPlayer: 0
   facingLeft: 0
   facing: 2
   level: 3
+  conditionPrefix: gamedev
 --- !u!1 &5996981454455591877
 GameObject:
   m_ObjectHideFlags: 0

@@ -165,16 +165,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 2480198943629176163, guid: 3b5beb22a27f9ac4d85f287c97308bbd, type: 3}
   dialogueSequences:
-  - id: 10
-    nodePrefix: preGame
+  - nodePrefix: preGame
     numNodes: 3
-  - id: 11
-    nodePrefix: postGame
+    condition: '!level_won_1'
+    trigger: 
+    endBehavior: 0
+  - nodePrefix: postGame
     numNodes: 3
+    condition: level_won_1
+    trigger: shapeshifter_startTrigger
+    endBehavior: 0
   turnsToPlayer: 0
   facingLeft: 1
   facing: 2
   level: 1
+  conditionPrefix: shapeshifter
   shapeshiftAnimator: {fileID: 2462856704240535933}
   phasePrefabs:
   - {fileID: 8740075363017259741, guid: 3bc18c2d64a729b478c10554c80b3e93, type: 3}

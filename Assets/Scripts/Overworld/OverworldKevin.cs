@@ -19,15 +19,5 @@ public class OverworldKevin : OverworldCharacter
     public override void OnInteract()
     {
         base.OnInteract();
-
-        if (!IsDialoguePlayed(DialogueSequenceID.PREGAME, 1) && !LevelManager.IsLevelPlayed(level) && TableSelectManager.Instance)
-        {
-            TableSelectManager.Instance.UnlockTable(level);
-        }
-    }
-
-    protected override string GetNextDialogue()
-    {
-        return base.GetNextDialogue();
     }
 }

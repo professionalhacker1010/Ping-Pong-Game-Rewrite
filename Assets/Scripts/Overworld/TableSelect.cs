@@ -15,14 +15,14 @@ public class TableSelect : MonoBehaviour, ICanInteract
     public Vector2 InteractPos { get => transform.position; }
     public bool IsInteractable { 
         get {
-            return Conditions.GetCondition(selectableCondition);
+            return Conditions.Get(selectableCondition);
         } 
     }
 
     private void Awake()
     {
         selectableCondition = "table" + level.ToString() + "_selectable";
-        Conditions.SetCondition(selectableCondition, false);
+        Conditions.Initialize(selectableCondition, false);
     }
 
     private void Start()
@@ -35,12 +35,12 @@ public class TableSelect : MonoBehaviour, ICanInteract
 
     public void LockThisTable()
     {
-        Conditions.SetCondition(selectableCondition, false);
+        Conditions.Set(selectableCondition, false);
     }
 
     public void UnlockThisTable()
     {
-        Conditions.SetCondition(selectableCondition, true);
+        Conditions.Set(selectableCondition, true);
     }
 
     public void OnInteract()

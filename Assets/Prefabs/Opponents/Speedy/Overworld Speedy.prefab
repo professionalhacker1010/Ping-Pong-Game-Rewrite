@@ -151,16 +151,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 2480198943629176163, guid: 75dfd1cd7025dd548bb0ad6dac8ec7f3, type: 3}
   dialogueSequences:
-  - id: 10
-    nodePrefix: preGame
+  - nodePrefix: preGame
     numNodes: 3
-  - id: 12
-    nodePrefix: preGame_hasDrink
+    condition: '!level_won_2 && !speedy_hasDrink'
+    trigger: 0
+    endBehavior: 0
+  - nodePrefix: preGame_hasDrink
     numNodes: 1
-  - id: 11
-    nodePrefix: postGame
-    numNodes: 2
+    condition: '!level_won_2 && speedy_hasDrink'
+    trigger: 0
+    endBehavior: 0
+  - nodePrefix: postGame_start
+    numNodes: 1
+    condition: level_won_2
+    trigger: 1
+    endBehavior: 1
+  - nodePrefix: postGame
+    numNodes: 1
+    condition: level_won_2
+    trigger: 0
+    endBehavior: 0
   turnsToPlayer: 0
   facingLeft: 0
   facing: 1
   level: 2
+  conditionPrefix: speedy

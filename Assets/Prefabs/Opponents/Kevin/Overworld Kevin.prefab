@@ -141,16 +141,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20ec1541cfa4f4449c8f1733062a24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 2480198943629176163, guid: 786c5c0df0942934e8e307d4c024adea, type: 3}
   dialogueSequences:
-  - id: 10
-    nodePrefix: preGame
+  - nodePrefix: preGame
     numNodes: 4
-  - id: 11
-    nodePrefix: postGame
-    numNodes: 2
+    condition: '!level_won_0'
+    trigger: 0
+    endBehavior: 0
+  - nodePrefix: postGame_start
+    numNodes: 1
+    condition: level_won_0
+    trigger: 1
+    endBehavior: 1
+  - nodePrefix: postGame
+    numNodes: 1
+    condition: level_won_0
+    trigger: 0
+    endBehavior: 0
   turnsToPlayer: 1
   facingLeft: 1
   facing: 0
   level: 0
+  conditionPrefix: kevin
   watchingVideosPosition: {x: 6.41, y: -1.94}

@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class OverworldSpeedy : OverworldCharacter
 {
-    private static bool hadEnergyDrink = false;
+    protected override void Awake()
+    {
+        base.Awake();
+        Conditions.Initialize(conditionPrefix + "_hasDrink", false);
+    }
 
     public override void OnHit()
     {
         base.OnHit();
     }
 
-    protected override string GetNextDialogue()
-    {
-        return base.GetNextDialogue();
-    }
-
     public override void OnInteract()
     {
         base.OnInteract();
-
-        if (hadEnergyDrink && TableSelectManager.Instance)
-        {
-            TableSelectManager.Instance.UnlockTable(level);
-        }
     }
 }

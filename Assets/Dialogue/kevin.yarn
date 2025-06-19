@@ -1,0 +1,159 @@
+﻿title: kevin_preGame1
+tags:
+---
+<<start_speaker Kevin>>
+Hi. #line:0b18552 
+
+<<change_speaker Player>>
+Hi! #line:010e6ef 
+
+<<change_speaker Kevin>>
+<<change_emotion Kevin Win>>
+You're the first of MANY who've dared challenge me. #line:0eac407 
+Many have failed. #line:0833571 
+You're just another pebble to kick. #line:00aec37 
+<<change_emotion Kevin Backhand>>
+Another NOOB. #line:0837b84 
+
+<<change_speaker Player>>
+Ok. #line:0b261d6 
+
+<<change_speaker Kevin>>
+Approach the table, challenger!! #line:062e7aa 
+<<end_speaker>>
+<<unlock_table 0>>
+===
+
+
+
+title: kevin_preGame2
+tags:
+---
+<<start_speaker Kevin>>
+Well? What's the holdup? #line:086b084 
+
+<<change_speaker Player>>
+You came here for the fried chicken too? #line:0cf0bba 
+
+<<change_speaker Kevin>>
+Blegh no... I'm here to WIN. #line:0163a6c 
+And beat some NOOBS! #line:0c8b258 
+But I guess a raccoon like you would like that sort of thing. #line:098de6b 
+
+<<change_speaker Player>>
+I sure do! #line:042e66e 
+<<end_speaker>>
+===
+
+
+
+title: kevin_preGame3
+tags:
+---
+<<start_speaker Player>>
+Wait so how does this game work? #line:0d3638f 
+
+<<change_speaker Kevin>>
+<<change_emotion Kevin Win>>
+WELL #line:0dfaad7 
+<<change_emotion Kevin Idle>>
+You just use the arrow keys to move the paddle and hit with the spacebar. #line:095cbb1 
+If you're good like me you can control the angle of the ball #line:00e4242 
+But you gotta think quick for that. #line:00c54c7 
+Also we're playing best 4 out of 7. First person to beat everyone WINS. #line:09f973e 
+That's not how it usually works #line:0396d87 
+But I guess this tournament got hijacked by NOOBS. #line:0e5cb2e 
+<<end_speaker>>
+===
+
+
+
+title: kevin_preGame4
+tags:
+---
+<<start_speaker Kevin>>
+You need me to explain again? #line:0dd7c87 
+
+-> I'm good
+	<<end_speaker>>
+-> Yeah
+	<<jump kevin_preGame4_Yes>>
+===
+
+title: kevin_preGame4_Yes
+tags:
+---
+<<change_speaker Kevin>>
+You just use the arrow keys to move the paddle and hit with the spacebar. #line:0c6eb27 
+If you're good like me you can control the angle of the ball #line:0490984 
+But you gotta think quick for that. #line:0447a6c 
+Also we're playing best 4 out of 7. First person to beat everyone WINS. #line:0525420 
+
+<<change_speaker Player>>
+Ok thanks! #line:0c87585 
+<<end_speaker>>
+===
+
+
+
+title: kevin_postGame_start1
+tags:
+---
+<<change_emotion Kevin Lose>>
+<<wait 2>>
+<<start_speaker Kevin>>
+I can't believe it. #line:0bdf454 
+I pulled every trick in the book. #line:05107fb 
+And still I get beat out by the FIRST person I play. #line:07336cd 
+Ghhh I'm a loser!! #line:068a54d 
+I... #line:069337a 
+D-don't look at me! #line:0fdc57c 
+
+-> Comfort
+	<<change_speaker Player>>
+	Are you ok...? #line:0755e86 
+-> Discomfort
+	<<change_speaker Player>>
+	You're only technically a loser! #line:011b57a 
+
+	<<change_speaker Kevin>>
+	Ghhhhhhhhhhhhhh... #line:0fb32ac 
+
+	<<change_speaker Player>>
+
+Do you need... some Fried and Fancy chicken?
+
+<<change_emotion Kevin Idle>>
+<<change_speaker Kevin>>
+PSHH
+I don't even like chicken. It's fine.
+But, if you ever work up the courage for a REMATCH
+I'll be in the corner watching videos on my phone. 
+
+<<change_emotion Kevin Win>>
+And this time, I'll DEFINITELY win!
+
+<<change_emotion Kevin Idle>>
+<<end_speaker>>
+===
+
+
+
+title: kevin_postGame1
+tags:
+---
+<<start_speaker Kevin>>
+So, you've come to challenge me again? #line:0a3b4b9 
+
+-> Yes.
+	How very bold of you. #line:04ac1aa 
+	Meet me at the table when you're ready to get CREAMED. #line:07ce9ad
+-> What are you watching?
+	Oh, this? #line:0a003dd 
+	It's a video compilation of EPIC WINS. #line:0cbba24 
+	REALLY gets the adrenaline pumping for my next match. #line:0336a68
+
+<<end_speaker>>
+===
+
+

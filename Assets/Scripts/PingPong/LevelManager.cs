@@ -22,8 +22,11 @@ public class LevelManager : MonoBehaviour
         _instance = this;
         for (int i = 0; i < opponentPrefabs.Count; i++)
         {
-            Conditions.SetCondition("LevelManager_Played_Level" + i.ToString(), false);
-            Conditions.SetCondition("LevelManager_Won_Level" + i.ToString(), false);
+            string playedCondition = "level_played_" + i.ToString();
+            Conditions.Initialize(playedCondition, false);
+
+            string wonCondition = "level_won_" + i.ToString();
+            Conditions.Initialize(wonCondition, false);
         }
     }
     #endregion
@@ -31,6 +34,7 @@ public class LevelManager : MonoBehaviour
     [Header("Opponents")]
     [SerializeField] private List<GameObject> opponentPrefabs;
 
+    [SerializeField]
     public static int chosenOpponent = 0; //opponent chosen from level select screen or from game's progression
 
     private void Start()
@@ -38,13 +42,13 @@ public class LevelManager : MonoBehaviour
 
     }
 
-    public static bool IsLevelPlayed(int level) => Conditions.GetCondition("LevelManager_Played_Level" + level.ToString());
+    public static bool IsLevelPlayed(int level) => Conditions.Get("level_played_" + level.ToString());
     public static void SetLevelPlayed(int level) { 
-        Conditions.SetCondition("LevelManager_Played_Level" + level.ToString(), true);
+        Conditions.Set("level_played_" + level.ToString(), true);
     }
-    public static bool IsLevelWon(int level) => Conditions.GetCondition("LevelManager_Won_Level" + level.ToString());
+    public static bool IsLevelWon(int level) => Conditions.Get("level_won_" + level.ToString());
     public static void SetLevelWon(int level) { 
-        Conditions.SetCondition("LevelManager_Won_Level" + level.ToString(), true);
+        Conditions.Set("level_won_" + level.ToString(), true);
     }
 
     public GameObject CreateChosenOpponent() => Instantiate(opponentPrefabs[chosenOpponent]);

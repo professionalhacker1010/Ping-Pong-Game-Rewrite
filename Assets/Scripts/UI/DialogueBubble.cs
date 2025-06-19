@@ -9,7 +9,7 @@ public class DialogueBubble : MonoBehaviour
     [SerializeField] private GameObject text;
     private TMPro.TMP_Text shownText;
     [SerializeField] private TMPro.TMP_Text preText, preText2;
-    private DialogueUI dialogueUI;
+    //private DialogueUI dialogueUI;
     private DialogueRunner dialogueRunner;
 
     //bubble
@@ -30,10 +30,13 @@ public class DialogueBubble : MonoBehaviour
 
     private void Start()
     {
-        dialogueUI = FindObjectOfType<DialogueUI>();
+        //dialogueUI = FindObjectOfType<DialogueUI>();
         dialogueRunner = FindObjectOfType<DialogueRunner>();
         shownText = text.GetComponent<TMPro.TMP_Text>();
         bubbleEnterExit.SetActive(false);
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        dialogueRunner.onLineStart.AddListener(AdjustBubble);
 
         ULx = -150f;
         URx = 150f;
@@ -185,8 +188,9 @@ public class DialogueBubble : MonoBehaviour
     {
         textTransform.anchoredPosition = new Vector2(20f, textTransform.anchoredPosition.y);
         yield return new WaitForSeconds(0.02f);
-        preText.text = dialogueUI.preText;
-        preText2.text = dialogueUI.preText;
+        if (dialogueRunner.CurrentLine == null) yield break;
+        preText.text = dialogueRunner.CurrentLine.Text.Text;
+        preText2.text = dialogueRunner.CurrentLine.Text.Text;
         yield return new WaitForSeconds(0.02f);
         yield return AdjustPretext();
     }
@@ -264,11 +268,6 @@ public class DialogueBubble : MonoBehaviour
         preTextTransform.sizeDelta = new Vector2(160f, preTextTransform.sizeDelta.y);
     }
 
-    private void OnEnable()
-    {
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-    }
-
     private float calcCurve(float x)
     {
         if (x <= 0.5)
@@ -283,8 +282,8 @@ public class DialogueBubble : MonoBehaviour
 
     public void OnLineUpdate(string text)
     {
-        string finalText = dialogueUI.preText;
-        finalText = finalText.Substring(0, text.Length) + "<color=#FFFFFF00>" + finalText.Substring(text.Length, finalText.Length-text.Length);
+        string finalText = dialogueRunner.CurrentLine.Text.Text;
+        finalText = finalText.Substring(0, text.Length) + "<color=#FFFFFF00>" + finalText.Substring(text.Length, finalText.Length - text.Length);
         shownText.text = finalText;
     }
 }

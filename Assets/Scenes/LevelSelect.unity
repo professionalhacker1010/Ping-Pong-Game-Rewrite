@@ -2109,7 +2109,7 @@ MonoBehaviour:
   playerControls: {fileID: 1052381935}
   cameraFollower: {fileID: 652359034}
   door: {fileID: 324245688}
-  yarnFile: {fileID: 2480198943629176163, guid: 79e8e3963cac1a044843300f073a86fd, type: 3}
+  dialogueNode: introStatement_Start
   spacePromptPosition: {x: 3, y: 1, z: 0}
 --- !u!4 &933764966
 Transform:

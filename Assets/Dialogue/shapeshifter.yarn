@@ -1,0 +1,146 @@
+﻿title: shapeshifter_preGame1
+tags:
+---
+<<start_speaker Player>>
+Hellooo #line:037bf0d 
+Anyone here? #line:05b657c 
+
+<<disable_bubble>>
+<<shapeshifterIntro>>
+<<enable_bubble>>
+
+Whoa!!! Nice entrance! #line:0440110 
+
+<<change_speaker Shapeshifter>>
+:3 #line:03a71ff 
+
+<<change_speaker Player>>
+[[:3 | preGame1_next1]] #line:06de76a 
+[[(*^_^)~ | preGame1_next2]] #line:0109389 
+===
+
+title: shapeshifter_preGame1_next1
+tags:
+---
+:3 #line:0be3afe 
+
+I'll come see you when I'm ready! #line:0111766 
+
+<<end_speaker>>
+<<unlock_table 1>>
+===
+
+title: shapeshifter_preGame1_next2
+tags:
+---
+(*^_^)~ #line:0c53271 
+
+I'll come see you when I'm ready! #line:0557b8a 
+
+<<end_speaker>>
+<<unlock_table 1>>
+===
+
+
+
+title: shapeshifter_preGame2
+---
+<<start_speaker Player>>
+I guess you're gonna use magic against me? Is that allowed? #line:030391d 
+
+<<change_speaker Shapeshifter>>
+... :) #line:0d9b2f4 
+
+<<start_speaker Player>>
+Well I don't know any magic so... #line:0d59e12 
+Any tips? #line:0006539 
+
+<<change_speaker Shapeshifter>>
+... #line:0da8318 
+
+<<start_speaker Player>>
+A magician never reveals their secrets... #line:098e3bb 
+===
+
+
+
+title: shapeshifter_preGame3
+---
+<<start_speaker Shapeshifter>>
+... #line:0b8a1d6 
+
+<<change_speaker Player>>
+Maybe I should ask someone else for tips on how to beat this guy. #line:08de1c4 
+===
+
+
+
+title: shapeshifter_postGame1
+tags:
+---
+<<start_speaker Player>>
+That was super cool! #line:03e3ada 
+The way you shapeshifted and stuff. #line:0600f0f 
+
+<<change_speaker Shapeshifter>>
+;) #line:0975364 
+
+<<change_speaker Player>>
+I'm glad you're a good sport. #line:00cb644 
+The last guy I played got really upset. #line:00386e9 
+Like it's just a ping pong game!! #line:053a879 
+It about having a good time, not winning! #line:0458ba1 
+
+<<change_speaker Shapeshifter>>
+:/ #line:0bf692f 
+
+<<change_speaker Player>>
+Yeah. It's fine though. #line:0ae9f66 
+===
+
+
+
+title: shapeshifter_postGame2
+tags:
+---
+<<start_speaker Player>>
+Can I ask you something? #line:0dfa8b5 
+[[Can you do the thing? | postGame2_end]] #line:0597c02 
+[[Nevermind. | postGame_exit]] #line:0064651 
+===
+
+title: shapeshifter_postGame2_end
+tags:
+---
+<<disable_bubble>>
+<<shapeshift>>
+<<enable_bubble>>
+So cool!!! #line:0f64d1f 
+===
+
+
+
+title: shapeshifter_postGame3
+tags:
+---
+<<start_speaker Player>>
+Hey. #line:0c8a170 
+[[Can you do the thing? | postGame3_shapeshift]] #line:09d7956 
+[[Nevermind. | postGame_exit]] #line:0ca5b14 
+===
+
+title: shapeshifter_postGame3_shapeshift
+tags:
+---
+<<disable_bubble>>
+<<shapeshift>>
+<<enable_bubble>>
+===
+
+
+
+title: shapeshifter_postGame_exit
+---
+<<disable_bubble>>
+<<wait 0.2>>
+===

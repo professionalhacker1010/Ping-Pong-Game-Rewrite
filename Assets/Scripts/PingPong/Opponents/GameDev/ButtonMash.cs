@@ -12,7 +12,6 @@ public class ButtonMash : MonoBehaviour
     [SerializeField] private float maxPoints;[SerializeField] private float pointsDecayPerSecond, startingPoints, pointsPerMashEasy, pointsPerMashMedium, pointsPerMashHard; //button mash bar
     [SerializeField] private float mediumModePoints, hardModePoints; //when to trigger stuff based on how filled the bar is
     [SerializeField] private float maxBarScaledHeight;
-    [SerializeField] private YarnProgram outroDialogue;
     private bool buttonMashBroken = false;
     private float points, decay, barUnit;
 
@@ -58,7 +57,7 @@ public class ButtonMash : MonoBehaviour
         buttonMash.SetActive(false);
         yield return new WaitForSeconds(1f);
 
-        //DialogueManager.Instance.StartDialogue(outroDialogue);
+        DialogueManager.Instance.StartDialogue("gameDev_gameOutro");
         yield return new WaitUntil(() => DialogueManager.Instance.DialogueRunning());
         yield return new WaitUntil(() => !DialogueManager.Instance.DialogueRunning());
 

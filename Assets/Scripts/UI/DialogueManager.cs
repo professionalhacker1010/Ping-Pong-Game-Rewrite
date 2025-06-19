@@ -26,10 +26,10 @@ public class DialogueManager : MonoBehaviour
 
     //references to dialogue stuffs
     [SerializeField] DialogueRunner dialogueRunner;
-    [SerializeField] DialogueUI dialogueUI;
+    //[SerializeField] DialogueUI dialogueUI;
 
     public DialogueRunner DialogueRunner { get => dialogueRunner; }
-    public DialogueUI DialogueUI { get => dialogueUI; }
+    //public DialogueUI DialogueUI { get => dialogueUI; }
 
     // Start is called before the first frame update
     void Start()
@@ -37,16 +37,8 @@ public class DialogueManager : MonoBehaviour
 
     }
 
-    public void StartDialogue(YarnProgram file, string startNode)
+    public void StartDialogue(string startNode)
     {
-        StartCoroutine(StartDialogueHelper(file, startNode));
-    }
-
-    private IEnumerator StartDialogueHelper(YarnProgram file, string startNode)
-    {
-        dialogueRunner.Clear();
-        yield return new WaitForSeconds(0.05f);
-        dialogueRunner.Add(file);
         dialogueRunner.StartDialogue(startNode);
     }
 

@@ -7,7 +7,7 @@ public class DialogueControls : MonoBehaviour
 {
     [SerializeField] private TMPro.TMP_Text dialogue = null;
 
-    private DialogueUI dialogueUI = null;
+    //private DialogueUI dialogueUI = null;
     private TMPro.TMP_Text[] options;
 
     private int optionSize;
@@ -21,9 +21,9 @@ public class DialogueControls : MonoBehaviour
         // Flag needed to check when the Options are displayed to enable the controls for them
         isOptionDisplayed = false;
         // Get a reference to the DialogueUI
-        dialogueUI = FindObjectOfType<DialogueUI>();
+        //dialogueUI = FindObjectOfType<DialogueUI>();
         // Save the number of options available
-        optionSize = dialogueUI.optionButtons.Count;
+        //optionSize = dialogueUI.optionButtons.Count;
         // Initialize the current index
         currentOption = 0;
         // Initialize the array size to the number of options
@@ -31,7 +31,7 @@ public class DialogueControls : MonoBehaviour
         // Get the TextMeshPro Text components from the option buttons in the DialogueUI 
         for (int i = 0; i < optionSize; i++)
         {
-            options[i] = dialogueUI.optionButtons[i].GetComponentInChildren<TMPro.TMP_Text>();
+            //options[i] = dialogueUI.optionButtons[i].GetComponentInChildren<TMPro.TMP_Text>();
         }
     }
 
@@ -78,7 +78,7 @@ public class DialogueControls : MonoBehaviour
     {
         if (KeyCodes.Interact())
         {
-            dialogueUI.MarkLineComplete();
+            //dialogueUI.MarkLineComplete();
         }
     }
 
@@ -86,7 +86,7 @@ public class DialogueControls : MonoBehaviour
     {
         if (KeyCodes.Interact())
         {
-            dialogueUI.SelectOption(currentOption);
+            //dialogueUI.SelectOption(currentOption);
             ResetCurrentOption();
         }
     }

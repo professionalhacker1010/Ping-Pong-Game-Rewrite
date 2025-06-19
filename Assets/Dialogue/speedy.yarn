@@ -1,0 +1,98 @@
+﻿title: speedy_preGame1
+tags:
+---
+<<start_speaker Speedy>>
+Hey! I guess we're playing each other next? #line:0a7868f 
+Feeling kind of drained though #line:05fe31b 
+And the refreshments table is aalllll the way over there. #line:0315d75 
+Would be really great if I had an energy drink. #line:01940f1 
+I dunno. Just a thought. #line:0a3ce10 
+<<end_speaker>>
+===
+
+
+
+title: speedy_preGame2
+tags:
+---
+<<start_speaker Speedy>>
+Hmm... could really go for an energy drink right now... #line:0ea9f22 
+<<end_speaker>>
+===
+
+
+
+title: speedy_preGame3
+tags:
+---
+<<start_speaker Speedy>>
+I've winked like 3 times by this point. #line:0c78120 
+Can't wink any harder than this. #line:03511bc 
+<<end_speaker>>
+===
+
+
+
+title: speedy_preGame_hasDrink1
+tags:
+---
+<<start_speaker Speedy>>
+You got me an energy drink! So thoughtful of you. #line:0e11c43 
+
+<<disable_bubble>>
+<<wait 0.5>>
+<<change_emotion Speedy energize>>
+<<wait 2>>
+<<change_emotion Speedy Win>>
+<<enable_bubble>>
+
+All right!!! #line:0cecd80 
+I don't know what they put in this stuff #line:043098f 
+but one drink makes me feel like I could run 100000000000000 miles an hour. #line:029caee 
+I'm gonna productively channel all of my energy into this game. #line:0af7329 
+You should have a drink too, if you wanna keep up with me. #line:0a34f80 
+<<end_speaker>>
+<<unlock_table 2>>
+===
+
+
+
+title: speedy_postGame_start1
+tags:
+---
+<<change_emotion Speedy Lose>>
+<<start_speaker Speedy>>
+Huh. #line:00e49b7 
+Not bad. #line:0cb9496 
+<<wait 1.5>>
+<<change_emotion Speedy Win>>
+Heh, actually #line:0921fd4 
+maybe I'm slowing down a little from all that caffeine. #line:0ef07e9 
+As in I might have overdosed. #line:061c902 
+I'm extremely light-headed and my heart rate is through the roof. #line:06bab14 
+I'm also experiencing a bout of debilitating anxiety. #line:09c1703 
+
+<<change_speaker Player>>
+Oh gosh!! I'm sorry! #line:02b08c8 
+
+<<change_speaker Speedy>>
+Don't be. I like living on the edge. #line:057de93 
+That being said #line:0f05896 
+I think I'll just... #line:0f4e65e 
+Stand here. For the rest of the day. #line:0ae7e3a 
+<<end_speaker>>
+===
+
+
+
+title: speedy_postGame1
+tags:
+---
+<<change_emotion Speedy idle>>
+<<start_speaker Speedy>>
+Heyyyy... You wanna play again? #line:061f423 
+
+[[Yes | yes]] #line:0de9249 
+
+<<end_speaker>>
+===

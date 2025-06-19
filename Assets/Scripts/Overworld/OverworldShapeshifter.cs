@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 public class OverworldShapeshifter : OverworldCharacter
 {
@@ -11,17 +12,11 @@ public class OverworldShapeshifter : OverworldCharacter
     ShapeShifterPhase currPhase;
 
     private int phaseIdx = 0, catForm = 0;
-    private static bool initialized = false;
+    private static bool interactedOnce = false;
 
     protected override void Start()
     {
         base.Start();
-        if (!initialized && dialogueRunner)
-        {
-            dialogueRunner.AddCommandHandler("shapeshift", Shapeshift);
-            dialogueRunner.AddCommandHandler("shapeshifterIntro", Intro);
-            initialized = true;
-        }
 
         if (!LevelManager.IsLevelPlayed(level))
         {
@@ -36,12 +31,9 @@ public class OverworldShapeshifter : OverworldCharacter
 
     //shapeshift stuffs
     #region
-    public void Shapeshift(string[] parameters, System.Action onComplete)
-    {
-        StartCoroutine(ShapeshiftHelper(onComplete));
-    }
 
-    private IEnumerator ShapeshiftHelper(System.Action onComplete)
+    [YarnCommand("shapeshift")]
+    public IEnumerator Shapeshift()
     {
         yield return new WaitForSeconds(0.5f);
 
@@ -93,16 +85,10 @@ public class OverworldShapeshifter : OverworldCharacter
         }
 
         yield return new WaitForSeconds(15 / 24f);
-
-        onComplete();
     }
 
-    public void Intro(string[] parameters, System.Action onComplete)
-    {
-        StartCoroutine(IntroHelper(onComplete));
-    }
-
-    private IEnumerator IntroHelper(System.Action onComplete)
+    [YarnCommand("shapeshifterIntro")]
+    public IEnumerator Intro()
     {
         yield return new WaitForSeconds(0.5f);
 
@@ -118,8 +104,6 @@ public class OverworldShapeshifter : OverworldCharacter
             yield return new WaitForSeconds(15 / 24f);
             shapeshiftAnimator.SetTrigger("idle");
         }
-
-        onComplete();
     }
 
     public void Poof()
@@ -132,9 +116,10 @@ public class OverworldShapeshifter : OverworldCharacter
 
     public override void OnSelect()
     {
-        if (!LevelManager.IsLevelPlayed(level) && !IsDialoguePlayed(DialogueSequenceID.PREGAME, 1))
+        if (!interactedOnce)
         {
-            if (TableSelectManager.Instance) TableSelectManager.Instance.SelectTable(level);
+            Vector3 tablePos = TableSelectManager.Instance.GetTablePosition(level);
+            cKeyPrompt.Show(new Vector3(tablePos.x, tablePos.y + 2.0f));
         }
         else
         {
@@ -142,27 +127,10 @@ public class OverworldShapeshifter : OverworldCharacter
         }
     }
 
-    public override void OnDeselect()
-    {
-        if (!LevelManager.IsLevelPlayed(level) && !IsDialoguePlayed(DialogueSequenceID.PREGAME, 1))
-        {
-            if (TableSelectManager.Instance) TableSelectManager.Instance.DeselectTable(level);
-        }
-        else
-        {
-            base.OnDeselect();
-        }
-    }
-
     public override void OnInteract()
     {
         base.OnInteract();
-
-        if (!IsDialoguePlayed(DialogueSequenceID.PREGAME, 1) && !LevelManager.IsLevelPlayed(level) && TableSelectManager.Instance)
-        {
-            TableSelectManager.Instance.UnlockTable(level);
-            TableSelectManager.Instance.AddBeforeTransitionToGameCoroutine(OnTableInteractCoroutine, level);
-        }
+        interactedOnce = true;
     }
 
     private IEnumerator OnTableInteractCoroutine()
@@ -173,11 +141,6 @@ public class OverworldShapeshifter : OverworldCharacter
         Poof();
         yield return new WaitForSeconds(4 / 24f);
         shapeshiftAnimator.gameObject.SetActive(false);
-    }
-
-    protected override string GetNextDialogue()
-    {
-        return base.GetNextDialogue();
     }
 
     public override void OnHit()
