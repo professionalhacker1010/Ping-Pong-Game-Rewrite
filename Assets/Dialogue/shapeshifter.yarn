@@ -15,28 +15,13 @@ Whoa!!! Nice entrance! #line:0440110
 :3 #line:03a71ff 
 
 <<change_speaker Player>>
-[[:3 | preGame1_next1]] #line:06de76a 
-[[(*^_^)~ | preGame1_next2]] #line:0109389 
-===
 
-title: shapeshifter_preGame1_next1
-tags:
----
-:3 #line:0be3afe 
+-> :3
+	:3 #line:0be3afe 
+-> (*^_^)~
+	(*^_^)~ #line:0c53271 
 
 I'll come see you when I'm ready! #line:0111766 
-
-<<end_speaker>>
-<<unlock_table 1>>
-===
-
-title: shapeshifter_preGame1_next2
-tags:
----
-(*^_^)~ #line:0c53271 
-
-I'll come see you when I'm ready! #line:0557b8a 
-
 <<end_speaker>>
 <<unlock_table 1>>
 ===
@@ -105,17 +90,13 @@ tags:
 ---
 <<start_speaker Player>>
 Can I ask you something? #line:0dfa8b5 
-[[Can you do the thing? | postGame2_end]] #line:0597c02 
-[[Nevermind. | postGame_exit]] #line:0064651 
-===
-
-title: shapeshifter_postGame2_end
-tags:
----
-<<disable_bubble>>
-<<shapeshift>>
-<<enable_bubble>>
-So cool!!! #line:0f64d1f 
+-> Can you do the thing? 
+	<<disable_bubble>>
+	<<shapeshift>>
+	<<enable_bubble>>
+	So cool!!! #line:0f64d1f 
+-> Nevermind.
+	<<disable_bubble>>
 ===
 
 
@@ -125,22 +106,10 @@ tags:
 ---
 <<start_speaker Player>>
 Hey. #line:0c8a170 
-[[Can you do the thing? | postGame3_shapeshift]] #line:09d7956 
-[[Nevermind. | postGame_exit]] #line:0ca5b14 
-===
-
-title: shapeshifter_postGame3_shapeshift
-tags:
----
-<<disable_bubble>>
-<<shapeshift>>
-<<enable_bubble>>
-===
-
-
-
-title: shapeshifter_postGame_exit
----
-<<disable_bubble>>
-<<wait 0.2>>
+-> Can you do the thing? 
+	<<disable_bubble>>
+	<<shapeshift>>
+	<<enable_bubble>>
+-> Nevermind.
+	<<disable_bubble>>
 ===

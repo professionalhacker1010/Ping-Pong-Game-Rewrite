@@ -1,9 +1,11 @@
 ﻿title: speedy_preGame1
 tags:
 ---
-<<start_speaker Speedy>>
-Hey! I guess we're playing each other next? #line:0a7868f 
-Feeling kind of drained though #line:05fe31b 
+<<start_speaker Player>>
+Hey! Wanna play each other next?
+
+<<change_speaker Speedy>>
+Sure. Feeling kind of drained though
 And the refreshments table is aalllll the way over there. #line:0315d75 
 Would be really great if I had an energy drink. #line:01940f1 
 I dunno. Just a thought. #line:0a3ce10 
@@ -48,8 +50,8 @@ You got me an energy drink! So thoughtful of you. #line:0e11c43
 
 All right!!! #line:0cecd80 
 I don't know what they put in this stuff #line:043098f 
-but one drink makes me feel like I could run 100000000000000 miles an hour. #line:029caee 
-I'm gonna productively channel all of my energy into this game. #line:0af7329 
+but I wanna run a MARATHON
+I wanna BREAK something
 You should have a drink too, if you wanna keep up with me. #line:0a34f80 
 <<end_speaker>>
 <<unlock_table 2>>
@@ -70,7 +72,6 @@ Heh, actually #line:0921fd4
 maybe I'm slowing down a little from all that caffeine. #line:0ef07e9 
 As in I might have overdosed. #line:061c902 
 I'm extremely light-headed and my heart rate is through the roof. #line:06bab14 
-I'm also experiencing a bout of debilitating anxiety. #line:09c1703 
 
 <<change_speaker Player>>
 Oh gosh!! I'm sorry! #line:02b08c8 
@@ -90,9 +91,24 @@ tags:
 ---
 <<change_emotion Speedy idle>>
 <<start_speaker Speedy>>
-Heyyyy... You wanna play again? #line:061f423 
+What's up? #line:061f423 
 
-[[Yes | yes]] #line:0de9249 
+-> Nothing
+-> So what brought you here?
+	I dunno. Ping pong's cool I guess.
+
+	<<change_speaker Player>>
+	Yeah, and look at that giant bucket of fried chicken!
+
+	<<change_speaker Speedy>>
+	Ew, no.
+	People get heart attacks from eating too much of that stuff.
+
+	<<change_speaker Player>>
+	And not-
+
+	<<change_speaker Speedy>>
+	Do NOT go there.
 
 <<end_speaker>>
 ===

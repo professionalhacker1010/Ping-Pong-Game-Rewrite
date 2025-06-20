@@ -13,6 +13,7 @@ public class OverworldShapeshifter : OverworldCharacter
 
     private int phaseIdx = 0, catForm = 0;
     private static bool interactedOnce = false;
+    private static bool initialized = false;
 
     protected override void Start()
     {
@@ -27,12 +28,22 @@ public class OverworldShapeshifter : OverworldCharacter
         {
             shapeshiftAnimator.SetTrigger("idle");
         }
+
+        if (!initialized)
+        {
+            DialogueRunner dr = FindObjectOfType<DialogueRunner>();
+            if (dr)
+            {
+                dr.AddCommandHandler("shapeshift", Shapeshift);
+                dr.AddCommandHandler("shapeshifterIntro", Intro);
+                initialized = true;
+            }
+        }
     }
 
     //shapeshift stuffs
     #region
 
-    [YarnCommand("shapeshift")]
     public IEnumerator Shapeshift()
     {
         yield return new WaitForSeconds(0.5f);
@@ -87,7 +98,6 @@ public class OverworldShapeshifter : OverworldCharacter
         yield return new WaitForSeconds(15 / 24f);
     }
 
-    [YarnCommand("shapeshifterIntro")]
     public IEnumerator Intro()
     {
         yield return new WaitForSeconds(0.5f);

@@ -91,7 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75360fd261af7b441bc17743c8450415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 2480198943629176163, guid: fd580481a7a189146bc46e953ddc3449, type: 3}
   dialogueSequences:
   - nodePrefix: preGame
     numNodes: 4
@@ -112,7 +111,7 @@ MonoBehaviour:
   facingLeft: 0
   facing: 2
   level: 3
-  conditionPrefix: gamedev
+  conditionPrefix: gameDev
 --- !u!1 &5996981454455591877
 GameObject:
   m_ObjectHideFlags: 0
