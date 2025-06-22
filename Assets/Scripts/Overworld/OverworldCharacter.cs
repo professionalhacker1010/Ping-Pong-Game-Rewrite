@@ -87,7 +87,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
 
     protected virtual void Start()
     {
-        characterControls = OverworldManager.Instance.PlayerController;
+        characterControls = FindAnyObjectByType<CharacterControls>();
 
         cKeyPrompt = KeyPressPromptManager.Instance.GetKeyPressPrompt("C");
 

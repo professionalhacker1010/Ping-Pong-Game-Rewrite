@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Yarn.Unity;
 using UnityEngine.Events;
 
 public class CharacterControls : MonoBehaviour
@@ -17,8 +16,6 @@ public class CharacterControls : MonoBehaviour
     private int movementLocks = 0;
     private bool movementHalted;
 
-    private static float spawnPos = -4.84f;
-
     List<IHittable> candidateHittables;
     ICanInteract prevInteractableCandidate, currInteractableCandidate;
 
@@ -27,6 +24,10 @@ public class CharacterControls : MonoBehaviour
     public UnityAction OnDialogueEnd;
 
     public float Velocity { get => rb.velocity.x; }
+    public bool FacingLeft { get => facingLeft; }
+    private bool facingLeft = false;
+
+    private bool initializeLeft = false;
 
     private void Awake()
     {
@@ -37,10 +38,11 @@ public class CharacterControls : MonoBehaviour
     }
     private void Start()
     {
-        //spawn at the correct table, only starts when you've played your first game
-        if (Conditions.Get("intro_played")) transform.position = new Vector3(spawnPos, transform.position.y);
+        OverworldManager.SceneInfo sceneInfo = OverworldManager.Instance.GetSceneInfo();
+        transform.position = sceneInfo.spawnPos;
+        if (sceneInfo.facingLeft) initializeLeft = true;
 
-        OnDialogueStart += () => {
+            OnDialogueStart += () => {
             DeselectInteractable();
         };
         OnDialogueEnd += () => {
@@ -65,9 +67,10 @@ public class CharacterControls : MonoBehaviour
         //move character at correct velocity
         //get keycode to set direction of animations
         float horizontalInput = Input.GetAxis("Horizontal");
-        if (KeyCodes.Left())
+        if (KeyCodes.Left() || initializeLeft)
         {
             FaceLeft();
+            initializeLeft = false;
         }
         else if (KeyCodes.Right())
         {
@@ -126,8 +129,10 @@ public class CharacterControls : MonoBehaviour
 
     public void FaceLeft()
     {
+        Debug.Log("face left");
         leftHitBox.gameObject.SetActive(true);
         rightHitBox.gameObject.SetActive(false);
+        facingLeft = true;
 
         if (OnFaceLeft != null) OnFaceLeft();
     }
@@ -136,6 +141,7 @@ public class CharacterControls : MonoBehaviour
     {
         leftHitBox.gameObject.SetActive(false);
         rightHitBox.gameObject.SetActive(true);
+        facingLeft = false;
 
         if (OnFaceRight != null) OnFaceRight();
     }
@@ -266,7 +272,6 @@ public class CharacterControls : MonoBehaviour
 
     private void OnDestroy()
     {
-        spawnPos = transform.position.x;
         if (DialogueManager.Instance)
         {
             DialogueManager.Instance.DialogueRunner.onDialogueStart.RemoveListener(OnDialogueStart);

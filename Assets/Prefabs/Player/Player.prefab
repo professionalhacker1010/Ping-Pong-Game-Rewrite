@@ -231,6 +231,7 @@ MonoBehaviour:
   arm: {fileID: 1780701075986660718}
   swipe: {fileID: 1780701076435246400}
   armSpriteRenderer: {fileID: 1780701075986660717}
+  playerControls: {fileID: 1780701075532725747}
 --- !u!1 &1780701075864651914
 GameObject:
   m_ObjectHideFlags: 0

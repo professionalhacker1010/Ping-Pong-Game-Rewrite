@@ -7,6 +7,7 @@ public class TableSelect : MonoBehaviour, ICanInteract
     [SerializeField] private int level;
     private Vector3 selectedTransform = new Vector3(0f, 0.5f, 0f);
     private string selectableCondition;
+    private bool isSelectable = false;
 
     public int Level { get => level; }
 
@@ -15,7 +16,7 @@ public class TableSelect : MonoBehaviour, ICanInteract
     public Vector2 InteractPos { get => transform.position; }
     public bool IsInteractable { 
         get {
-            return Conditions.Get(selectableCondition);
+            return isSelectable;
         } 
     }
 
@@ -23,6 +24,7 @@ public class TableSelect : MonoBehaviour, ICanInteract
     {
         selectableCondition = "table" + level.ToString() + "_selectable";
         Conditions.Initialize(selectableCondition, false);
+        isSelectable = Conditions.Get(selectableCondition);
     }
 
     private void Start()
@@ -36,16 +38,18 @@ public class TableSelect : MonoBehaviour, ICanInteract
     public void LockThisTable()
     {
         Conditions.Set(selectableCondition, false);
+        isSelectable = false;
     }
 
     public void UnlockThisTable()
     {
         Conditions.Set(selectableCondition, true);
+        isSelectable = true;
     }
 
     public void OnInteract()
     {
-        TableSelectManager.Instance.TransitionToGame(level);
+        OverworldManager.Instance.TransitionToGame(level);
     }
 
     public void OnSelect()
@@ -56,5 +60,10 @@ public class TableSelect : MonoBehaviour, ICanInteract
     public void OnDeselect()
     {
         transform.Translate(-selectedTransform);
+    }
+
+    private void OnDestroy()
+    {
+        TableSelectManager.Instance.RemoveTable(this);
     }
 }

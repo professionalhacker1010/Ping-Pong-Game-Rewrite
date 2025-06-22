@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;//add this
-using Yarn.Unity;
 
 public class TableSelectManager : MonoBehaviour
 {
@@ -21,7 +19,6 @@ public class TableSelectManager : MonoBehaviour
     #endregion
 
     private List<TableSelect> tables;
-    private Dictionary<int, Func<IEnumerator>> beforeTransitionToGame;
     public static bool selectable = true;
     private static int locks = 0;
 
@@ -29,27 +26,16 @@ public class TableSelectManager : MonoBehaviour
     {
         _instance = this;
         tables = new List<TableSelect>();
-        beforeTransitionToGame = new Dictionary<int, Func<IEnumerator>>();
-    }
-
-    public void TransitionToGame(int level)
-    {
-        StartCoroutine(TransitionToGameHelper(level));
-    }
-
-    private IEnumerator TransitionToGameHelper(int level)
-    {
-        if (beforeTransitionToGame.ContainsKey(level))
-        {
-            yield return beforeTransitionToGame[level]();
-        }
-        TransitionManager.Instance.QuickOut("Game");
-        LevelManager.chosenOpponent = level;
     }
 
     public void AddTable(TableSelect tableSelect)
     {
         tables.Add(tableSelect);
+    }
+
+    public void RemoveTable(TableSelect tableSelect)
+    {
+        tables.Remove(tableSelect);
     }
 
     public void LockTable(int level)
@@ -94,13 +80,6 @@ public class TableSelectManager : MonoBehaviour
             if (table.Level == level) table.OnDeselect();
         });
     }
-
-    public void AddBeforeTransitionToGameCoroutine(Func<IEnumerator> coroutine, int level)
-    {
-        beforeTransitionToGame.Add(level, coroutine);
-    }
-
-    public void ClearBeforeTransitionToGameCoroutine(int level) { beforeTransitionToGame.Remove(level); }
 
     public static void LockSelection()
     {

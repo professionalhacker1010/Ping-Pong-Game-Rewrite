@@ -6,17 +6,18 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator body, arm, swipe;
     [SerializeField] private SpriteRenderer armSpriteRenderer;
+    [SerializeField] private CharacterControls playerControls;
 
     private void Start()
     {
-        OverworldManager.Instance.PlayerController.OnFaceRight += FaceRight;
-        OverworldManager.Instance.PlayerController.OnFaceLeft += FaceLeft;
-        OverworldManager.Instance.PlayerController.OnHit += Hit;
+        playerControls.OnFaceRight += FaceRight;
+        playerControls.OnFaceLeft += FaceLeft;
+        playerControls.OnHit += Hit;
     }
 
     private void Update()
     {
-        UpdaateVelocity(OverworldManager.Instance.PlayerController.Velocity);
+        UpdaateVelocity(playerControls.Velocity);
     }
 
     public void UpdaateVelocity(float velocity)
@@ -28,6 +29,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void FaceLeft()
     {
+        Debug.Log("face left");
         body.SetBool("faceLeft", true);
         body.SetBool("faceRight", false);
         arm.SetBool("faceLeft", true);
@@ -63,11 +65,11 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (OverworldManager.Instance && OverworldManager.Instance.PlayerController)
+        if (OverworldManager.Instance && playerControls)
         {
-            OverworldManager.Instance.PlayerController.OnFaceRight -= FaceRight;
-            OverworldManager.Instance.PlayerController.OnFaceLeft -= FaceLeft;
-            OverworldManager.Instance.PlayerController.OnHit -= Hit;
+            playerControls.OnFaceRight -= FaceRight;
+            playerControls.OnFaceLeft -= FaceLeft;
+            playerControls.OnHit -= Hit;
         }
     }
 }

@@ -89,7 +89,7 @@ public class OverworldShapeshifter : OverworldCharacter
         else
         {
             currPhase = Instantiate(phasePrefabs[phaseIdx], shapeshiftAnimator.transform.position, Quaternion.identity).GetComponent<ShapeShifterPhase>();
-            if (phaseIdx == phasePrefabs.Count - 1) currPhase.transform.position = new Vector2(transform.position.x, OverworldManager.Instance.PlayerController.transform.position.y);
+            if (phaseIdx == phasePrefabs.Count - 1) currPhase.transform.position = new Vector2(transform.position.x, FindObjectOfType<CharacterControls>().transform.position.y);
             OverworldManager.Instance.MoveToGameScene(currPhase.gameObject);
             currPhase.GetComponent<SpriteRenderer>().sortingLayerID = spriteRenderer.sortingLayerID;
 

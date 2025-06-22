@@ -11,11 +11,13 @@ public class CameraFollower : MonoBehaviour
 
     private bool normalCameraBehaviour = true;
     private int locks = 0;
+    Vector2 minmax;
 
     private void Start()
     {
-        newTransform.x = player.transform.position.x;
-        if (newTransform.x < 0f) newTransform.x = 0;
+        minmax = OverworldManager.Instance.GetSceneInfo().minMaxCameraX;
+
+        newTransform.x = Mathf.Clamp(player.transform.position.x, minmax.x, minmax.y);
         newTransform.y = transform.position.y;
         newTransform.z = -10f;
 
@@ -37,14 +39,14 @@ public class CameraFollower : MonoBehaviour
             else if (distance >= maxEdge)
             {
                 newTransform.x = player.transform.position.x - maxEdge;
-                if (newTransform.x > 94.6f) newTransform.x = 94.6f;
+                if (newTransform.x > minmax.y) newTransform.x = minmax.y;
                 transform.position = newTransform;
             }
             //for following to the left
             else if (distance <= -maxEdge)
             {
                 newTransform.x = player.transform.position.x + maxEdge;
-                if (newTransform.x < 0f) newTransform.x = 0f;
+                if (newTransform.x < minmax.x) newTransform.x = minmax.x;
                 transform.position = newTransform;
             }
             

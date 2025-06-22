@@ -13,7 +13,7 @@ public class SpaceToContinue : MonoBehaviour
 
             if (GameManager.Instance.GameIsWon())
             {
-                TransitionManager.Instance.QuickOut("LevelSelect");
+                OverworldManager.Instance.TransitionToOverworld(OverworldManager.Instance.GameScene);
                 GameManager.Instance.ResetGame();
             }
             else if (GameManager.Instance.GameIsLost())

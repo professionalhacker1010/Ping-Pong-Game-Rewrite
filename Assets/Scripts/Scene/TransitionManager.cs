@@ -10,7 +10,7 @@ public class TransitionManager : MonoBehaviour
     public GameObject transitionObject;
 
     public bool isTransitioning = false; //for pause menu - don't wanna be able to pause while transitioning
-    public event Action OnTransitionIn, OnTransitionOut, OnTransitionFinished;
+    public event Action OnTransitionIn, OnTransitionOut;
     public string activeScene;
 
     #region
@@ -95,7 +95,5 @@ public class TransitionManager : MonoBehaviour
 
         isTransitioning = value;
         animator.ResetTrigger(trigger);
-
-        //OnTransitionFinished();
     }
 }

@@ -29,4 +29,10 @@ public static class Util
         yield return new WaitUntil(condition);
         callback();
     }
+
+    public static IEnumerator VoidCallbackNextFrame(System.Action callback)
+    {
+        yield return new WaitForEndOfFrame();
+        callback();
+    }
 }

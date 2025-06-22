@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class OverworldManager : MonoBehaviour
 {
@@ -19,12 +20,19 @@ public class OverworldManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] CharacterControls playerController;
-
-    string gameScene = "LevelSelect";
-
-    public CharacterControls PlayerController { get => playerController; }
     public string GameScene { get => gameScene; }
+    [SerializeField] private string gameScene = "LevelSelect";
+
+    [Serializable]
+    public class SceneInfo
+    {
+        public string name;
+        public Vector2 spawnPos;
+        public bool facingLeft;
+        public Vector2 minMaxCameraX;
+    }
+    [SerializeField] private List<SceneInfo> sceneInfo;
+
 
     private void Awake()
     {
@@ -34,13 +42,58 @@ public class OverworldManager : MonoBehaviour
     private void Start()
     {
         TransitionManager.Instance.activeScene = gameScene;
-        StartCoroutine(TransitionIn());
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
-    private IEnumerator TransitionIn()
+    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        yield return new WaitForSeconds(0.5f);
-        TransitionManager.Instance.QuickIn();
+        sceneInfo.ForEach(i =>
+        {
+            if (i.name == scene.name)
+            {
+                TransitionManager.Instance.QuickIn();
+            }
+        });
+    }
+
+    public void TransitionToOverworld(string scene)
+    {
+        for (int i = 0; i < sceneInfo.Count; i++)
+        {
+            if (sceneInfo[i].name == gameScene)
+            {
+                var cc = FindObjectOfType<CharacterControls>();
+                sceneInfo[i].spawnPos = cc.transform.position;
+                sceneInfo[i].facingLeft = cc.FacingLeft;
+            }
+        }
+        gameScene = scene;
+        TransitionManager.Instance.QuickOut(scene);
+    }
+
+    public void TransitionToGame(int level)
+    {
+        for (int i = 0; i < sceneInfo.Count; i++)
+        {
+            if (sceneInfo[i].name == gameScene)
+            {
+                var cc = FindObjectOfType<CharacterControls>();
+                sceneInfo[i].spawnPos = cc.transform.position;
+                sceneInfo[i].facingLeft = cc.FacingLeft;
+            }
+        }
+        TransitionManager.Instance.QuickOut("Game");
+        LevelManager.chosenOpponent = level;
+    }
+
+    public SceneInfo GetSceneInfo()
+    {
+        SceneInfo retVal = new SceneInfo();
+        sceneInfo.ForEach(i =>
+        {
+            if (i.name == gameScene) retVal = i;
+        });
+        return retVal;
     }
 
     public void MoveToGameScene(GameObject go)

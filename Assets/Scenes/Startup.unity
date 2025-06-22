@@ -154,8 +154,8 @@ MonoBehaviour:
   _scenesToLoad:
   - sceneAsset: {fileID: 102900000, guid: f7a29d5c6ec585648b5b87521159c6d9, type: 3}
     scenePath: Assets/Scenes/BaseGame.unity
-  - sceneAsset: {fileID: 102900000, guid: 983a4677607f34644bbd89224d688ab3, type: 3}
-    scenePath: Assets/Scenes/LevelSelect.unity
+  - sceneAsset: {fileID: 102900000, guid: 42b772dfca99d88489743a6c7c920883, type: 3}
+    scenePath: Assets/Scenes/Moon.unity
 --- !u!4 &456335772
 Transform:
   m_ObjectHideFlags: 0
