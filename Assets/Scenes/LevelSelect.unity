@@ -533,6 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0.15
   startParallax: 0
+  minmaxX: {x: -72.89, y: -62}
 --- !u!1 &324245688
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0.25
   startParallax: 50
+  minmaxX: {x: -5, y: 15}
 --- !u!212 &401424063
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1136,6 +1138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0.25
   startParallax: 0
+  minmaxX: {x: -50, y: -30}
 --- !u!212 &658189630
 SpriteRenderer:
   m_ObjectHideFlags: 0

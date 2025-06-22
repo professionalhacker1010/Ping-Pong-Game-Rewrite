@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50611f9e2e367004d9db1b158a653c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameScene: Moon
+  gameScene: LevelSelect
   sceneInfo:
   - name: LevelSelect
-    spawnPos: {x: 74.51, y: -2.19}
+    spawnPos: {x: -4.84, y: -2.19}
     facingLeft: 0
     minMaxCameraX: {x: 0, y: 94.6}
   - name: Moon

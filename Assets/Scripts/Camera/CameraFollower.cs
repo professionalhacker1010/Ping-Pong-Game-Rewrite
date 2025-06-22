@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CameraFollower : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class CameraFollower : MonoBehaviour
     private bool normalCameraBehaviour = true;
     private int locks = 0;
     Vector2 minmax;
+
+    public Action afterUpdate;
 
     private void Start()
     {
@@ -49,8 +52,8 @@ public class CameraFollower : MonoBehaviour
                 if (newTransform.x < minmax.x) newTransform.x = minmax.x;
                 transform.position = newTransform;
             }
-            
-            
+
+            if (afterUpdate != null) afterUpdate();
         }
     }
 

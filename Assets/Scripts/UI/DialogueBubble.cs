@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 
 public class DialogueBubble : MonoBehaviour
@@ -35,6 +36,11 @@ public class DialogueBubble : MonoBehaviour
         shownText = text.GetComponent<TMPro.TMP_Text>();
         bubbleEnterExit.SetActive(false);
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) =>
+        {
+            mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        };
 
         dialogueRunner.onLineStart.AddListener(AdjustBubble);
 
