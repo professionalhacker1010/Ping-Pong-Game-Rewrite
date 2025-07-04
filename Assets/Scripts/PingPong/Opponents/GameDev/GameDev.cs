@@ -109,7 +109,7 @@ public class GameDev : Opponent
 
     private IEnumerator Intro()
     {
-        var pingpong = GameManager.Instance.Pingpong;
+        var pingpong = GameManager.Instance.balls[0];
 
         currGlitch = 3;
         desktopScreen.SetActive(true);
@@ -166,7 +166,7 @@ public class GameDev : Opponent
 
         glitches[currGlitch].TurnOff();
         PaddleControls.LockInputs(); //pause game
-        GameManager.Instance.Pingpong.PauseGame();
+        GameManager.Instance.balls[0].PauseGame();
         FindObjectOfType<UnityEngine.Rendering.Volume>().gameObject.SetActive(false);
     }
 

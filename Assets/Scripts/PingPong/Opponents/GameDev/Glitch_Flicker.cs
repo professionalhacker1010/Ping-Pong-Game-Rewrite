@@ -14,8 +14,8 @@ public class Glitch_Flicker : GameDevGlitch
     public override void TurnOn()
     {
         flicker = true;
-        StartCoroutine(Flicker(GameManager.Instance.Pingpong.gameObject));
-        StartCoroutine(Flicker(GameManager.Instance.Pingpong.shadow.gameObject));
+        StartCoroutine(Flicker(GameManager.Instance.balls[0].gameObject));
+        StartCoroutine(Flicker(GameManager.Instance.balls[0].shadow.gameObject));
         StartCoroutine(Flicker(GameManager.Instance.PaddleControls.gameObject));
         StartCoroutine(FlickerPostProcessing());
     }

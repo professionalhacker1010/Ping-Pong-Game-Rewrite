@@ -129,7 +129,6 @@ public class CharacterControls : MonoBehaviour
 
     public void FaceLeft()
     {
-        Debug.Log("face left");
         leftHitBox.gameObject.SetActive(true);
         rightHitBox.gameObject.SetActive(false);
         facingLeft = true;

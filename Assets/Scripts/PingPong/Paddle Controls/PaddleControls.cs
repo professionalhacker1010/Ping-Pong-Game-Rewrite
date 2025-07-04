@@ -25,8 +25,8 @@ public class PaddleControls : MonoBehaviour
     protected float horizontalInput, verticalInput;
     [HideInInspector] public bool inverted = false;
 
-    public bool multiBall = false;
-    [HideInInspector] public List<MultiBall> multiBalls; //for working around the locked inputs thing? 
+/*    public bool multiBall = false;
+    [HideInInspector] public List<MultiBall> multiBalls; //for working around the locked inputs thing? */
 
     //refs
     [SerializeField] private Animator swipeAnimation;
@@ -106,45 +106,25 @@ public class PaddleControls : MonoBehaviour
 
     protected virtual void ProcessInput()
     {
-        /*        if (multiBall && KeyCodes.Hit())
-                {
-                    //check which ball is interactable, hit the first one and exit loop
-                    foreach (var ball in multiBalls)
-                    {
-                        if (ball.thisBallInteractable)
-                        {
-                            print("hit interactable");
-                            ball.PlayerHit();
-                            return;
-                        }
-                    }
-                }
-                else if (!lockedInputs && KeyCodes.Hit())
-                {
-                    if (hardHitActivated)
-                    {
-                        HardHitBehaviour();
-                    }
-                    else if (KeyCodes.Hit())
-
-                    {
-                        Debug.Log("normal hit");
-                        GameManager.Instance.Pingpong.PlayerHit();
-                        StartCoroutine(WaitForHitAnimation()); //lock inputs until animation is done - prevents player from spamming space
-                    }
-                }*/
-
         if (playerHitDown)
         {
-            TryHitBall(GameManager.Instance.Pingpong, false);
+            //check which ball is interactable, hit the first one and exit loop
+            foreach (var ball in GameManager.Instance.balls)
+            {
+                if (ball.thisBallInteractable)
+                {
+                    TryHitBall(ball, false);
+                }
+            }
         }
     }
 
     protected void TryHitBall(Pingpong ball, bool explodeOnMiss)
     {
+        if (!ball.thisBallInteractable) return;
         if (ball.circleCollider.IsTouching(circleCollider))
         {
-            Debug.Log("normal hit");
+            //Debug.Log("normal hit");
 
             Vector2 hitPos = ball.transform.position - circleCollider.bounds.center;
             float playerHitHeight = hitPos.y * factorPaddleY;
@@ -159,7 +139,7 @@ public class PaddleControls : MonoBehaviour
         }
         else
         {
-            Debug.Log("You missed the ball!");
+            //Debug.Log("You missed the ball!");
             HitLeft();
             if (explodeOnMiss) ball.ExplodeBall(false);
         }

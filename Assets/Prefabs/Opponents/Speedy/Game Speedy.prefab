@@ -58,7 +58,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 6064151124992222827}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       insertIndex: -1
@@ -67,6 +70,11 @@ PrefabInstance:
 --- !u!95 &9019535853349054675 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3494757529961602029, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+  m_PrefabInstance: {fileID: 5572091176724378430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9019535854417014713 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3494757531041029255, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
   m_PrefabInstance: {fileID: 5572091176724378430}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &9019535854417014714 stripped
@@ -102,3 +110,98 @@ MonoBehaviour:
   hitOutDistance: 6
   leftOut: {x: -11, y: 1, z: 1}
   rightOut: {x: 11, y: 1, z: 1}
+--- !u!1001 &8843705449627657869
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9019535854417014713}
+    m_Modifications:
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966119, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_Name
+      value: Ping Pong Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050412716966119, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050413183950551, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: collider
+      value: 
+      objectReference: {fileID: 6064151125590800477}
+    - target: {fileID: 3356050413183950551, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: paddleCenter
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050413183950551, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: circleCollider
+      value: 
+      objectReference: {fileID: 6064151125590800477}
+    - target: {fileID: 3356050413183950551, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: paddleCollider
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050413183950551, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: paddleControls
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+--- !u!4 &6064151124992222827 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3356050412716966118, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+  m_PrefabInstance: {fileID: 8843705449627657869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &6064151125590800477 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3356050413183950544, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+  m_PrefabInstance: {fileID: 8843705449627657869}
+  m_PrefabAsset: {fileID: 0}

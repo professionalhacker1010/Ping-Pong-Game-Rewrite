@@ -5,12 +5,11 @@ using UnityEngine.Rendering;
 
 public class Spider : Opponent
 {
-    [SerializeField] private PaddleControls paddleControls;
+    private PaddleControls paddleControls;
     //opponent data on how many balls should be on screen at a time for this pattern and where the balls should go
     [Header("Pattern Data")]
-    [SerializeField] private List<GameObject> balls; //the actual balls
+    [SerializeField] private List<MultiBall> balls; //the actual balls
     [SerializeField] private BigBall bigStar;
-    private List<MultiBall> multiBallScripts;
     [SerializeField] private List<GameObject> arms;
 
     [SerializeField] private List<int> ballsPerPattern; //how many balls should there be?
@@ -30,41 +29,29 @@ public class Spider : Opponent
     [SerializeField] private float maxHealth, smallStarDamage, largeStarDamage, hitOutDamage;
     [SerializeField] private List<float> spiderHealthCheckpoints;
 
-    //create new ping pongs on the fly using instantiate. Here is where we define custom behaviour for these ping pongs
     [Header("Custom Ping Pong")]
     [SerializeField] private float ballSpeed;
 
 
     private void Awake()
     {
-        //get components
-        multiBallScripts = new List<MultiBall>();
-        foreach (var item in balls)
+        for (int i = 0; i < balls.Count; i++)
         {
-            multiBallScripts.Add(item.GetComponentInChildren<MultiBall>());
-        }
-
-        //serializable changes to ping pong scripts
-        for (int i = 0; i < multiBallScripts.Count; i++)
-        {
-            multiBallScripts[i].ballSpeed = ballSpeed;
-            multiBallScripts[i].SetHealthBars(playerHealth, spiderHealth);
+            balls[i].ballSpeed = ballSpeed;
+            balls[i].SetHealthBars(playerHealth, spiderHealth);
         }
 
         bigStar.ballSpeed = ballSpeed;
         bigStar.SetHealthBars(playerHealth, spiderHealth);
 
         //set paddle controls
-        paddleControls.multiBalls = multiBallScripts;
-        paddleControls.multiBalls.Add(bigStar);
-        paddleControls.multiBall = true;
+        paddleControls = FindObjectOfType<PaddleControls>();
     }
 
     protected override void Start()
     {
         base.Start();
 
-        GameManager.Instance.Pingpong.gameObject.SetActive(false);
         //GameManager.Instance.winRounds = 1000; //so that point-based lose state never triggers
         positions = patternOne;
         bigStar.ballPositions = patternOneBigStar;
@@ -83,32 +70,32 @@ public class Spider : Opponent
         //turn off all balls except the ones needed
         for (int i = 0; i < balls.Count; i++)
         {
-            if (i >= ballsPerPattern[currPattern]) balls[i].SetActive(false);
+            if (i >= ballsPerPattern[currPattern]) balls[i].gameObject.SetActive(false);
             else
             {
-                balls[i].SetActive(true);
+                balls[i].gameObject.SetActive(true);
 
                 //pass in list of all possible locations for this ball - gonna have the multiball script handle all the ball locations...
-                multiBallScripts[i].ballPositions.Clear();
-                for (int j = i; j < positions.Count; j+= ballsPerPattern[currPattern]) multiBallScripts[i].ballPositions.Add(positions[j]);
+                balls[i].ballPositions.Clear();
+                for (int j = i; j < positions.Count; j+= ballsPerPattern[currPattern]) balls[i].ballPositions.Add(positions[j]);
 
                 //make sure it's not interactable
-                multiBallScripts[i].thisBallInteractable = false;
+                balls[i].thisBallInteractable = false;
 
                 //set ball to correct arm position, animation, and layer
                 int index = (int)positions[i].z - 10;
                 Vector3 currArm = arms[index].transform.position;
-                
-                multiBallScripts[i].currArm = currArm;
-                multiBallScripts[i].gameObject.transform.position = currArm;
+
+                balls[i].currArm = currArm;
+                balls[i].gameObject.transform.position = currArm;
                 servePosition = currArm; //temporarily swap out serve position
-                multiBallScripts[i].ballAnimation.SetTrigger("opponentWaitServe");
-                multiBallScripts[i].SendToOrder(balls.Count - i); //set to correct ordering in layer
+                balls[i].ballAnimation.SetTrigger("opponentWaitServe");
+                balls[i].SendToOrder(balls.Count - i); //set to correct ordering in layer
 
                 //hit ball animations
 
                 //some animation of spider charging up star ball
-                StartCoroutine(ServeBall(multiBallScripts[i]));
+                StartCoroutine(ServeBall(balls[i]));
 
                 //offset the time between hitting each ball
                 yield return new WaitForSeconds(offsetPerBall[currPattern] / 24f);
@@ -179,8 +166,8 @@ public class Spider : Opponent
         //doesn't hit the rest of the balls left in play
         for (int i = 0; i < ballsPerPattern[currPattern]; i++)
         {
-            multiBallScripts[i].patternStarted = false;
-            multiBallScripts[i].patternEnded = false;
+            balls[i].patternStarted = false;
+            balls[i].patternEnded = false;
         }
 
         //drop paddle animation
@@ -200,9 +187,9 @@ public class Spider : Opponent
     private IEnumerator UpdateReorderBall(int i)
     {
         //print("update reorder ball");
-        multiBallScripts[i].SendToOrder(balls.Count - i); //send to back
+        balls[i].SendToOrder(balls.Count - i); //send to back
         yield return new WaitForSeconds(ballPath.endFrame / 24f * ballSpeed);
-        multiBallScripts[i].SendToOrder(0 + i); //send to front
+        balls[i].SendToOrder(0 + i); //send to front
     }
 
     public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
@@ -214,7 +201,7 @@ public class Spider : Opponent
 
     private void NextPattern()
     {
-        foreach (var ball in multiBallScripts) ball.currPosition = 0;
+        foreach (var ball in balls) ball.currPosition = 0;
         bigStar.currPosition = 0;
 
         if (currPattern == 1)

@@ -154,6 +154,8 @@ MonoBehaviour:
   conditions:
   - name: intro_played
     value: 1
+  - name: table4_selectable
+    value: 1
 --- !u!4 &111688243
 Transform:
   m_ObjectHideFlags: 0
@@ -295,13 +297,17 @@ PrefabInstance:
     - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
       propertyPath: opponentPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 4366197742057743190, guid: ebf88977881289e4aaa576ff1b7554f3, type: 3}
+      objectReference: {fileID: 4573916570662602384, guid: d77e4605e91caed48bd91945323a5b4c, type: 3}
     - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
       propertyPath: opponentPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 9019535854417014714, guid: 59dd31350affcee43930f3c8e94f49d9, type: 3}
+      objectReference: {fileID: 4366197742057743190, guid: ebf88977881289e4aaa576ff1b7554f3, type: 3}
     - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
       propertyPath: opponentPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 9019535854417014714, guid: 59dd31350affcee43930f3c8e94f49d9, type: 3}
+    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
+      propertyPath: opponentPrefabs.Array.data[4]
       value: 
       objectReference: {fileID: 7190685315303504325, guid: ddb237401552d554a8c2b25c2bd2e795, type: 3}
     - target: {fileID: 8641875249295143539, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
@@ -1204,7 +1210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
       propertyPath: gameScene
-      value: Moon
+      value: LevelSelect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

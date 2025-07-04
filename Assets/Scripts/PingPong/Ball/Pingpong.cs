@@ -15,7 +15,7 @@ public class Pingpong : MonoBehaviour
     [SerializeField] public Animator ballAnimation;
     [SerializeField] public Animator shadow;
     [SerializeField] protected Animator explodeAnimation;
-    [SerializeField] protected CameraShake cameraShaker;
+    protected CameraShake cameraShaker;
 
     //list of tableY-trueMaxY ranges
     [SerializeField] private List<float> trueMaxY;
@@ -24,7 +24,7 @@ public class Pingpong : MonoBehaviour
 
     //out of bounds values
     [SerializeField] private float edgeNet;
-    [SerializeField] private PolygonCollider2D tableCollider;
+    //[SerializeField] private PolygonCollider2D tableCollider;
     protected bool netBall = false, edgeBall = false;
 
     //window of frames player has to hit back
@@ -47,7 +47,7 @@ public class Pingpong : MonoBehaviour
     BallPathInfo ballPathInfo;
     #endregion
 
-    private void Awake()
+    protected virtual void Awake()
     {
         //normalize the heights...
         for (int i = 0; i < trueMaxY.Count; i++)
@@ -74,10 +74,15 @@ public class Pingpong : MonoBehaviour
             ballPathInfo.x.Add(transform.position.x);
             ballPathInfo.y.Add(transform.position.y);
         }
+
+        cameraShaker = FindObjectOfType<CameraShake>();
+        circleCollider = GetComponent<CircleCollider2D>();
     }
 
     protected virtual void Start()
     {
+        GameManager.Instance.balls.Add(this);
+
         //static animation based on whos serving
         if (playerServing) ballAnimation.SetTrigger("playerWaitServe");
         else ballAnimation.SetTrigger("opponentWaitServe");
@@ -85,7 +90,8 @@ public class Pingpong : MonoBehaviour
 
     private void Update()
     {
-        if (PaddleControls.LockedInputs)
+        //debug color
+        if (!thisBallInteractable)
         {
             ballAnimation.GetComponent<SpriteRenderer>().color = Color.black;
         }
@@ -109,7 +115,7 @@ public class Pingpong : MonoBehaviour
 
         //print("opponent X: " + opponentX.ToString() + " Y: " + opponentY.ToString());
 
-        PaddleControls.LockInputs();
+        //PaddleControls.LockInputs();
         thisBallInteractable = false;
 
         StopAllCoroutines();
@@ -123,12 +129,12 @@ public class Pingpong : MonoBehaviour
         bool playerLose = true;
         if (netBall)
         {
-            Debug.Log("You hit a net ball!");
+            //Debug.Log("You hit a net ball!");
             SetBallPath(0, currBallPath.endFrame, playerLose);
         }
         else if (edgeBall)
         {
-            Debug.Log("You hit out of bounds!");
+            //Debug.Log("You hit out of bounds!");
             SetBallPath(0, currBallPath.endFrame, playerLose);
         }
         else {
@@ -162,7 +168,7 @@ public class Pingpong : MonoBehaviour
                 //scaling size of explosion based on who hit
                 if (playerLose) //then the opponent wins
                 {
-                    print("out of bounds explosion");
+                    //print("out of bounds explosion");
                     explodeAnimation.transform.localScale = new Vector3(0.6f, 0.6f);
                     ExplodeBall(false); //wait for explode ball animation to finish to restart
                 }
@@ -214,8 +220,9 @@ public class Pingpong : MonoBehaviour
         {
             if (frameCount == endFrame - hitBackFrames)
             {
-                PaddleControls.UnlockInputs();
+                //PaddleControls.UnlockInputs();
                 thisBallInteractable = true;
+                Debug.Log("Hit back window started");
             }
             frameCount++;
             yield return new WaitForSeconds(1 / (24f * ballSpeed));
@@ -223,7 +230,7 @@ public class Pingpong : MonoBehaviour
 
         if (frameCount >= endFrame + hitBackLeeway)
         {
-            PaddleControls.LockInputs();
+            //PaddleControls.LockInputs();
             thisBallInteractable = false;
             Debug.Log("You're too late!");
             ExplodeBall(false);
@@ -354,7 +361,7 @@ public class Pingpong : MonoBehaviour
         bpcPlayer.CalcBallPath(currBallPath, out ballPathInfo, playerHitHeight, playerHitLateral, startX, startY, opponentX, opponentY);
 
         //if ball bounces out of bounds on x2 frame
-        if (!tableCollider.OverlapPoint(new Vector2(ballPathInfo.x[currBallPath.bounceFrame], ballPathInfo.y[currBallPath.bounceFrame])))
+        if (!GameManager.Instance.TableCollider.OverlapPoint(new Vector2(ballPathInfo.x[currBallPath.bounceFrame], ballPathInfo.y[currBallPath.bounceFrame])))
         {
             //Debug.Log("edgeball is true");
             edgeBall = true;
@@ -381,7 +388,7 @@ public class Pingpong : MonoBehaviour
         bool gameIsWon = GameManager.Instance.GameIsWon();
         if (gameIsLost || gameIsWon)
         {
-            PaddleControls.LockInputs();
+            //PaddleControls.LockInputs();
             thisBallInteractable = false;
             ballAnimation.transform.position = new Vector3(0.0f, 0.0f);
             if (gameIsLost)
@@ -409,7 +416,7 @@ public class Pingpong : MonoBehaviour
             else
             {
                 frameCount = tableY.Count;
-                PaddleControls.UnlockInputs();
+                //PaddleControls.UnlockInputs();
                 thisBallInteractable = true; //this should never happen tho
                 ballAnimation.SetTrigger("playerWaitServe");
                 ballAnimation.transform.position = playerServePosition;

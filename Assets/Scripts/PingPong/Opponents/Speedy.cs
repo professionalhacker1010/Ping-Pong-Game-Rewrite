@@ -72,7 +72,7 @@ public class Speedy : Opponent
         yield return new WaitForSeconds(oppHitFrame / 24f);
 
         //increase speed if needed (ie if player's score has increased)
-        GameManager.Instance.Pingpong.ballSpeed = ballSpeeds[GameManager.Instance.PlayerWins];
+        GameManager.Instance.balls[0].ballSpeed = ballSpeeds[GameManager.Instance.PlayerWins];
         PaddleControls.UnlockInputs();
     }
 
@@ -92,7 +92,7 @@ public class Speedy : Opponent
     private IEnumerator StartGame()
     {
         PaddleControls.LockInputs();
-        var pingPong = GameManager.Instance.Pingpong;
+        var pingPong = GameManager.Instance.balls[0];
 
         pingPong.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f); //wait for round number info to display

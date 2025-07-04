@@ -25,7 +25,7 @@ public class PaddleControls_FocusHit : PaddleControls
     protected override void Start()
     {
         base.Start();
-        GameManager.Instance.Pingpong.OnExplode += ResetFocusHit;
+        GameManager.Instance.balls[0].OnExplode += ResetFocusHit;
     }
 
     protected override void ProcessMovement()
@@ -36,7 +36,7 @@ public class PaddleControls_FocusHit : PaddleControls
 
     protected override void ProcessInput()
     {
-        var pingPong = GameManager.Instance.Pingpong;
+        var pingPong = GameManager.Instance.balls[0];
         //hit the ball
         if (playerHitUp || hitHeldFrames >= focusHitMaxFrames)
         {
@@ -74,6 +74,6 @@ public class PaddleControls_FocusHit : PaddleControls
 
     private void OnDestroy()
     {
-        if (GameManager.Instance && GameManager.Instance.Pingpong) GameManager.Instance.Pingpong.OnExplode -= ResetFocusHit;
+        if (GameManager.Instance && GameManager.Instance.balls[0]) GameManager.Instance.balls[0].OnExplode -= ResetFocusHit;
     }
 }

@@ -13,7 +13,7 @@ public class Debugger : MonoBehaviour
 
     [SerializeField] List<DebugCondition> conditions;
 
-    private void Start()
+    private void Awake()
     {
         conditions.ForEach(i =>
         {

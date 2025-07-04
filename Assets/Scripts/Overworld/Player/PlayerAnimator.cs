@@ -29,7 +29,6 @@ public class PlayerAnimator : MonoBehaviour
 
     public void FaceLeft()
     {
-        Debug.Log("face left");
         body.SetBool("faceLeft", true);
         body.SetBool("faceRight", false);
         arm.SetBool("faceLeft", true);

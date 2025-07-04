@@ -28,8 +28,7 @@ public class GameManager : MonoBehaviour
     public BallPath PlayerBallPath { get => gameMode.playerBallPath; }
     [SerializeField] GameMode gameMode;
 
-    public Pingpong Pingpong { get => pingPong; }
-    [SerializeField] Pingpong pingPong;
+    public List<Pingpong> balls;
 
     public PaddleControls PaddleControls { get => paddleControls; }
     PaddleControls paddleControls;
@@ -40,6 +39,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private SpriteRenderer BG;
     [SerializeField] private SpriteRenderer table;
+
+    public PolygonCollider2D TableCollider { get => tableCollider; }
+    [SerializeField] private PolygonCollider2D tableCollider;
 
     public int OpponentWins { get => opponentWins; }
     public int PlayerWins { get => playerWins; }

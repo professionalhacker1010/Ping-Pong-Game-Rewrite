@@ -13,8 +13,8 @@ public class Glitch_Trail : GameDevGlitch
     public override void TurnOn()
     {
         trail = true;
-        StartCoroutine(Trail(GameManager.Instance.Pingpong.gameObject));
-        StartCoroutine(Trail(GameManager.Instance.Pingpong.shadow.gameObject));
+        StartCoroutine(Trail(GameManager.Instance.balls[0].gameObject));
+        StartCoroutine(Trail(GameManager.Instance.balls[0].shadow.gameObject));
         StartCoroutine(Trail(GameManager.Instance.PaddleControls.gameObject));
         StartCoroutine(Trail(GameManager.Instance.PaddleControls.transform.GetChild(0).gameObject));
     }

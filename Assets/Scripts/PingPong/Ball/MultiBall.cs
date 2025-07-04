@@ -24,8 +24,9 @@ public class MultiBall : Pingpong
     //health bars
     private HealthBar playerHealth, opponentHealth;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         spriteRenderer = GetComponent<SpriteRenderer>();
         ballPositions = new List<Vector3>();
     }

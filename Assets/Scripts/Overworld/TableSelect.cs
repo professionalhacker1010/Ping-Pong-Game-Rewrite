@@ -7,7 +7,7 @@ public class TableSelect : MonoBehaviour, ICanInteract
     [SerializeField] private int level;
     private Vector3 selectedTransform = new Vector3(0f, 0.5f, 0f);
     private string selectableCondition;
-    private bool isSelectable = false;
+    [SerializeField] private bool isSelectable = false;
 
     public int Level { get => level; }
 
@@ -24,7 +24,6 @@ public class TableSelect : MonoBehaviour, ICanInteract
     {
         selectableCondition = "table" + level.ToString() + "_selectable";
         Conditions.Initialize(selectableCondition, false);
-        isSelectable = Conditions.Get(selectableCondition);
     }
 
     private void Start()
@@ -33,6 +32,7 @@ public class TableSelect : MonoBehaviour, ICanInteract
         {
             TableSelectManager.Instance.AddTable(this);
         }
+        isSelectable = Conditions.Get(selectableCondition);
     }
 
     public void LockThisTable()
