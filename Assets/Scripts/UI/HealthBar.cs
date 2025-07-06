@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
+    public enum DamageType { 
+        SMALL,
+        LARGE,
+        BADHIT
+    }
+
     [SerializeField] private RectTransform bar;
     [SerializeField] private bool isPlayerHealth;
     private float points = 0;
@@ -25,11 +31,11 @@ public class HealthBar : MonoBehaviour
         barUnit = bar.sizeDelta.y / maxPoints;
     }
 
-    public void Damage(int strength)
+    public void Damage(DamageType strength)
     {
-        if (strength == 0) points -= smallStarDamage;
-        else if (strength == 1) points -= largeStarDamage;
-        else if (strength == -1) points -= hitOutDamage;
+        if (strength == DamageType.SMALL) points -= smallStarDamage;
+        else if (strength == DamageType.LARGE) points -= largeStarDamage;
+        else if (strength == DamageType.BADHIT) points -= hitOutDamage;
         bar.sizeDelta = new Vector2(bar.sizeDelta.x, barUnit * points);
 
         if (points <= 0)

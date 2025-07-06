@@ -5,6 +5,7 @@ using UnityEngine;
 public class MultiBall : Pingpong
 {
     [SerializeField] private int starType = 0;
+    [SerializeField] private HealthBar.DamageType damageType;
 
     //defining some custom behaviour for level 5
     private SpriteRenderer spriteRenderer;
@@ -29,6 +30,8 @@ public class MultiBall : Pingpong
         base.Awake();
         spriteRenderer = GetComponent<SpriteRenderer>();
         ballPositions = new List<Vector3>();
+        if (starType == 0) damageType = HealthBar.DamageType.SMALL;
+        else if (starType == 1) damageType = HealthBar.DamageType.LARGE;
     }
 
     protected override void Start()
@@ -52,7 +55,7 @@ public class MultiBall : Pingpong
         else if (!thisBallInteractable && !colored)
         {
             colored = true;
-            if (starType == 0) spriteRenderer.color = Color.red;
+            if (damageType == HealthBar.DamageType.SMALL) spriteRenderer.color = Color.red;
             else spriteRenderer.color = Color.blue;
         }
 
@@ -111,8 +114,8 @@ public class MultiBall : Pingpong
         else //then you're too late
         {
             //deal damage to player or opponent?
-            if (!playerWin) playerHealth.Damage(starType);
-            else opponentHealth.Damage(starType);
+            if (!playerWin) playerHealth.Damage(damageType);
+            else opponentHealth.Damage(damageType);
         }
 
         StopAllCoroutines();

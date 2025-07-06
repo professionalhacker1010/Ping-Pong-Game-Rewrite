@@ -119,10 +119,8 @@ public class GameDev : Opponent
         //switch player UI into place
         yield return new WaitForSeconds(2.2f); //wait until ball reaches UI and explodes
 
-        pingpong.PauseGame();
+        pingpong.Pause();
         PaddleControls.LockInputs();
-        print("locked");
-
         
         DialogueManager.Instance.StartDialogue("gameDev_gameIntro");
         yield return new WaitUntil(() => DialogueManager.Instance.DialogueRunning());
@@ -132,7 +130,6 @@ public class GameDev : Opponent
         introPlayed = true;
         pingpong.playerServing = true;
         pingpong.ResetRound();
-        print("unlocked");
     }
 
     private void SwitchGlitch()
@@ -166,7 +163,7 @@ public class GameDev : Opponent
 
         glitches[currGlitch].TurnOff();
         PaddleControls.LockInputs(); //pause game
-        GameManager.Instance.balls[0].PauseGame();
+        GameManager.Instance.balls[0].Pause();
         FindObjectOfType<UnityEngine.Rendering.Volume>().gameObject.SetActive(false);
     }
 
