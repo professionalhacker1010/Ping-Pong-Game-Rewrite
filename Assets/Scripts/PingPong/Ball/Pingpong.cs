@@ -84,8 +84,17 @@ public class Pingpong : MonoBehaviour
         GameManager.Instance.balls.Add(this);
 
         //static animation based on whos serving
-        if (playerServing) ballAnimation.SetTrigger("playerWaitServe");
-        else ballAnimation.SetTrigger("opponentWaitServe");
+        if (playerServing)
+        {
+            ballAnimation.SetTrigger("playerWaitServe");
+        }
+        else
+        {
+            ballAnimation.SetTrigger("opponentWaitServe");
+            StartCoroutine(Util.VoidCallbackTimer(2.0f, 
+                () => StartCoroutine(WaitForOpponentServe())
+                ));
+        }
     }
 
     private void Update()
@@ -240,6 +249,8 @@ public class Pingpong : MonoBehaviour
     public IEnumerator WaitForOpponentServe()
     {
         print("Waitforopponentserve");
+        if (TransitionManager.Instance) yield return new WaitUntil(() => TransitionManager.Instance.isTransitioning == false);
+
         var opponent = GameManager.Instance.opponent;
 
         float startX = opponent.servePosition.x;
@@ -309,7 +320,6 @@ public class Pingpong : MonoBehaviour
         //opponent misses when Z = 2
         if (opponentBallPath.z == 2.0f)
         {
-            Debug.Log("ExplodeBall called");
             explodeAnimation.transform.localScale = new Vector3(0.5f, 0.5f);
             ExplodeBall(true);
         }
@@ -430,7 +440,7 @@ public class Pingpong : MonoBehaviour
         }
     }
 
-    public void PauseGame()
+    public void Pause()
     {
         StopAllCoroutines();
         ballAnimation.speed = 0f;
@@ -438,7 +448,7 @@ public class Pingpong : MonoBehaviour
         //Debug.Log("game paused");
     }
 
-    public void ResumeGame()
+    public void Resume()
     {
         ballAnimation.speed = ballSpeed;
         shadow.speed = ballSpeed;

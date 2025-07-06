@@ -18,7 +18,6 @@ public class Speedy : Opponent
         base.Start();
 
         prevX = servePosition.x;
-        StartCoroutine(StartGame());
     }
 
     //speedy hits out if you hit the ball really far apart, one end then the other
@@ -86,18 +85,5 @@ public class Speedy : Opponent
         yield return TweenPositionX(animator.transform.position.x, servePosition.x, 3, 3 / 24f);
 
         animator.SetTrigger("idle");
-    }
-
-    //for starting the game
-    private IEnumerator StartGame()
-    {
-        PaddleControls.LockInputs();
-        var pingPong = GameManager.Instance.balls[0];
-
-        pingPong.gameObject.SetActive(false);
-        yield return new WaitForSeconds(2f); //wait for round number info to display
-        pingPong.gameObject.SetActive(true);
-        pingPong.ResetRound();
-        pingPong.ballSpeed = ballSpeeds[GameManager.Instance.PlayerWins];
     }
 }

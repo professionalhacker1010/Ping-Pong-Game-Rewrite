@@ -43,7 +43,7 @@ public class PaddleControls_FocusHit : PaddleControls
             //reset any hard hit stuff
             //Debug.Log("Hard hit reset after frames: " + holdSpaceFrames.ToString());
 
-            pingPong.ResumeGame();
+            pingPong.Resume();
 
             hitHeldFrames = 0;
             hardHitIndicator.StopAllCoroutines();
@@ -55,7 +55,7 @@ public class PaddleControls_FocusHit : PaddleControls
         else if (playerHitDown)
         {
             hitDownTime = Time.time;
-            pingPong.PauseGame();
+            pingPong.Pause();
             hardHitIndicator.FadeToBlack(focusHitMaxFrames);
         }
         //focus hit: only for SPEEDY oppponent. fade to black lasts 24 frames

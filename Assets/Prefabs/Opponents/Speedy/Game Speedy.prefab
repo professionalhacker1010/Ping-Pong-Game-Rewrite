@@ -179,6 +179,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3356050413183950551, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
+      propertyPath: playerServing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356050413183950551, guid: c9d893de6081bae4faf65ac4ec821b72, type: 3}
       propertyPath: circleCollider
       value: 
       objectReference: {fileID: 6064151125590800477}
