@@ -91,7 +91,7 @@ public class GameDev : Opponent
         return base.GetOpponentBallPath(X, Y, isServing);
     }
 
-    public override void ChangeOpponentPosition(float startX, float startY, Vector3 end, int hitFrame) //this is where glitches are called
+    public override void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame) //this is where glitches are called
     {
         if (!introPlayed)
         {

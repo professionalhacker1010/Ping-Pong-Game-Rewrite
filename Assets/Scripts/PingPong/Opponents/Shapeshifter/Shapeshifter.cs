@@ -43,7 +43,7 @@ public class Shapeshifter : Opponent
         return hit;
     }
 
-    public override void ChangeOpponentPosition(float startX, float startY, Vector3 end, int hitFrame)
+    public override void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame)
     {
         StartCoroutine(ChangeOpponentPositionHelper(startX, startY));
     }

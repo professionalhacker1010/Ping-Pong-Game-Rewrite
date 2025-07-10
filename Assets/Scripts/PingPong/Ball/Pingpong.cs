@@ -39,6 +39,7 @@ public class Pingpong : MonoBehaviour
 
     //events
     public event Action OnExplode;
+    public event Action<float, float, Vector3, int> OnPlayerHit;
 
     //BPC
     protected BallPath currBallPath;
@@ -77,11 +78,13 @@ public class Pingpong : MonoBehaviour
 
         cameraShaker = FindObjectOfType<CameraShake>();
         circleCollider = GetComponent<CircleCollider2D>();
+
+        GameManager.Instance.balls.Add(this);
     }
 
     protected virtual void Start()
     {
-        GameManager.Instance.balls.Add(this);
+
 
         //static animation based on whos serving
         if (playerServing)
@@ -130,7 +133,24 @@ public class Pingpong : MonoBehaviour
         StopAllCoroutines();
 
         currBallPath = GameManager.Instance.PlayerBallPath;
-        CalcPlayerBallPath(playerHitHeight, playerHitLateral);
+
+        //calc player ball path
+        float startX = ballPathInfo.x[ballPathInfo.x.Count - 1];
+        float startY = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;//GetScaledY(0, finalX.Count - 1, finalY[finalY.Count - 1]+normalizer);
+
+        //update opponent X and Y values
+        float opponentX = startX; //todo: does X need scaling?
+        float opponentY = startY;
+
+        bpcPlayer.CalcBallPath(currBallPath, out ballPathInfo, playerHitHeight, playerHitLateral, startX, startY, opponentX, opponentY);
+
+        //if ball bounces out of bounds on x2 frame
+        if (!GameManager.Instance.TableCollider.OverlapPoint(new Vector2(ballPathInfo.x[currBallPath.bounceFrame], ballPathInfo.y[currBallPath.bounceFrame])))
+        {
+            //Debug.Log("edgeball is true");
+            edgeBall = true;
+        }
+        //CalcPlayerBallPath(playerHitHeight, playerHitLateral);
 
         //start ball animations, updating positions while animation is playing with setballpath coroutine
         shadow.SetTrigger("hitBall");
@@ -150,9 +170,70 @@ public class Pingpong : MonoBehaviour
             //Debug.Log("successful hit");
             playerLose = false;
             SetBallPath(0, currBallPath.endFrame, playerLose);
-            StartCoroutine(MoveOpponent(false));
+
+            var opponent = GameManager.Instance.opponent;
+            //Debug.Log("move opponent");
+
+            
+            float startXOpponent = ballPathInfo.x[ballPathInfo.x.Count - 1];
+            float startYOpponent = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;
+            Vector3 opponentBallEnd = opponent.GetOpponentBallPath(startXOpponent, startYOpponent - normalizer, false);
+            if (OnPlayerHit != null) OnPlayerHit(startX, startY - normalizer, opponentBallEnd, currBallPath.endFrame);
+
+            StartCoroutine(Util.VoidCallbackTimer(currBallPath.endFrame / (24f * ballSpeed),
+                () => OpponentHit(opponent, opponentBallEnd)));
         }
 
+    }
+
+    public virtual void OpponentHit(Opponent opponent, Vector3 opponentBallPath)
+    {
+        //calc
+        float startX = ballPathInfo.x[ballPathInfo.x.Count - 1];
+        float startY = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;
+        bpcOpponent.CalcBallPath(opponent.ballPath, out ballPathInfo, opponentBallPath, startX, startY);
+
+        currBallPath = opponent.ballPath;
+
+        //opponent misses when Z = 2
+        if (opponentBallPath.z == 2.0f)
+        {
+            explodeAnimation.transform.localScale = new Vector3(0.5f, 0.5f);
+            ExplodeBall(true);
+        }
+        else
+        {
+            //play animations
+            shadow.SetTrigger("opponentHitBall");
+            shadow.SetTrigger("opponentHitInBounds");
+            ballAnimation.SetTrigger("opponentHitBall");
+            opponent.HitFlash(startX, startY - normalizer);
+
+            //net ball
+            if (opponentBallPath.z == -1.0f)
+            {
+                Debug.Log("Opponent hit net ball!");
+                netBall = true;
+                SetBallPath(0, currBallPath.endFrame, false);
+            }
+            //opponent htis out of bounds when z = 1
+            else if (opponentBallPath.z == 1.0f)
+            {
+                Debug.Log("Opponent hit out of bounds!");
+                edgeBall = true;
+                SetBallPath(0, currBallPath.endFrame, false);
+            }
+            //successful hit
+            else
+            {
+                //print("normal hit");
+                SetBallPath(0, currBallPath.endFrame, true);
+                StartCoroutine(PlayerHitBackWindow(0, currBallPath.endFrame));
+                //update for next hit
+                UpdateBallSpeed();
+
+            }
+        }
     }
 
     //Coroutines
@@ -205,23 +286,6 @@ public class Pingpong : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveOpponent(bool ballOut) //move opponent and call calculation of opponent ball
-    {
-        var opponent = GameManager.Instance.opponent;
-        //Debug.Log("move opponent");
-
-        //this is called after player hits no matter what. Opponent class will take care of what animations to play and when
-        float startX = ballPathInfo.x[ballPathInfo.x.Count - 1];
-        float startY = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;
-        Vector3 opponentBallEnd = opponent.GetOpponentBallPath(startX, startY - normalizer, false);
-        opponent.ChangeOpponentPosition(startX, startY - normalizer, opponentBallEnd, currBallPath.endFrame);
-
-        yield return new WaitForSeconds(currBallPath.endFrame / (24f * ballSpeed));
-        
-        bool opponentHasHit = true;
-        CalcOpponentBallPath(opponent, opponentHasHit, opponentBallEnd);
-    }
-
     private IEnumerator PlayerHitBackWindow(int startFrame, int endFrame)
     {
         frameCount = startFrame;
@@ -265,7 +329,7 @@ public class Pingpong : MonoBehaviour
             ballPathInfo.x[i] = startX;
             ballPathInfo.y[i] = startY;
         }
-        CalcOpponentBallPath(opponent, true, opponentBallPath);
+        OpponentHit(opponent, opponentBallPath);
     }
 
     public virtual void ExplodeBall(bool playerWin)
@@ -308,75 +372,7 @@ public class Pingpong : MonoBehaviour
 
     #endregion
 
-    public virtual void CalcOpponentBallPath(Opponent opponent, bool opponentHasHit, Vector3 opponentBallPath)
-    {
-        //calc
-        float startX = ballPathInfo.x[ballPathInfo.x.Count - 1];
-        float startY = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;
-        bpcOpponent.CalcBallPath(opponent.ballPath, out ballPathInfo, opponentBallPath, startX, startY);
 
-        currBallPath = opponent.ballPath;
-
-        //opponent misses when Z = 2
-        if (opponentBallPath.z == 2.0f)
-        {
-            explodeAnimation.transform.localScale = new Vector3(0.5f, 0.5f);
-            ExplodeBall(true);
-        }
-        else
-        {
-            //play animations
-            shadow.SetTrigger("opponentHitBall");
-            shadow.SetTrigger("opponentHitInBounds");
-            ballAnimation.SetTrigger("opponentHitBall");
-            opponent.HitFlash(startX, startY - normalizer);
-
-            //net ball
-            if (opponentBallPath.z == -1.0f)
-            {
-                Debug.Log("Opponent hit net ball!");
-                netBall = true;
-                SetBallPath(0, currBallPath.endFrame, false);
-            }
-            //opponent htis out of bounds when z = 1
-            else if (opponentBallPath.z == 1.0f)
-            {
-                Debug.Log("Opponent hit out of bounds!");
-                edgeBall = true;
-                SetBallPath(0, currBallPath.endFrame, false);
-            }
-            //successful hit
-            else
-            {
-                //print("normal hit");
-                SetBallPath(0, currBallPath.endFrame, true);
-                StartCoroutine(PlayerHitBackWindow(0, currBallPath.endFrame));
-                //update for next hit
-                UpdateBallSpeed();
-                
-            }
-        }
-    }
-
-    private void CalcPlayerBallPath(float playerHitHeight, float playerHitLateral)
-    {
-        //calc
-        float startX = ballPathInfo.x[ballPathInfo.x.Count - 1];
-        float startY = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;//GetScaledY(0, finalX.Count - 1, finalY[finalY.Count - 1]+normalizer);
-
-        //update opponent X and Y values
-        float opponentX = startX; //todo: does X need scaling?
-        float opponentY = startY; 
-
-        bpcPlayer.CalcBallPath(currBallPath, out ballPathInfo, playerHitHeight, playerHitLateral, startX, startY, opponentX, opponentY);
-
-        //if ball bounces out of bounds on x2 frame
-        if (!GameManager.Instance.TableCollider.OverlapPoint(new Vector2(ballPathInfo.x[currBallPath.bounceFrame], ballPathInfo.y[currBallPath.bounceFrame])))
-        {
-            //Debug.Log("edgeball is true");
-            edgeBall = true;
-        }
-    }
 
     private void UpdateBallSpeed() //updating variables for continuing rallies
     {

@@ -29,6 +29,7 @@ public class Opponent : MonoBehaviour
             if (gameModeOverride) GameManager.Instance.SetGameMode(gameModeOverride);
             GameManager.Instance.OnGameLost += PlayWinAnimation;
             GameManager.Instance.OnGameWon += PlayLoseAnimation;
+            GameManager.Instance.balls.ForEach(ball => ball.OnPlayerHit += OnPlayerHit);
         }
 
     }
@@ -40,7 +41,7 @@ public class Opponent : MonoBehaviour
         return hitPattern[0][i];
     }
 
-    virtual public void ChangeOpponentPosition(float startX, float startY, Vector3 end, int hitFrame)
+    virtual public void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame)
     {
         transform.position = new Vector3(startX, 0f);
     }

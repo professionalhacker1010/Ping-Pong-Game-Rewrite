@@ -46,7 +46,7 @@ public class Kevin : Opponent
         return false;
     }
 
-    public override void ChangeOpponentPosition(float startX, float startY, Vector3 end, int hitFrame)
+    public override void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame)
     {
         //determine which animation to play
         string animation;

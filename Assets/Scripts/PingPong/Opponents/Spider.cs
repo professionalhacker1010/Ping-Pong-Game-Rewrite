@@ -179,7 +179,7 @@ public class Spider : Opponent
         StartCoroutine(StartBalls());
     }
 
-    public override void ChangeOpponentPosition(float startX, float startY, Vector3 end, int hitFrame)
+    public override void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame)
     {
      
     }

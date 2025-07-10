@@ -40,7 +40,7 @@ public class Speedy : Opponent
         return new Vector3(X * -1.25f, Y);
     }
 
-    public override void ChangeOpponentPosition(float startX, float startY, Vector3 end, int hitFrame)
+    public override void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame)
     {
         StartCoroutine(ChangeSpeedyPosition(startX, hitFrame));
     }

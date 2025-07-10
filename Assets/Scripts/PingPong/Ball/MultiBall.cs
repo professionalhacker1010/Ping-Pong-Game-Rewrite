@@ -85,7 +85,7 @@ public class MultiBall : Pingpong
     protected void CalcOpponentBallPath2(Vector3 v)
     {
         var opponent = GameManager.Instance.opponent;
-        base.CalcOpponentBallPath(opponent, true, v);
+        base.OpponentHit(opponent, v);
     }
 
     public void SendToOrder(int i)
@@ -179,7 +179,7 @@ public class MultiBall : Pingpong
         base.SetBallPath(startFrame, endFrame, playerLose);
     }
 
-    public override void CalcOpponentBallPath(Opponent opponent, bool opponentHasHit, Vector3 opponentBallPath) //damn lol
+    public override void OpponentHit(Opponent opponent, Vector3 opponentBallPath) //damn lol
     {
     }
 }
