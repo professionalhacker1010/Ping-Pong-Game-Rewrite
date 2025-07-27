@@ -317,7 +317,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 5
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -325,6 +324,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -647,7 +647,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 5
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -655,6 +654,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -1011,7 +1011,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 5
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -1019,6 +1018,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -1717,7 +1717,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 5
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -1725,6 +1724,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -1900,6 +1900,8 @@ MonoBehaviour:
   hitPattern: {fileID: 11400000, guid: 4b46c0c665447f84da0faafa061f9d51, type: 2}
   servePosition: {x: 0, y: 2, z: 0}
   serveTime: 2
+  playerServing: 0
+  playerServePosition: {x: 0, y: -2, z: 0}
   gameModeOverride: {fileID: 11400000, guid: 99bb6caf2a344484faeef4bf889224a4, type: 2}
   balls:
   - {fileID: 4573916570967148482}
@@ -2287,7 +2289,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 3
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -2295,6 +2296,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -2595,7 +2597,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 5
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -2603,6 +2604,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -3062,7 +3064,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 5
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -3070,6 +3071,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -4226,7 +4228,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 5
   playerServePosition: {x: 0, y: -2, z: 0}
@@ -4234,6 +4235,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 0
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0
@@ -5026,7 +5028,6 @@ MonoBehaviour:
   - 2.03
   normalizer: 5.64
   edgeNet: 0.5
-  tableCollider: {fileID: 0}
   hitBackFrames: 6
   hitBackLeeway: 6
   playerServePosition: {x: 0, y: 2, z: 0}
@@ -5034,6 +5035,7 @@ MonoBehaviour:
   thisBallInteractable: 0
   ballSpeed: 0.75
   starType: 1
+  damageType: 0
   currArm: {x: 0, y: 0, z: 0}
   ballPositions: []
   currPosition: 0

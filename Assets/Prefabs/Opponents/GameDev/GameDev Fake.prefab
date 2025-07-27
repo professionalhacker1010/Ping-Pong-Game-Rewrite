@@ -605,6 +605,8 @@ MonoBehaviour:
   hitPattern: {fileID: 11400000, guid: 85740e23afab51a4bbd26a86493a8431, type: 2}
   servePosition: {x: 0, y: 2.7, z: 0}
   serveTime: 2
+  playerServing: 1
+  playerServePosition: {x: 0, y: -2, z: 0}
   gameModeOverride: {fileID: 11400000, guid: 33aefc509fccc204f99ae543231fb3a6, type: 2}
   hitsPerGlitch: 0100000003000000030000000200000002000000020000000100000001000000
   uiGlitch: {fileID: 1750571360121790081}

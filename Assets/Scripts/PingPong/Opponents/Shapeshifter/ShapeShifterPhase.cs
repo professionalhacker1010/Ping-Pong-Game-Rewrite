@@ -46,8 +46,16 @@ public class ShapeShifterPhase : Opponent
         yield return null;
     }
 
-    public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(float X, float Y, bool isServing)
     {
-        return base.GetOpponentBallPath(X, Y, isServing);
+        return base.GetBallPath(X, Y, isServing);
+    }
+
+    public override void OnPlayerHit(int ballId, float startX, float startY, Vector3 end, int hitFrame)
+    {
+    }
+
+    override protected void OnBallFinishedExploding(int ballId, bool playerWin, bool edgeBall, bool netBall)
+    {
     }
 }

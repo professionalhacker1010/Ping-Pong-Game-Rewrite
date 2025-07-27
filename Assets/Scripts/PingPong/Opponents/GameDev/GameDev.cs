@@ -45,7 +45,7 @@ public class GameDev : Opponent
         }
     }
 
-    public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(float X, float Y, bool isServing)
     {
         var playerScore = GameManager.Instance.GameUI.PlayerScoreUI;
         var opponentScore = GameManager.Instance.GameUI.OpponentScoreUI;
@@ -88,10 +88,10 @@ public class GameDev : Opponent
             }
         }
 
-        return base.GetOpponentBallPath(X, Y, isServing);
+        return base.GetBallPath(X, Y, isServing);
     }
 
-    public override void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame) //this is where glitches are called
+    public override void OnPlayerHit(int ballId, float startX, float startY, Vector3 end, int hitFrame) //this is where glitches are called
     {
         if (!introPlayed)
         {
@@ -128,8 +128,8 @@ public class GameDev : Opponent
 
         PaddleControls.UnlockInputs();
         introPlayed = true;
-        pingpong.playerServing = true;
-        pingpong.ResetRound();
+        playerServing = true;
+        pingpong.PlayerServe(playerServePosition);
     }
 
     private void SwitchGlitch()

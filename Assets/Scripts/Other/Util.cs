@@ -35,4 +35,10 @@ public static class Util
         yield return new WaitForEndOfFrame();
         callback();
     }
+
+    public static IEnumerator VoidCallbackAfterIE(IEnumerator enumerator, System.Action callback)
+    {
+        yield return enumerator;
+        callback();
+    }
 }

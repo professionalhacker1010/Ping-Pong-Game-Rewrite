@@ -141,7 +141,7 @@ public class PaddleControls : MonoBehaviour
         {
             //Debug.Log("You missed the ball!");
             HitLeft();
-            if (explodeOnMiss) ball.ExplodeBall(false);
+            if (explodeOnMiss) StartCoroutine(ball.ExplodeBall(false));
         }
     }
 

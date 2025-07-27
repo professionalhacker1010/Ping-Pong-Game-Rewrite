@@ -45,7 +45,7 @@ public class Drums : ShapeShifterPhase
         animator.SetTrigger("drum4");
     }
 
-    public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(float X, float Y, bool isServing)
     {
         Vector3 hit = new Vector3(X, Y);
 
@@ -69,6 +69,6 @@ public class Drums : ShapeShifterPhase
             return missHit;
         }
 
-        return base.GetOpponentBallPath(X, Y, isServing);
+        return base.GetBallPath(X, Y, isServing);
     }
 }

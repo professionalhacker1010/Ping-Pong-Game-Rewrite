@@ -191,6 +191,8 @@ MonoBehaviour:
   hitPattern: {fileID: 11400000, guid: 1a56d0f39935c8049adb4f526f191300, type: 2}
   servePosition: {x: 0, y: 2.7, z: 0}
   serveTime: 2
+  playerServing: 1
+  playerServePosition: {x: 0, y: -2, z: 0}
   gameModeOverride: {fileID: 0}
   kevinMisses: {x: 0, y: 0, z: 2}
   tutorialUI: {fileID: 6560104882511064556, guid: 9c5eb8c223c6d9f46824e507b5fa9036, type: 3}

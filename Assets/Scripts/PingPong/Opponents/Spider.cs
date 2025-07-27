@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static HealthBar;
 
 public class Spider : Opponent
 {
@@ -20,7 +21,7 @@ public class Spider : Opponent
     [SerializeField] private List<Vector3> patternTwo; //X,Y is the place spider hits the ball to, Z is the hand that hits it
     [SerializeField] private List<Vector3> patternTwoBigStar;
 
-    private int currBall = 0, currPattern = 0;
+    private int currPattern = 0;
     private List<Vector3> positions;
 
     [Header("Health Bar")]
@@ -32,13 +33,16 @@ public class Spider : Opponent
     [Header("Custom Ping Pong")]
     [SerializeField] private float ballSpeed;
 
+    private List<bool> playerHasHit = new List<bool>();
 
+    //initialize balls
     private void Awake()
     {
         for (int i = 0; i < balls.Count; i++)
         {
             balls[i].ballSpeed = ballSpeed;
             balls[i].SetHealthBars(playerHealth, spiderHealth);
+            playerHasHit.Add(false);
         }
 
         bigStar.ballSpeed = ballSpeed;
@@ -179,25 +183,54 @@ public class Spider : Opponent
         StartCoroutine(StartBalls());
     }
 
-    public override void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame)
+    public override void OnPlayerHit(int ballId, float startX, float startY, Vector3 end, int hitFrame)
     {
-     
+        balls[ballId].SendToOrder(balls.Count - ballId); //send to back
+        playerHasHit[ballId] = true;
+    }
+
+    public override void OnHit(int ballId, float X, float Y)
+    {
+        base.OnHit(ballId, X, Y);
+        /*        if (playerHasHit[ballId]) balls[ballId].gameObject.SetActive(false);
+                else balls[ballId].SendToOrder(0 + ballId); //send to front*/
+        balls[ballId].SendToOrder(0 + ballId); //send to front
+    }
+
+    protected override void OnBallFinishedExploding(int ballId, bool playerWin, bool edgeBall, bool netBall)
+    {
+/*        var ball = balls[ballId];
+        if (endExplosionPlaying)
+        {
+            spiderHealth.Damage(ball.damageType);
+        }
+        else
+        {
+            //wait for different amounts of time depending on whether player hit out or missed.
+            if (!edgeBall && !netBall)
+            {
+                //deal damage to player or opponent?
+                if (!playerWin) playerHealth.Damage(ball.damageType);
+                else spiderHealth.Damage(ball.damageType);
+            }
+
+            //StopAllCoroutines();
+        }
+        endExplosionPlaying = false;*/
     }
 
     private IEnumerator UpdateReorderBall(int i)
     {
         //print("update reorder ball");
-        balls[i].SendToOrder(balls.Count - i); //send to back
+        
         yield return new WaitForSeconds(ballPath.endFrame / 24f * ballSpeed);
-        balls[i].SendToOrder(0 + i); //send to front
+       
     }
 
-    public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
+/*    public override Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
     {
-        if (!isServing) StartCoroutine(UpdateReorderBall(currBall)); //set to correct ordering in layer, swap back after correct amount of time
-
         return base.GetOpponentBallPath(X, Y, isServing);
-    }
+    }*/
 
     private void NextPattern()
     {

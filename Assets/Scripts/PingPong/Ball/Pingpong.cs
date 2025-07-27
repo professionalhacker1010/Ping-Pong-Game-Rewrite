@@ -8,6 +8,9 @@ public class Pingpong : MonoBehaviour
 {
     //variables
     #region
+    public int ID { get => id; }
+    int id;
+
     //colliders
     [SerializeField] public CircleCollider2D circleCollider;
 
@@ -39,7 +42,9 @@ public class Pingpong : MonoBehaviour
 
     //events
     public event Action OnExplode;
-    public event Action<float, float, Vector3, int> OnPlayerHit;
+    public event Action<int, bool, bool, bool> OnExplodeFinished;
+    public event Action<int, float, float, Vector3, int> OnPlayerHit;
+    public event Action<int, float, float> OnOpponentHit;
 
     //BPC
     protected BallPath currBallPath;
@@ -79,25 +84,11 @@ public class Pingpong : MonoBehaviour
         cameraShaker = FindObjectOfType<CameraShake>();
         circleCollider = GetComponent<CircleCollider2D>();
 
-        GameManager.Instance.balls.Add(this);
+        id = GameManager.Instance.AddBall(this);
     }
 
     protected virtual void Start()
     {
-
-
-        //static animation based on whos serving
-        if (playerServing)
-        {
-            ballAnimation.SetTrigger("playerWaitServe");
-        }
-        else
-        {
-            ballAnimation.SetTrigger("opponentWaitServe");
-            StartCoroutine(Util.VoidCallbackTimer(2.0f, 
-                () => StartCoroutine(WaitForOpponentServe())
-                ));
-        }
     }
 
     private void Update()
@@ -177,8 +168,8 @@ public class Pingpong : MonoBehaviour
             
             float startXOpponent = ballPathInfo.x[ballPathInfo.x.Count - 1];
             float startYOpponent = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;
-            Vector3 opponentBallEnd = opponent.GetOpponentBallPath(startXOpponent, startYOpponent - normalizer, false);
-            if (OnPlayerHit != null) OnPlayerHit(startX, startY - normalizer, opponentBallEnd, currBallPath.endFrame);
+            Vector3 opponentBallEnd = opponent.GetBallPath(startXOpponent, startYOpponent - normalizer, false);
+            if (OnPlayerHit != null) OnPlayerHit(id, startX, startY - normalizer, opponentBallEnd, currBallPath.endFrame);
 
             StartCoroutine(Util.VoidCallbackTimer(currBallPath.endFrame / (24f * ballSpeed),
                 () => OpponentHit(opponent, opponentBallEnd)));
@@ -186,7 +177,7 @@ public class Pingpong : MonoBehaviour
 
     }
 
-    public virtual void OpponentHit(Opponent opponent, Vector3 opponentBallPath)
+    protected virtual void OpponentHit(Opponent opponent, Vector3 opponentBallPath)
     {
         //calc
         float startX = ballPathInfo.x[ballPathInfo.x.Count - 1];
@@ -198,8 +189,7 @@ public class Pingpong : MonoBehaviour
         //opponent misses when Z = 2
         if (opponentBallPath.z == 2.0f)
         {
-            explodeAnimation.transform.localScale = new Vector3(0.5f, 0.5f);
-            ExplodeBall(true);
+            StartCoroutine(ExplodeBall(true, 0.5f));
         }
         else
         {
@@ -207,7 +197,8 @@ public class Pingpong : MonoBehaviour
             shadow.SetTrigger("opponentHitBall");
             shadow.SetTrigger("opponentHitInBounds");
             ballAnimation.SetTrigger("opponentHitBall");
-            opponent.HitFlash(startX, startY - normalizer);
+            if (OnOpponentHit != null) OnOpponentHit(id, startX, startY - normalizer);
+            //opponent.OnHit(startX, startY - normalizer);
 
             //net ball
             if (opponentBallPath.z == -1.0f)
@@ -259,21 +250,18 @@ public class Pingpong : MonoBehaviour
                 if (playerLose) //then the opponent wins
                 {
                     //print("out of bounds explosion");
-                    explodeAnimation.transform.localScale = new Vector3(0.6f, 0.6f);
-                    ExplodeBall(false); //wait for explode ball animation to finish to restart
+                    StartCoroutine(ExplodeBall(false, 0.6f)); //wait for explode ball animation to finish to restart
                 }
                 else //otherwise the player wins
                 {
-                    explodeAnimation.transform.localScale = new Vector3(0.75f, 0.75f);
-                    ExplodeBall(true);
+                    StartCoroutine(ExplodeBall(true, 0.75f));
                 }
                 startFrame = endFrame;
             }
             else if (startFrame == (currBallPath.endFrame / 2) && netBall)
             {
-                explodeAnimation.transform.localScale = new Vector3(0.85f, 0.85f);
-                if (playerLose) ExplodeBall(false);
-                else ExplodeBall(true);
+                if (playerLose) StartCoroutine(ExplodeBall(false, 0.85f));
+                else StartCoroutine(ExplodeBall(true, 0.85f));
             }
             //reset lose flags
             else if (startFrame == currBallPath.endFrame - hitBackFrames && !playerLose)
@@ -306,7 +294,7 @@ public class Pingpong : MonoBehaviour
             //PaddleControls.LockInputs();
             thisBallInteractable = false;
             Debug.Log("You're too late!");
-            ExplodeBall(false);
+            StartCoroutine(ExplodeBall(false));
         }
     }
 
@@ -320,7 +308,7 @@ public class Pingpong : MonoBehaviour
         float startX = opponent.servePosition.x;
         float startY = opponent.servePosition.y + normalizer;
         ballAnimation.transform.position = opponent.servePosition;
-        Vector3 opponentBallPath = opponent.GetOpponentBallPath(startX, startY-normalizer, true);
+        Vector3 opponentBallPath = opponent.GetBallPath(startX, startY-normalizer, true);
 
         yield return opponent.PlayServeAnimation();
 
@@ -332,46 +320,26 @@ public class Pingpong : MonoBehaviour
         OpponentHit(opponent, opponentBallPath);
     }
 
-    public virtual void ExplodeBall(bool playerWin)
+    public IEnumerator ExplodeBall(bool playerWin, float explosionScale = 1.0f, int shakeStrength = 0)
     {
-        StartCoroutine(ExplodeBallHelper(playerWin));
         if (OnExplode != null) OnExplode();
-    }
-
-    private IEnumerator ExplodeBallHelper(bool playerWin)
-    {
         //Debug.Log("Explode ball");
+        explodeAnimation.transform.localScale = new Vector3(explosionScale, explosionScale);
         explodeAnimation.transform.position = ballAnimation.transform.position;
         ballAnimation.SetTrigger("explodeBall");
         explodeAnimation.SetTrigger("explodeBall");
         shadow.SetTrigger("explodeBall");
         yield return new WaitForSeconds(0.25f);
 
-        cameraShaker.ShakeCamera(0);
+        cameraShaker.ShakeCamera(shakeStrength);
         yield return new WaitForSeconds(.75f);
 
-        //this is after the ball explosion animation is finished
-        if (playerWin)
-        {
-            GameManager.Instance.AddPlayerWin();
-
-            //play lose reaction between rounds
-            if (!GameManager.Instance.GameIsWon())
-            {
-                var opponent = GameManager.Instance.opponent;
-                StartCoroutine(opponent.PlayLoseRoundAnimation());
-            }
-        }
-        else
-        {
-            GameManager.Instance.AddOpponentWin();
-        }
+        if (OnExplodeFinished != null) OnExplodeFinished(id, playerWin, edgeBall, netBall);
+        
         ResetRound();
-        explodeAnimation.transform.localScale = new Vector3(1.0f, 1.0f); //reset explosion scale
     }
 
     #endregion
-
 
 
     private void UpdateBallSpeed() //updating variables for continuing rallies
@@ -382,8 +350,7 @@ public class Pingpong : MonoBehaviour
         shadow.speed = ballSpeed;
     }
 
-    //checks if anyone's won or lost the game, then triggers appropriate results. resets variables and determines server. aOnly called after someone's scored a point
-    public void ResetRound()
+    private void ResetRound()
     {
         //print("resetround");
         netBall = false;
@@ -397,42 +364,26 @@ public class Pingpong : MonoBehaviour
             //PaddleControls.LockInputs();
             thisBallInteractable = false;
             ballAnimation.transform.position = new Vector3(0.0f, 0.0f);
-            if (gameIsLost)
-            {
-                Debug.Log("You Lose!");
-                GameManager.Instance.GameOver(false);
-            }
-            else if (gameIsWon)
-            {
-                Debug.Log("You Win!");
-                GameManager.Instance.GameOver(true);
-            }
         }
+    }
 
-        //game continues
-        else
+    public void OpponentServe()
+    {
+        ballAnimation.SetTrigger("opponentWaitServe");
+        StartCoroutine(WaitForOpponentServe());
+    }
+
+    public void PlayerServe(Vector3 playerServePos)
+    {
+        frameCount = tableY.Count;
+        //PaddleControls.UnlockInputs();
+        thisBallInteractable = true; //this should never happen tho
+        ballAnimation.SetTrigger("playerWaitServe");
+        ballAnimation.transform.position = playerServePos;
+        for (int i = 0; i < tableY.Count; i++)
         {
-            //switch server every round
-            playerServing = !playerServing;
-            if (!playerServing)
-            {
-                ballAnimation.SetTrigger("opponentWaitServe");
-                StartCoroutine(WaitForOpponentServe());
-            }
-            else
-            {
-                frameCount = tableY.Count;
-                //PaddleControls.UnlockInputs();
-                thisBallInteractable = true; //this should never happen tho
-                ballAnimation.SetTrigger("playerWaitServe");
-                ballAnimation.transform.position = playerServePosition;
-                for (int i = 0; i < tableY.Count; i++)
-                {
-                    ballPathInfo.x[i] = playerServePosition.x;
-                    ballPathInfo.y[i] = playerServePosition.y;
-                }
-            }
-        
+            ballPathInfo.x[i] = playerServePos.x;
+            ballPathInfo.y[i] = playerServePos.y;
         }
     }
 

@@ -18,39 +18,113 @@ public class Opponent : MonoBehaviour
     [SerializeField] protected HitPattern hitPattern;
     [SerializeField] public Vector3 servePosition;
     [SerializeField] protected float serveTime = 2.0f;
+    [SerializeField] protected bool playerServing = true;
+    [SerializeField] protected Vector3 playerServePosition;
 
     [Header("Optional")]
-    [SerializeField] GameMode gameModeOverride;
+    [SerializeField] protected GameMode gameModeOverride;
 
     protected virtual void Start()
     {
         if (GameManager.Instance)
         {
-            if (gameModeOverride) GameManager.Instance.SetGameMode(gameModeOverride);
-            GameManager.Instance.OnGameLost += PlayWinAnimation;
-            GameManager.Instance.OnGameWon += PlayLoseAnimation;
-            GameManager.Instance.balls.ForEach(ball => ball.OnPlayerHit += OnPlayerHit);
+            var gameManager = GameManager.Instance;
+            if (gameModeOverride) gameManager.SetGameMode(gameModeOverride);
+            gameManager.OnGameLost += PlayWinAnimation;
+            gameManager.OnGameWon += PlayLoseAnimation;
+            gameManager.balls.ForEach(b => b.OnPlayerHit += OnPlayerHit);
+            gameManager.balls.ForEach(b => b.OnOpponentHit += OnHit);
+            gameManager.balls.ForEach(b => b.OnExplodeFinished += OnBallFinishedExploding);
         }
 
+
+        StartGame();
+    }
+
+    virtual protected void StartGame()
+    {
+        if (GameManager.Instance)
+        {
+            var gameManager = GameManager.Instance;
+            if (!playerServing)
+            {
+                gameManager.balls[0].OpponentServe();
+            }
+            else
+            {
+                gameManager.balls[0].PlayerServe(playerServePosition);
+            }
+        }
     }
 
     //defines behavior of where opponent hits based on where player hits - make custom behavior for each opponent
-    virtual public Vector3 GetOpponentBallPath(float X, float Y, bool isServing)
+    virtual public Vector3 GetBallPath(float X, float Y, bool isServing)
     {
         int i = (int) Random.Range(0, hitPattern[0].size);
         return hitPattern[0][i];
     }
 
-    virtual public void OnPlayerHit(float startX, float startY, Vector3 end, int hitFrame)
+    virtual public void OnPlayerHit(int ballId, float startX, float startY, Vector3 end, int hitFrame)
     {
         transform.position = new Vector3(startX, 0f);
     }
 
-    virtual public void HitFlash(float X, float Y)
+    virtual public void OnHit(int ballId, float X, float Y)
     {
         var hitFlash = Instantiate(hitFlashPrefab);
         hitFlash.transform.position = new Vector3(X + 0.5f, Y);
         Destroy(hitFlash, 6 / 24f);
+    }
+
+    virtual protected void OnBallFinishedExploding(int ballId, bool playerWin, bool edgeBall, bool netBall)
+    {
+        var gameManager = GameManager.Instance;
+        if (playerWin)
+        {
+            gameManager.AddPlayerWin();
+
+            //play lose reaction between rounds
+            if (!gameManager.GameIsWon())
+            {
+                PlayLoseRoundAnimation();
+            }
+        }
+        else
+        {
+            gameManager.AddOpponentWin();
+        }
+
+        //check if game over
+        bool gameIsLost = gameManager.GameIsLost();
+        bool gameIsWon = gameManager.GameIsWon();
+        if (gameIsLost || gameIsWon)
+        {
+            if (gameIsLost)
+            {
+                Debug.Log("You Lose!");
+                gameManager.GameOver(false);
+            }
+            else if (gameIsWon)
+            {
+                Debug.Log("You Win!");
+                gameManager.GameOver(true);
+            }
+        }
+        //game continues
+        else
+        {
+            //switch server every round
+            playerServing = !playerServing;
+            if (!playerServing)
+            {
+                gameManager.balls[ballId].OpponentServe();
+            }
+            else
+            {
+                gameManager.balls[ballId].PlayerServe(playerServePosition);
+            }
+
+        }
     }
 
     virtual public IEnumerator PlayServeAnimation() 
@@ -87,8 +161,12 @@ public class Opponent : MonoBehaviour
     {
         if (GameManager.Instance)
         {
-            GameManager.Instance.OnGameLost -= PlayWinAnimation;
-            GameManager.Instance.OnGameWon -= PlayLoseAnimation;
+            var gameManager = GameManager.Instance;
+            gameManager.OnGameLost -= PlayWinAnimation;
+            gameManager.OnGameWon -= PlayLoseAnimation;
+            gameManager.balls.ForEach(b => b.OnPlayerHit -= OnPlayerHit);
+            gameManager.balls.ForEach(b => b.OnOpponentHit -= OnHit);
+            gameManager.balls.ForEach(b => b.OnExplodeFinished -= OnBallFinishedExploding);
         }
 
     }

@@ -19,13 +19,14 @@ public class BigBall : MultiBall
         else if (!patternEnded && Time.time - lastOpponentHitTime >= 2.0f / defaultSpeed)
         {
             patternEnded = true;
-            ExplodeBall(true);
+            StartCoroutine(ExplodeBall(true));
         }
     }
 
     public void HitBall()
     {
-        CalcOpponentBallPath2(ballPositions[currPosition]);
+        opponentShouldHit = true;
+        OpponentHit(GameManager.Instance.opponent, ballPositions[currPosition]);
         currPosition = (currPosition + 1) % ballPositions.Count;
     }
 

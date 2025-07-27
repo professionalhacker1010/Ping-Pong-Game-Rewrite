@@ -5,7 +5,7 @@ using UnityEngine;
 public class MultiBall : Pingpong
 {
     [SerializeField] private int starType = 0;
-    [SerializeField] private HealthBar.DamageType damageType;
+    [SerializeField] public HealthBar.DamageType damageType;
 
     //defining some custom behaviour for level 5
     private SpriteRenderer spriteRenderer;
@@ -24,6 +24,9 @@ public class MultiBall : Pingpong
 
     //health bars
     private HealthBar playerHealth, opponentHealth;
+
+    private bool endExplosionPlaying = false;
+    protected bool opponentShouldHit = false;
 
     protected override void Awake()
     {
@@ -71,70 +74,22 @@ public class MultiBall : Pingpong
                 lastOpponentHitTime = Time.time;
 
                 transform.position = currArm;
-                CalcOpponentBallPath2(ballPositions[currPosition]);
+                opponentShouldHit = true;
+                OpponentHit(GameManager.Instance.opponent, ballPositions[currPosition]);
                 currPosition = (currPosition + 1) % ballPositions.Count;
             }
             else if (!patternEnded)
             {
                 patternEnded = true;
-                StartCoroutine(EndExplosion());
+                endExplosionPlaying = true;
+                StartCoroutine(ExplodeBall(false, 0.5f, 1));
             }
         }
-    }
-
-    protected void CalcOpponentBallPath2(Vector3 v)
-    {
-        var opponent = GameManager.Instance.opponent;
-        base.OpponentHit(opponent, v);
     }
 
     public void SendToOrder(int i)
     {
         spriteRenderer.sortingOrder = i;
-    }
-
-    //everytime the score changes, reset the ball and have the opponent hit it when it's time in the pattern comes
-    public override void ExplodeBall(bool playerWin)
-    {
-        explodeAnimation.transform.position = ballAnimation.transform.position;
-        ballAnimation.SetTrigger("explodeBall");
-        explodeAnimation.SetTrigger("explodeBall");
-        shadow.SetTrigger("explodeBall");
-
-        float waitTime = 1f;
-        //wait for different amounts of time depending on whether player hit out or missed.
-        if (edgeBall)
-        {
-            waitTime -= currBallPath.bounceFrame / (24f * ballSpeed);
-        }
-        else if (netBall)
-        {
-            waitTime -= currBallPath.endFrame * 0.5f / (24f * ballSpeed);
-        }
-        else //then you're too late
-        {
-            //deal damage to player or opponent?
-            if (!playerWin) playerHealth.Damage(damageType);
-            else opponentHealth.Damage(damageType);
-        }
-
-        StopAllCoroutines();
-        StartCoroutine(WaitForPlayIn(waitTime));
-    }
-
-    private IEnumerator EndExplosion()
-    {
-        explodeAnimation.transform.localScale = new Vector3(0.5f, 0.5f);
-        explodeAnimation.transform.position = ballAnimation.transform.position;
-        ballAnimation.SetTrigger("explodeBall");
-        explodeAnimation.SetTrigger("explodeBall");
-        shadow.SetTrigger("explodeBall");
-        yield return new WaitForSeconds(0.2f);
-
-        cameraShaker.ShakeCamera(1);
-        yield return new WaitForSeconds(0.3f);
-
-        opponentHealth.Damage(0);
     }
 
     private IEnumerator WaitForPlayIn(float waitTime)
@@ -149,8 +104,6 @@ public class MultiBall : Pingpong
 
         yield return new WaitForSeconds((waitTime - .2f) / ballSpeed);
 
-        explodeAnimation.transform.localScale = new Vector3(1.0f, 1.0f); //reset explosion scale
-
 /*        startX = currArm.x;
         startY = currArm.y + 5.6f;*/
         edgeBall = false;
@@ -158,7 +111,7 @@ public class MultiBall : Pingpong
     }
 
     //every time setBall Path is called from the opponent, check how much time has elapsed.. temporarily adjust the ball speed so that the spacing between hits is the same
-    protected override void SetBallPath(int startFrame, int endFrame, bool playerLose)
+/*    protected override void SetBallPath(int startFrame, int endFrame, bool playerLose)
     {
         //print("Set ball path");
         float elapsedTime = Time.time - lastOpponentHitTime;
@@ -172,14 +125,16 @@ public class MultiBall : Pingpong
         }
 
         base.SetBallPath(startFrame, endFrame, playerLose);
-    }
+    }*/
 
     protected void SetBallPath2(int startFrame, int endFrame, bool playerLose)
     {
         base.SetBallPath(startFrame, endFrame, playerLose);
     }
 
-    public override void OpponentHit(Opponent opponent, Vector3 opponentBallPath) //damn lol
+    protected override void OpponentHit(Opponent opponent, Vector3 opponentBallPath)
     {
+        if (opponentShouldHit) base.OpponentHit(opponent, opponentBallPath);
+        opponentShouldHit = false;
     }
 }

@@ -101,6 +101,8 @@ MonoBehaviour:
   hitPattern: {fileID: 11400000, guid: 4b46c0c665447f84da0faafa061f9d51, type: 2}
   servePosition: {x: 0, y: 2.7, z: 0}
   serveTime: 2
+  playerServing: 0
+  playerServePosition: {x: 0, y: -2, z: 0}
   gameModeOverride: {fileID: 11400000, guid: 791b8b6ce29ca8d4d8b4f95269d4da1d, type: 2}
   ballSpeeds:
   - 1.5

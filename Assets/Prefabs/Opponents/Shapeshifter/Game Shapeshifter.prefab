@@ -190,6 +190,8 @@ MonoBehaviour:
   hitPattern: {fileID: 11400000, guid: 4b46c0c665447f84da0faafa061f9d51, type: 2}
   servePosition: {x: 0, y: 2.7, z: 0}
   serveTime: 2
+  playerServing: 1
+  playerServePosition: {x: 0, y: -2, z: 0}
   gameModeOverride: {fileID: 0}
   startIntroWaitTime: 1
   shapeShifterObject: {fileID: 8041789778340343188, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}

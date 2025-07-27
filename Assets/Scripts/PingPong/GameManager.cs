@@ -172,4 +172,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.MoveGameObjectToScene(go, SceneManager.GetSceneByName(gameScene));
     }
+
+    public int AddBall(Pingpong ball)
+    {
+        balls.Add(ball);
+        return balls.Count - 1;
+    }
 }
