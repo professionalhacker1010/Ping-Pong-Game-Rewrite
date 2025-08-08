@@ -11,8 +11,8 @@ public class HealthBar : MonoBehaviour
     }
 
     [SerializeField] private RectTransform bar;
-    [SerializeField] private bool isPlayerHealth;
     private float points = 0;
+    public float Points { get => points; }
     private float smallStarDamage = 0, largeStarDamage = 0, hitOutDamage = 0; //when to trigger stuff based on how filled the bar is
     private float barUnit = 0;
 
@@ -37,27 +37,5 @@ public class HealthBar : MonoBehaviour
         else if (strength == DamageType.LARGE) points -= largeStarDamage;
         else if (strength == DamageType.BADHIT) points -= hitOutDamage;
         bar.sizeDelta = new Vector2(bar.sizeDelta.x, barUnit * points);
-
-        if (points <= 0)
-        {
-            if (isPlayerHealth)
-            {
-                //trigger lose game stuff... or reset to last checkpoint
-                print("player health is ZERO");
-                GameManager.Instance.GameOver(false);
-            }
-            else
-            {
-                //trigger win game stuff
-                print("opponent health is ZERO");
-                GameManager.Instance.GameOver(true);
-            }
-            
-        }
-    }
-
-    public float Points()
-    {
-        return points;
     }
 }

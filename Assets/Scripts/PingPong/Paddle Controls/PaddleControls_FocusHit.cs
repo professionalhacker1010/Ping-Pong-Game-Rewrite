@@ -66,7 +66,7 @@ public class PaddleControls_FocusHit : PaddleControls
         }
     }
 
-    public void ResetFocusHit()
+    public void ResetFocusHit(int ballId, bool playerWin, bool edgeBall, bool netBall)
     {
         playerHitHeld = false;
         hitHeldFrames = 0;

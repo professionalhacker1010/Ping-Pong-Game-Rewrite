@@ -17,7 +17,7 @@ public class Kevin : Opponent
     [SerializeField] private Vector3 kevinMisses;
     [SerializeField] private GameObject tutorialUI, holdSpace, releaseToSlam;
 
-    public override Vector3 GetBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
         //reset pattern if player lost
         if (playerLost())

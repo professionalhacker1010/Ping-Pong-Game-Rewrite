@@ -2,6 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//virtual functions:
+//override protected void Start() : Setup subscriptions
+//override protected void StartGame() : Game-related behavior for starting
+//override public Vector3 GetBallPath(float X, float Y, bool isServing) : Logic for where opponent hits next, if they hit successfully or not. Called by Pingpong
+//override public void OnPlayerHit(int ballId, float startX, float startY, Vector3 end, int hitFrame) : Most likely for animating opponent hitting the ball
+//override public void OnHit(int ballId, float X, float Y) : Invoked by Pinpong after player hits and ball reaches opponent, or when Pingpong::OpponentServe called
+//override protected void OnBallFinishedExploding(int ballId, bool playerWin, bool edgeBall, bool netBall) : Determine scoring and win states
+//override protected void OnDestroy() : Unsubscribe
+//
+//sandbox functions:
+//IEnumerator TweenPositionX(float startX, float endX, int frames, float frameRate = 1 / 24f)
+
 public class Opponent : MonoBehaviour
 {
     
@@ -48,7 +60,7 @@ public class Opponent : MonoBehaviour
             var gameManager = GameManager.Instance;
             if (!playerServing)
             {
-                gameManager.balls[0].OpponentServe();
+                gameManager.balls[0].OpponentServe(servePosition);
             }
             else
             {
@@ -58,7 +70,7 @@ public class Opponent : MonoBehaviour
     }
 
     //defines behavior of where opponent hits based on where player hits - make custom behavior for each opponent
-    virtual public Vector3 GetBallPath(float X, float Y, bool isServing)
+    virtual public Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
         int i = (int) Random.Range(0, hitPattern[0].size);
         return hitPattern[0][i];
@@ -117,7 +129,7 @@ public class Opponent : MonoBehaviour
             playerServing = !playerServing;
             if (!playerServing)
             {
-                gameManager.balls[ballId].OpponentServe();
+                gameManager.balls[ballId].OpponentServe(servePosition);
             }
             else
             {
@@ -132,7 +144,7 @@ public class Opponent : MonoBehaviour
         yield return new WaitForSeconds(serveTime);
     }
 
-    virtual public void PlayWinAnimation()
+    virtual protected void PlayWinAnimation()
     {
         animator.SetTrigger("Win");
     }

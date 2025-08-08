@@ -31,7 +31,7 @@ public class TransitionOpponent : ShapeShifterPhase
         animator.SetTrigger("Out");
     }
 
-    public override Vector3 GetBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
         int prevTransform = currTransitionCircleTransform;
         Vector3 hit = new Vector3(X, Y);
@@ -56,6 +56,6 @@ public class TransitionOpponent : ShapeShifterPhase
             return missHit;
         }
 
-        return base.GetBallPath(X, Y, isServing);
+        return base.GetBallPath(ballId, X, Y, isServing);
     }
 }

@@ -29,10 +29,10 @@ public class Shapeshifter : Opponent
         
     }
 
-    public override Vector3 GetBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
         Vector3 hit = new Vector3(X, Y);
-        if (!isShapeshifting) hit = currPhase.GetBallPath(X, Y, isServing);
+        if (!isShapeshifting) hit = currPhase.GetBallPath(ballId, X, Y, isServing);
         if (currPhase.isDefeated && !isShapeshifting)
         {
             Debug.Log(currPhase.gameObject.name + " defeated. Hit: " + hit.ToString());
@@ -142,10 +142,6 @@ public class Shapeshifter : Opponent
 
         //need to wait a bit longer if serving right after a shapeshift...
         yield return currPhase.PlayServeAnimation();
-    }
-
-    public override void PlayWinAnimation()
-    {
     }
 
     public override void PlayLoseAnimation()

@@ -22,7 +22,7 @@ public class Speedy : Opponent
 
     //speedy hits out if you hit the ball really far apart, one end then the other
     //player can tell because their hits mirror yours at a slightly wider angle ALWAYS.
-    public override Vector3 GetBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
         Debug.Log((X - prevX).ToString());
 

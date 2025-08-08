@@ -106,14 +106,15 @@ public class GameManager : MonoBehaviour
     public void GameOver(bool playerWon)
     {
         LevelManager.SetLevelPlayed(LevelManager.chosenOpponent);
+
         if (playerWon)
         {
             LevelManager.SetLevelWon(LevelManager.chosenOpponent);
-            OnGameWon();
+            if (OnGameWon != null) OnGameWon();
         }
         else
         {
-            OnGameLost();
+            if (OnGameLost != null) OnGameLost();
         }
     }
 

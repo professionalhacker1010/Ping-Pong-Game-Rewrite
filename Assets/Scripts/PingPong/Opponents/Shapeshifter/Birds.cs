@@ -38,7 +38,7 @@ public class Birds : ShapeShifterPhase
         }
     }
 
-    public override Vector3 GetBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
         Vector3 hit = new Vector3(X, Y);
 
@@ -52,7 +52,7 @@ public class Birds : ShapeShifterPhase
                     Debug.Log("Hit a bird");
                     shouldHit = false;
                     StartCoroutine(DeactivateBird(i)); //todo: bird getting hit animation? Or just a sound effect is good enough lol
-                    return base.GetBallPath(X, Y, isServing);
+                    return base.GetBallPath(ballId, X, Y, isServing);
                 }
             }
         }
@@ -72,7 +72,7 @@ public class Birds : ShapeShifterPhase
         if (candidates.Count > 0)
         {
             birdHitter = candidates[Random.Range(0, candidates.Count)];
-            return base.GetBallPath(X, Y, isServing);
+            return base.GetBallPath(ballId, X, Y, isServing);
         }
         
 

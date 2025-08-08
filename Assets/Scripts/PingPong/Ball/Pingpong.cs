@@ -33,16 +33,13 @@ public class Pingpong : MonoBehaviour
     //window of frames player has to hit back
     [SerializeField] private int hitBackFrames, hitBackLeeway;
     private int frameCount = 0; //keeps track of the frames from the opponent's hit only
-    [SerializeField] private Vector3 playerServePosition;
 
     //public variables
-    public bool playerServing = true;
     public bool thisBallInteractable = false;
     public float ballSpeed = 1.0f;
 
     //events
-    public event Action OnExplode;
-    public event Action<int, bool, bool, bool> OnExplodeFinished;
+    public event Action<int, bool, bool, bool> OnExplode, OnExplodeFinished;
     public event Action<int, float, float, Vector3, int> OnPlayerHit;
     public event Action<int, float, float> OnOpponentHit;
 
@@ -96,7 +93,7 @@ public class Pingpong : MonoBehaviour
         //debug color
         if (!thisBallInteractable)
         {
-            ballAnimation.GetComponent<SpriteRenderer>().color = Color.black;
+            //ballAnimation.GetComponent<SpriteRenderer>().color = Color.red;
         }
         else
         {
@@ -168,7 +165,7 @@ public class Pingpong : MonoBehaviour
             
             float startXOpponent = ballPathInfo.x[ballPathInfo.x.Count - 1];
             float startYOpponent = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;
-            Vector3 opponentBallEnd = opponent.GetBallPath(startXOpponent, startYOpponent - normalizer, false);
+            Vector3 opponentBallEnd = opponent.GetBallPath(id, startXOpponent, startYOpponent - normalizer, false);
             if (OnPlayerHit != null) OnPlayerHit(id, startX, startY - normalizer, opponentBallEnd, currBallPath.endFrame);
 
             StartCoroutine(Util.VoidCallbackTimer(currBallPath.endFrame / (24f * ballSpeed),
@@ -179,6 +176,7 @@ public class Pingpong : MonoBehaviour
 
     protected virtual void OpponentHit(Opponent opponent, Vector3 opponentBallPath)
     {
+        //print("OpponentHit");
         //calc
         float startX = ballPathInfo.x[ballPathInfo.x.Count - 1];
         float startY = ballPathInfo.y[ballPathInfo.y.Count - 1] + normalizer;
@@ -190,6 +188,10 @@ public class Pingpong : MonoBehaviour
         if (opponentBallPath.z == 2.0f)
         {
             StartCoroutine(ExplodeBall(true, 0.5f));
+        }
+        else if (opponentBallPath.z == 3.0f)
+        {
+            if (OnOpponentHit != null) OnOpponentHit(id, startX, startY - normalizer);
         }
         else
         {
@@ -283,7 +285,7 @@ public class Pingpong : MonoBehaviour
             {
                 //PaddleControls.UnlockInputs();
                 thisBallInteractable = true;
-                Debug.Log("Hit back window started");
+                //Debug.Log("Hit back window started");
             }
             frameCount++;
             yield return new WaitForSeconds(1 / (24f * ballSpeed));
@@ -298,17 +300,18 @@ public class Pingpong : MonoBehaviour
         }
     }
 
-    public IEnumerator WaitForOpponentServe()
+    public IEnumerator WaitForOpponentServe(Vector3 servePosition)
     {
-        print("Waitforopponentserve");
+        //print("Waitforopponentserve");
         if (TransitionManager.Instance) yield return new WaitUntil(() => TransitionManager.Instance.isTransitioning == false);
 
         var opponent = GameManager.Instance.opponent;
 
-        float startX = opponent.servePosition.x;
-        float startY = opponent.servePosition.y + normalizer;
-        ballAnimation.transform.position = opponent.servePosition;
-        Vector3 opponentBallPath = opponent.GetBallPath(startX, startY-normalizer, true);
+        servePosition.y += normalizer;
+        float startX = servePosition.x;
+        float startY = servePosition.y;
+        ballAnimation.transform.position = servePosition;
+        Vector3 opponentBallPath = opponent.GetBallPath(id, startX, startY-normalizer, true);
 
         yield return opponent.PlayServeAnimation();
 
@@ -322,8 +325,7 @@ public class Pingpong : MonoBehaviour
 
     public IEnumerator ExplodeBall(bool playerWin, float explosionScale = 1.0f, int shakeStrength = 0)
     {
-        if (OnExplode != null) OnExplode();
-        //Debug.Log("Explode ball");
+        if (OnExplode != null) OnExplode(id, playerWin, edgeBall, netBall);
         explodeAnimation.transform.localScale = new Vector3(explosionScale, explosionScale);
         explodeAnimation.transform.position = ballAnimation.transform.position;
         ballAnimation.SetTrigger("explodeBall");
@@ -367,10 +369,10 @@ public class Pingpong : MonoBehaviour
         }
     }
 
-    public void OpponentServe()
+    public void OpponentServe(Vector3 servePosition)
     {
         ballAnimation.SetTrigger("opponentWaitServe");
-        StartCoroutine(WaitForOpponentServe());
+        StartCoroutine(WaitForOpponentServe(servePosition));
     }
 
     public void PlayerServe(Vector3 playerServePos)

@@ -45,7 +45,7 @@ public class GameDev : Opponent
         }
     }
 
-    public override Vector3 GetBallPath(float X, float Y, bool isServing)
+    public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
         var playerScore = GameManager.Instance.GameUI.PlayerScoreUI;
         var opponentScore = GameManager.Instance.GameUI.OpponentScoreUI;
@@ -88,7 +88,7 @@ public class GameDev : Opponent
             }
         }
 
-        return base.GetBallPath(X, Y, isServing);
+        return base.GetBallPath(ballId, X, Y, isServing);
     }
 
     public override void OnPlayerHit(int ballId, float startX, float startY, Vector3 end, int hitFrame) //this is where glitches are called
@@ -196,12 +196,6 @@ public class GameDev : Opponent
     public override IEnumerator PlayLoseRoundAnimation()  //kinda JANKY but using this function to move UI while player is serving
     {
         yield return null;
-    }
-
- 
-
-    public override void PlayWinAnimation()
-    {
     }
 
     public override void PlayLoseAnimation()
