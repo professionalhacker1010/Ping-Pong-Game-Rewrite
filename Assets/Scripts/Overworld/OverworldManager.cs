@@ -41,7 +41,6 @@ public class OverworldManager : MonoBehaviour
 
     private void Start()
     {
-        TransitionManager.Instance.activeScene = gameScene;
         SceneManager.sceneLoaded += SceneManager_sceneLoaded;
     }
 
@@ -58,11 +57,11 @@ public class OverworldManager : MonoBehaviour
 
     public void TransitionToOverworld(string scene)
     {
+        var cc = FindObjectOfType<CharacterControls>();
         for (int i = 0; i < sceneInfo.Count; i++)
         {
-            if (sceneInfo[i].name == gameScene)
+            if (sceneInfo[i].name == gameScene && cc != null)
             {
-                var cc = FindObjectOfType<CharacterControls>();
                 sceneInfo[i].spawnPos = cc.transform.position;
                 sceneInfo[i].facingLeft = cc.FacingLeft;
             }

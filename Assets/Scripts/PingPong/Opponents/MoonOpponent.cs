@@ -82,8 +82,8 @@ public class MoonOpponent : Opponent
         
         Vector3 servePos = servePositions[Random.Range(0, servePositions.Count)];
         int count = 0;
-        //bool hasBigStar = (currVolley == hitPattern.patterns[currPattern].size - 1);
-        bool hasBigStar = (currVolley == 1);
+        bool hasBigStar = (currVolley == hitPattern.patterns[currPattern].size - 1);
+        //bool hasBigStar = (currVolley == 1);
 
         for (int i = 0; i < gameManager.balls.Count; i++)
         {
@@ -159,7 +159,11 @@ public class MoonOpponent : Opponent
             {
                 ball.gameObject.SetActive(false);
                 ballInfo[ballId].active = false;
-                if (ballInfo[ballId].volleyId == currVolley) numFinishedBalls++;
+                print("ball disappeared with id " + ballId + ", volleyId " + ballInfo[ballId].volleyId);
+                if (ballInfo[ballId].volleyId == currVolley)
+                {
+                    numFinishedBalls++; print("numFinishedBalls " + numFinishedBalls);
+                }
                 CheckProgress();
             }
 
@@ -198,7 +202,11 @@ public class MoonOpponent : Opponent
     protected override void OnBallFinishedExploding(int ballId, bool playerWin, bool edgeBall, bool netBall)
     {
         ballInfo[ballId].active = false;
-        if (ballInfo[ballId].volleyId == currVolley && !ballInfo[ballId].isBigStar) numFinishedBalls++;
+        print("ball exploded with id " + ballId + ", volleyId " + ballInfo[ballId].volleyId);
+        if (ballInfo[ballId].volleyId == currVolley && !ballInfo[ballId].isBigStar)
+        {
+            numFinishedBalls++; print("numFinishedBalls " + numFinishedBalls);
+        }
 
         bool gameOver = false;
 
@@ -235,6 +243,7 @@ public class MoonOpponent : Opponent
             currVolley = (currVolley + 1) % positions.Count;
             numFinishedBalls = 0;
             damageMode = false;
+            print("starting volley " + currVolley);
             StartCoroutine(ServeBalls());
         }
 
@@ -245,6 +254,7 @@ public class MoonOpponent : Opponent
             currVolley = 0;
             numFinishedBalls = 0;
             damageMode = false;
+            print("starting pattern " + currPattern);
             StartCoroutine(ServeBalls());
         }
     }

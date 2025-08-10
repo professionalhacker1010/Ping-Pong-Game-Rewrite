@@ -109,11 +109,13 @@ public class GameManager : MonoBehaviour
 
         if (playerWon)
         {
+            playerWins = gameMode.winRounds;
             LevelManager.SetLevelWon(LevelManager.chosenOpponent);
             if (OnGameWon != null) OnGameWon();
         }
         else
         {
+            opponentWins = gameMode.winRounds;
             if (OnGameLost != null) OnGameLost();
         }
     }
