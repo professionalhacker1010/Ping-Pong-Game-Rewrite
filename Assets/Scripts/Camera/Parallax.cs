@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    [SerializeField] private float distance; //0 means it follows the camera as if it were in the foreground (no edit to transform), 1 means that it stays completely still relative to camera
-    [SerializeField] private float startParallax;
     [SerializeField] Vector2 minmaxX;
-    //public float distance;
+
     private Camera cam;
-    private float prevCamX;
     private Vector2 minMaxCameraX;
+    bool staticFollow = false;
+
+    private void Awake()
+    {
+        staticFollow = (minmaxX.x == 0 && minmaxX.y == 0);
+    }
 
     private void Start()
     {
         cam = FindObjectOfType<Camera>();
-        prevCamX = cam.transform.position.x;
 
         minMaxCameraX = OverworldManager.Instance.GetSceneInfo().minMaxCameraX;
 
@@ -27,19 +29,24 @@ public class Parallax : MonoBehaviour
     {
         float camX = cam.transform.position.x;
 
+        if (staticFollow)
+        {
+            transform.localPosition = new Vector3(camX, transform.localPosition.y, transform.localPosition.z);
+            return;
+        }
+
         float lerp = Mathf.InverseLerp(minMaxCameraX.x, minMaxCameraX.y, camX);
         float newX = Mathf.Lerp(minmaxX.x, minmaxX.y, lerp);
         transform.localPosition = new Vector3(newX, transform.localPosition.y, transform.localPosition.z);
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        //Parallax();
-        /*        if (camX >= startParallax)
-                {
-                    float x = distance * (camX - prevCamX);
-                    transform.position = new Vector3(transform.position.x + x, transform.position.y);
-                }
-                prevCamX = camX;*/
+        if (cam)
+        {
+            var cf = cam.GetComponent<CameraFollower>();
+            cf.afterUpdate -= DoParallax;
+        }
+
     }
 }

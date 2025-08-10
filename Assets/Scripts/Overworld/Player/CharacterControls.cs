@@ -16,7 +16,7 @@ public class CharacterControls : MonoBehaviour
     private int movementLocks = 0;
     private bool movementHalted;
 
-    List<IHittable> candidateHittables;
+    IHittable currHittableCandidate;
     ICanInteract prevInteractableCandidate, currInteractableCandidate;
 
     public event Action OnFaceLeft, OnFaceRight, OnInteract, OnHit;
@@ -32,7 +32,7 @@ public class CharacterControls : MonoBehaviour
     private void Awake()
     {
         hitBox = GetComponent<BoxCollider2D>();
-        candidateHittables = new List<IHittable>();
+        currHittableCandidate = null;
         prevInteractableCandidate = null;
         currInteractableCandidate = null;
     }
@@ -157,14 +157,19 @@ public class CharacterControls : MonoBehaviour
         activeHitBox.OverlapCollider(contactFilter, results);
 
         //hit and interactable candidates
-        candidateHittables.Clear();
+        currHittableCandidate = null;
         currInteractableCandidate = null;
         foreach (var item in results)
         {
             IHittable hittable = item.GetComponent<IHittable>();
             if (hittable != null)
             {
-                candidateHittables.Add(hittable);
+                if (currHittableCandidate == null ||
+                    Vector2.Distance(item.gameObject.transform.position, transform.position) < Vector2.Distance(item.gameObject.transform.position, transform.position))
+                {
+                    currHittableCandidate = hittable;
+
+                }
             }
 
             ICanInteract interactable = item.GetComponent<ICanInteract>();
@@ -194,7 +199,7 @@ public class CharacterControls : MonoBehaviour
     private void Hit()
     {
         if (OnHit != null) OnHit();
-        if (candidateHittables.Count > 0) candidateHittables[0].OnHit();
+        if (currHittableCandidate != null) currHittableCandidate.OnHit();
     }
 
     private void Interact()

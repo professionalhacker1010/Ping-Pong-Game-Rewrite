@@ -59,7 +59,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     protected DialogueRunner dialogueRunner;
 
     //events
-    public event Action OnHitEvent;
+    //public event Action OnHitEvent;
 
     [SerializeField] protected string conditionPrefix;
 
@@ -160,7 +160,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
 
     public virtual void OnHit()
     {
-        if (OnHitEvent != null) OnHitEvent();
+        //if (OnHitEvent != null) OnHitEvent();
     }
 
     #endregion

@@ -247,9 +247,11 @@ MonoBehaviour:
   keyPressPrompts:
   - {fileID: 1545215459}
   - {fileID: 1750927967}
+  - {fileID: 1545215459}
   keyNames:
   - space
   - C
+  - '?'
 --- !u!4 &908985654
 Transform:
   m_ObjectHideFlags: 0

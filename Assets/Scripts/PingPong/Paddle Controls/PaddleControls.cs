@@ -48,8 +48,11 @@ public class PaddleControls : MonoBehaviour
 
     protected virtual void Start()
     {
-        TransitionManager.Instance.OnTransitionOut += LockInputs;
-        TransitionManager.Instance.OnTransitionIn += UnlockInputs;
+        if (TransitionManager.Instance)
+        {
+            TransitionManager.Instance.OnTransitionOut += LockInputs;
+            TransitionManager.Instance.OnTransitionIn += UnlockInputs;
+        }
     }
 
     protected virtual void Update()
@@ -106,10 +109,11 @@ public class PaddleControls : MonoBehaviour
 
     protected virtual void ProcessInput()
     {
-        if (playerHitDown)
+        var gameManager = GameManager.Instance;
+        if (playerHitDown && gameManager)
         {
             //check which ball is interactable, hit the first one and exit loop
-            foreach (var ball in GameManager.Instance.balls)
+            foreach (var ball in gameManager.balls)
             {
                 if (ball.thisBallInteractable)
                 {

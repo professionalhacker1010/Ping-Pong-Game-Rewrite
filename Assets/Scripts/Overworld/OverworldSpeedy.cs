@@ -9,14 +9,4 @@ public class OverworldSpeedy : OverworldCharacter
         base.Awake();
         Conditions.Initialize(conditionPrefix + "_hasDrink", false);
     }
-
-    public override void OnHit()
-    {
-        base.OnHit();
-    }
-
-    public override void OnInteract()
-    {
-        base.OnInteract();
-    }
 }
