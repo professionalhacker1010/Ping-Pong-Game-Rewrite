@@ -1190,6 +1190,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: OverworldManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: gameScene
+      value: Restaurant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.data[2].name
+      value: Restaurant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.data[2].facingLeft
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.data[2].spawnPos.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.data[2].spawnPos.y
+      value: -2.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.data[2].minMaxCameraX.x
+      value: 3.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.data[2].minMaxCameraX.y
+      value: 76.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
