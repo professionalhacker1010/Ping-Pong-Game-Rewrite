@@ -7,6 +7,7 @@ using System;
 public class TransitionManager : MonoBehaviour
 {
     private Animator animator;
+    private UnityEngine.UI.Image image;
     public GameObject transitionObject;
 
     public bool isTransitioning = false; //for pause menu - don't wanna be able to pause while transitioning
@@ -29,6 +30,7 @@ public class TransitionManager : MonoBehaviour
     {
         _instance = this;
         animator = transitionObject.GetComponent<Animator>();
+        image = transitionObject.GetComponent<UnityEngine.UI.Image>();
     }
     #endregion
 
@@ -76,10 +78,12 @@ public class TransitionManager : MonoBehaviour
     private IEnumerator PlayTransition(bool value, string trigger, string scene = "")
     {
         animator.SetTrigger(trigger);
+        StartCoroutine(ResetSize(5.0f));
 
         if (value == true && OnTransitionOut != null) OnTransitionOut();
 
         yield return new WaitForEndOfFrame();
+
         yield return new WaitForSecondsRealtime(animator.GetCurrentAnimatorStateInfo(0).length);
 
         if (scene != "")
@@ -95,5 +99,16 @@ public class TransitionManager : MonoBehaviour
 
         isTransitioning = value;
         animator.ResetTrigger(trigger);
+    }
+
+    private IEnumerator ResetSize(float time)
+    {
+        float t = 0f;
+        while (t <= time)
+        {
+            yield return new WaitForEndOfFrame();
+            t += Time.unscaledDeltaTime;
+            image.SetNativeSize();
+        }
     }
 }

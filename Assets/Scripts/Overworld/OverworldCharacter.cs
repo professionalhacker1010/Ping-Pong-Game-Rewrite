@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
 using System;
-using UnityEditor.Experimental.GraphView;
 
 public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
 {

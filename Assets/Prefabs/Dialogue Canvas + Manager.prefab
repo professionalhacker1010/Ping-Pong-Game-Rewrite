@@ -1179,19 +1179,7 @@ MonoBehaviour:
       m_Calls: []
   onDialogueStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4832654826168602245}
-        m_TargetAssemblyTypeName: CutsceneDatabase, Assembly-CSharp
-        m_MethodName: EnableBubble
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDialogueComplete:
     m_PersistentCalls:
       m_Calls:
@@ -1274,7 +1262,7 @@ MonoBehaviour:
   continueActionType: 1
   continueActionKeyCode: 32
   continueActionButtonName: Jump
-  continueActionOnButtonRelease: 0
+  continueActionOnButtonRelease: 1
 --- !u!1 &4832654826418636327
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,28 +13,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8041789778340343190, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0c19b4b4262e9da4eaade0a3eeff621e, type: 3}
-    - target: {fileID: 8041789778340343190, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
       propertyPath: m_SortingLayer
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8041789778340343190, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
       propertyPath: m_SortingLayerID
       value: -1144040497
-      objectReference: {fileID: 0}
-    - target: {fileID: 8041789778340343191, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.010000229
-      objectReference: {fileID: 0}
-    - target: {fileID: 8041789778340343191, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.4999998
-      objectReference: {fileID: 0}
-    - target: {fileID: 8041789778340343191, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.6682799
       objectReference: {fileID: 0}
     - target: {fileID: 8041789778581789767, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
       propertyPath: m_RootOrder
@@ -84,8 +68,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overworld Shapeshifter
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8041789778340343186, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -163,17 +146,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c090118ed01bd4648ab06eba5578f18e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 2480198943629176163, guid: 3b5beb22a27f9ac4d85f287c97308bbd, type: 3}
   dialogueSequences:
   - nodePrefix: preGame
     numNodes: 3
     condition: '!level_won_1'
-    trigger: 
+    trigger: 0
     endBehavior: 0
   - nodePrefix: postGame
     numNodes: 3
     condition: level_won_1
-    trigger: shapeshifter_startTrigger
+    trigger: 0
     endBehavior: 0
   turnsToPlayer: 0
   facingLeft: 1

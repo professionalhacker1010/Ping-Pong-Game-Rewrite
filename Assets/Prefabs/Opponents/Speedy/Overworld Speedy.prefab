@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3494757529961602027, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.17
+      value: -2.72
       objectReference: {fileID: 0}
     - target: {fileID: 3494757529961602028, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       propertyPath: m_FlipX
@@ -19,7 +19,7 @@ PrefabInstance:
     - target: {fileID: 3494757529961602028, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b5caf14b6961ccf4db03cac845f7b271, type: 3}
+      objectReference: {fileID: 21300000, guid: 82d9df5d7c6910b4e9e50bcbe07cf47c, type: 3}
     - target: {fileID: 3494757529961602028, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       propertyPath: m_SortingLayer
       value: 7
@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c2988868833a54294ed4a27f8451f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 2480198943629176163, guid: 75dfd1cd7025dd548bb0ad6dac8ec7f3, type: 3}
   dialogueSequences:
   - nodePrefix: preGame
     numNodes: 3

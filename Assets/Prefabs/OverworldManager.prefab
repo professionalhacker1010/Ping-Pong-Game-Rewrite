@@ -54,3 +54,7 @@ MonoBehaviour:
     spawnPos: {x: -5.07961, y: -2.19}
     facingLeft: 1
     minMaxCameraX: {x: -28.21, y: -8.92}
+  - name: Restaurant
+    spawnPos: {x: 0, y: -2.19}
+    facingLeft: 0
+    minMaxCameraX: {x: 3.78, y: 76.6}
