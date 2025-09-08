@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4651c43c40d9c7d45b897e270eaafe30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wantedAspectRatio: 1.7777778
+  _wantedAspectRatio: 1.777778
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

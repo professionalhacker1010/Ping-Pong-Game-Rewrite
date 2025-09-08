@@ -146,12 +146,12 @@ public class Opponent : MonoBehaviour
 
     virtual protected void PlayWinAnimation()
     {
-        animator.SetTrigger("Win");
+        if (animator) animator.SetTrigger("Win");
     }
 
     virtual public void PlayLoseAnimation()
     {
-        animator.SetTrigger("Lose");
+        if (animator) animator.SetTrigger("Lose");
     }
 
     virtual public IEnumerator PlayLoseRoundAnimation()
@@ -164,7 +164,7 @@ public class Opponent : MonoBehaviour
         float incX = (endX - startX) / (float) frames;   
         for (int i = 0; i < frames; i++)
         {
-            animator.transform.position = new Vector3(animator.transform.position.x + incX, animator.transform.position.y);
+            if (animator) animator.transform.position = new Vector3(animator.transform.position.x + incX, animator.transform.position.y);
             yield return new WaitForSeconds(frameRate);
         }
     }

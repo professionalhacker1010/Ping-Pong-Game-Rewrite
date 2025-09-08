@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.UI;
 
 public class TransitionManager : MonoBehaviour
 {
-    private Animator animator;
-    private UnityEngine.UI.Image image;
-    public GameObject transitionObject;
+    public List<GameObject> transitionObjects;
+    private List<Image> images;
+    private List<Animator> animators;
 
     public bool isTransitioning = false; //for pause menu - don't wanna be able to pause while transitioning
     public event Action OnTransitionIn, OnTransitionOut;
@@ -29,8 +30,12 @@ public class TransitionManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-        animator = transitionObject.GetComponent<Animator>();
-        image = transitionObject.GetComponent<UnityEngine.UI.Image>();
+
+        images = new List<Image>();
+        transitionObjects.ForEach(i => images.Add(i.GetComponent<Image>()));
+
+        animators = new List<Animator>();
+        transitionObjects.ForEach(i => animators.Add(i.GetComponent<Animator>()));
     }
     #endregion
 
@@ -58,33 +63,33 @@ public class TransitionManager : MonoBehaviour
     public void QuickOut(string scene)
     {
         Debug.Log("quick out called");
-        animator.speed = 1f;
+        animators.ForEach(i => i.speed = 1f);
         StartCoroutine(PlayTransition(true, "QuickOut", scene));
     }
 
     public void SlowOut(string scene)
     {
-        animator.speed = 1f;
+        animators.ForEach(i => i.speed = 1f);
         StartCoroutine(PlayTransition(true, "SlowOut", scene));
     }
 
     private IEnumerator DeactivateObject()
     {
         yield return new WaitForSecondsRealtime(3.0f);
-        yield return new WaitForSecondsRealtime(animator.GetCurrentAnimatorStateInfo(0).length);
-        animator.speed = 0f;
+        yield return new WaitForSecondsRealtime(animators[0].GetCurrentAnimatorStateInfo(0).length);
+        animators.ForEach(i => i.speed = 0f);
     }
 
     private IEnumerator PlayTransition(bool value, string trigger, string scene = "")
     {
-        animator.SetTrigger(trigger);
-        StartCoroutine(ResetSize(5.0f));
+        animators.ForEach(i => i.SetTrigger(trigger));
+        StartCoroutine(ResetSize(3.0f));
 
         if (value == true && OnTransitionOut != null) OnTransitionOut();
 
         yield return new WaitForEndOfFrame();
 
-        yield return new WaitForSecondsRealtime(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSecondsRealtime(animators[0].GetCurrentAnimatorStateInfo(0).length);
 
         if (scene != "")
         {
@@ -98,7 +103,7 @@ public class TransitionManager : MonoBehaviour
         if (value == false && OnTransitionIn != null) OnTransitionIn();
 
         isTransitioning = value;
-        animator.ResetTrigger(trigger);
+        animators.ForEach(i => i.ResetTrigger(trigger));
     }
 
     private IEnumerator ResetSize(float time)
@@ -108,7 +113,7 @@ public class TransitionManager : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
             t += Time.unscaledDeltaTime;
-            image.SetNativeSize();
+            images.ForEach(i => { if (i.gameObject.name != "Mask") i.SetNativeSize(); });
         }
     }
 }

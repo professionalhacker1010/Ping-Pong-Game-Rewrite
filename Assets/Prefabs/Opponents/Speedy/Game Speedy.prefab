@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3494757529961602027, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3494757531041029252, guid: f52ef1fd2ca2c764cb28d2a811f1b370, type: 3}
       propertyPath: m_Name
       value: Game Speedy

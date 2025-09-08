@@ -103,6 +103,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6560104881772327725, guid: 04e3668f1beae094790f93b1180e5cfd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 6560104883441580518, guid: 04e3668f1beae094790f93b1180e5cfd, type: 3}
       propertyPath: m_Name
       value: Game Kevin
