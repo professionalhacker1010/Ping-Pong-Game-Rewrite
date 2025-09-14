@@ -208,10 +208,10 @@ MonoBehaviour:
   startIntroWaitTime: 1
   shapeShifterObject: {fileID: 8041789778340343188, guid: aac73661bb6ca514dae06adee10a5fe1, type: 3}
   phasePrefabs:
+  - {fileID: 6139375016048678166, guid: 034e7c6d79585554abee806a6e288eed, type: 3}
   - {fileID: 8740075363017259741, guid: 3bc18c2d64a729b478c10554c80b3e93, type: 3}
   - {fileID: 6623637422923418114, guid: bb2e5318c7122d9419f856854b18550d, type: 3}
   - {fileID: 8506727967192215410, guid: 22059c60d325af04591ea8aba332556a, type: 3}
-  - {fileID: 6139375016048678166, guid: 034e7c6d79585554abee806a6e288eed, type: 3}
   poofPrefab: {fileID: 1288147394776459297, guid: cfae55891da4d4642b1170bc327e8d2b, type: 3}
   poofOffset: {x: 0, y: 2.9, z: 0}
 --- !u!4 &4366197742057743194 stripped

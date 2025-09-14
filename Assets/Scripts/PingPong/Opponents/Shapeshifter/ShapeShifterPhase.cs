@@ -36,6 +36,10 @@ public class ShapeShifterPhase : Opponent
         anim.SetTrigger(trigger);
     }
 
+    override protected void StartGame()
+    {
+    }
+
     public virtual IEnumerator ChangeOpponentPosition(float startX, float startY)
     {
         yield return null;

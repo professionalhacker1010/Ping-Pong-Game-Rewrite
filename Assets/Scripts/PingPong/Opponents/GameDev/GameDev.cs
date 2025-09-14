@@ -126,6 +126,7 @@ public class GameDev : Opponent
         yield return new WaitUntil(() => DialogueManager.Instance.DialogueRunning());
         yield return new WaitUntil(() => !DialogueManager.Instance.DialogueRunning());
 
+        pingpong.Resume();
         PaddleControls.UnlockInputs();
         introPlayed = true;
         playerServing = true;
@@ -164,7 +165,8 @@ public class GameDev : Opponent
         glitches[currGlitch].TurnOff();
         PaddleControls.LockInputs(); //pause game
         GameManager.Instance.balls[0].Pause();
-        FindObjectOfType<UnityEngine.Rendering.Volume>().gameObject.SetActive(false);
+        var volume = FindObjectOfType<UnityEngine.Rendering.Volume>();
+        if (volume) volume.gameObject.SetActive(false);
     }
 
     public IEnumerator UIMoveWhilePlayerServe()

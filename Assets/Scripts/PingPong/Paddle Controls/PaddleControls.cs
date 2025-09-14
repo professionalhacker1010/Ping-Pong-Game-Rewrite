@@ -25,9 +25,6 @@ public class PaddleControls : MonoBehaviour
     protected float horizontalInput, verticalInput;
     [HideInInspector] public bool inverted = false;
 
-/*    public bool multiBall = false;
-    [HideInInspector] public List<MultiBall> multiBalls; //for working around the locked inputs thing? */
-
     //refs
     [SerializeField] private Animator swipeAnimation;
     [SerializeField] private int hitFrame = 5;
@@ -173,13 +170,13 @@ public class PaddleControls : MonoBehaviour
 
     //hit animations
     #region
-    public void HitRight()
+    protected void HitRight()
     {
         swipeAnimation.SetTrigger("hitRight");
         //StartCoroutine(HidePaddlePreview());
     }
 
-    public void HitLeft()
+    protected void HitLeft()
     {
         swipeAnimation.SetTrigger("hitLeft");
         //StartCoroutine(HidePaddlePreview());

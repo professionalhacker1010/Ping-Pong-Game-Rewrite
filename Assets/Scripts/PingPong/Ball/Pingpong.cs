@@ -38,6 +38,9 @@ public class Pingpong : MonoBehaviour
     public bool thisBallInteractable = false;
     public float ballSpeed = 1.0f;
 
+    //private variables
+    private bool paused;
+
     //events
     public event Action<int, bool, bool, bool> OnExplode, OnExplodeFinished;
     public event Action<int, float, float, Vector3, int> OnPlayerHit;
@@ -48,6 +51,7 @@ public class Pingpong : MonoBehaviour
     BPC_Player bpcPlayer;
     BPC_Opponent bpcOpponent;
     BallPathInfo ballPathInfo;
+
     #endregion
 
     protected virtual void Awake()
@@ -115,7 +119,6 @@ public class Pingpong : MonoBehaviour
 
         //print("opponent X: " + opponentX.ToString() + " Y: " + opponentY.ToString());
 
-        //PaddleControls.LockInputs();
         thisBallInteractable = false;
 
         StopAllCoroutines();
@@ -207,6 +210,7 @@ public class Pingpong : MonoBehaviour
             {
                 Debug.Log("Opponent hit net ball!");
                 netBall = true;
+                thisBallInteractable = false;
                 SetBallPath(0, currBallPath.endFrame, false);
             }
             //opponent htis out of bounds when z = 1
@@ -214,6 +218,7 @@ public class Pingpong : MonoBehaviour
             {
                 Debug.Log("Opponent hit out of bounds!");
                 edgeBall = true;
+                thisBallInteractable = false;
                 SetBallPath(0, currBallPath.endFrame, false);
             }
             //successful hit
@@ -237,7 +242,7 @@ public class Pingpong : MonoBehaviour
     }
     private IEnumerator SetBallPathHelper(int startFrame, int endFrame, bool playerLose)
     {
-        //print("Set ball path");
+        print("Set ball path");
         while (startFrame < endFrame)
         {
             //translate the ball
@@ -251,7 +256,7 @@ public class Pingpong : MonoBehaviour
                 //scaling size of explosion based on who hit
                 if (playerLose) //then the opponent wins
                 {
-                    //print("out of bounds explosion");
+                    print("out of bounds explosion");
                     StartCoroutine(ExplodeBall(false, 0.6f)); //wait for explode ball animation to finish to restart
                 }
                 else //otherwise the player wins
@@ -273,6 +278,7 @@ public class Pingpong : MonoBehaviour
             }
 
             yield return new WaitForSeconds(1f / (24f * ballSpeed));
+            if (paused) yield return new WaitUntil(() => !paused);
         }
     }
 
@@ -283,17 +289,16 @@ public class Pingpong : MonoBehaviour
         {
             if (frameCount == endFrame - hitBackFrames)
             {
-                //PaddleControls.UnlockInputs();
                 thisBallInteractable = true;
                 //Debug.Log("Hit back window started");
             }
             frameCount++;
             yield return new WaitForSeconds(1 / (24f * ballSpeed));
+            if (paused) yield return new WaitUntil(() => !paused);
         }
 
         if (frameCount >= endFrame + hitBackLeeway)
         {
-            //PaddleControls.LockInputs();
             thisBallInteractable = false;
             Debug.Log("You're too late!");
             StartCoroutine(ExplodeBall(false));
@@ -307,13 +312,14 @@ public class Pingpong : MonoBehaviour
 
         var opponent = GameManager.Instance.opponent;
 
-        servePosition.y += normalizer;
         float startX = servePosition.x;
         float startY = servePosition.y;
         ballAnimation.transform.position = servePosition;
         Vector3 opponentBallPath = opponent.GetBallPath(id, startX, startY-normalizer, true);
 
+        if (paused) yield return new WaitUntil(() => !paused);
         yield return opponent.PlayServeAnimation();
+        if (paused) yield return new WaitUntil(() => !paused);
 
         for (int i = 0; i < tableY.Count; i++)
         {
@@ -363,7 +369,6 @@ public class Pingpong : MonoBehaviour
         bool gameIsWon = GameManager.Instance.GameIsWon();
         if (gameIsLost || gameIsWon)
         {
-            //PaddleControls.LockInputs();
             thisBallInteractable = false;
             ballAnimation.transform.position = new Vector3(0.0f, 0.0f);
         }
@@ -378,7 +383,6 @@ public class Pingpong : MonoBehaviour
     public void PlayerServe(Vector3 playerServePos)
     {
         frameCount = tableY.Count;
-        //PaddleControls.UnlockInputs();
         thisBallInteractable = true; //this should never happen tho
         ballAnimation.SetTrigger("playerWaitServe");
         ballAnimation.transform.position = playerServePos;
@@ -391,18 +395,18 @@ public class Pingpong : MonoBehaviour
 
     public void Pause()
     {
-        StopAllCoroutines();
         ballAnimation.speed = 0f;
         shadow.speed = 0f;
+        paused = true;
         //Debug.Log("game paused");
     }
 
     public void Resume()
     {
+        paused = false;
         ballAnimation.speed = ballSpeed;
         shadow.speed = ballSpeed;
         SetBallPath(frameCount, currBallPath.endFrame, false);
-
         //Debug.Log("game resumed");
     }
 }

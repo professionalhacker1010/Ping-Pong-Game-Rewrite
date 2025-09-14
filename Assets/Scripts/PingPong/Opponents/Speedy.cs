@@ -24,8 +24,6 @@ public class Speedy : Opponent
     //player can tell because their hits mirror yours at a slightly wider angle ALWAYS.
     public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
-        Debug.Log((X - prevX).ToString());
-
         //hit out and play lose animation when player hits wide enough
         if (X - prevX >= hitOutDistance)
         {

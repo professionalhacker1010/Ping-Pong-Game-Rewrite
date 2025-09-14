@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4012549351832821834, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
@@ -58,8 +59,14 @@ PrefabInstance:
     - target: {fileID: 4012549351832821843, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: d42e6d0f8a00bb54a9446709539b91e1, type: 2}
+      objectReference: {fileID: 22100000, guid: 68395cc9260689b4bb651dbd86f497cd, type: 2}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4012549351832821834, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3971034796288169493}
   m_SourcePrefab: {fileID: 100100000, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
 --- !u!1 &6146651068899668482 stripped
 GameObject:
@@ -82,12 +89,10 @@ MonoBehaviour:
   factorPaddleY: 0.6
   factorPaddleX: 0.4
   inverted: 0
-  multiBall: 0
-  multiBalls: []
-  swipeAnimation: {fileID: 6146651068899668507}
+  swipeAnimation: {fileID: 6146651068968401137}
   hitFrame: 5
---- !u!95 &6146651068899668507 stripped
+--- !u!95 &6146651068968401137 stripped
 Animator:
-  m_CorrespondingSourceObject: {fileID: 4012549351832821843, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4012549351763143353, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
   m_PrefabInstance: {fileID: 7125322384255619656}
   m_PrefabAsset: {fileID: 0}

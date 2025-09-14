@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4012549351832821834, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
@@ -56,6 +57,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4012549351832821834, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4100950131812642562}
   m_SourcePrefab: {fileID: 100100000, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
 --- !u!95 &4147761221888475805 stripped
 Animator:
@@ -80,23 +87,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalSpeed: 15
-  rb: {fileID: 4147761221957142644}
-  invertArrowKeys: 0
-  multiBall: 0
-  multiBalls: []
+  factorPaddleY: 0.6
+  factorPaddleX: 0.4
+  inverted: 0
   swipeAnimation: {fileID: 4147761221888475805}
   hitFrame: 5
-  paddlePreviewAnimation: {fileID: 4147761221957142647}
   focusHitSpeed: 7
+  focusBallSpeedMultiplier: 0.1
   focusHitMaxFrames: 16
   hardHitIndicatorPrefab: {fileID: 9204874374063164542, guid: ee731a530f280b14995dec27fd673920, type: 3}
---- !u!50 &4147761221957142644 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 4012549351832821840, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
-  m_PrefabInstance: {fileID: 1018023227233757220}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &4147761221957142647 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4012549351832821843, guid: 343c8f4627d3de14fbacc3ca1cb358f7, type: 3}
-  m_PrefabInstance: {fileID: 1018023227233757220}
-  m_PrefabAsset: {fileID: 0}

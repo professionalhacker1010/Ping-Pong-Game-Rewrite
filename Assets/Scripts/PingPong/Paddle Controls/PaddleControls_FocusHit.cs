@@ -5,6 +5,7 @@ using UnityEngine;
 public class PaddleControls_FocusHit : PaddleControls
 {
     [SerializeField] private float focusHitSpeed;
+    [SerializeField] private float focusBallSpeedMultiplier;
     [SerializeField] private int focusHitMaxFrames;
 
     //for indicating hard hit
@@ -36,26 +37,30 @@ public class PaddleControls_FocusHit : PaddleControls
 
     protected override void ProcessInput()
     {
-        var pingPong = GameManager.Instance.balls[0];
+        var ball = GameManager.Instance.balls[0];
+
         //hit the ball
         if (playerHitUp || hitHeldFrames >= focusHitMaxFrames)
         {
             //reset any hard hit stuff
             //Debug.Log("Hard hit reset after frames: " + holdSpaceFrames.ToString());
 
-            pingPong.Resume();
+            // ball.Resume();
+            ball.ballSpeed /= focusBallSpeedMultiplier;
 
             hitHeldFrames = 0;
             hardHitIndicator.StopAllCoroutines();
             hardHitIndicator.FadeToOpaque();
 
-            TryHitBall(pingPong, true);
+            if (!ball.thisBallInteractable) HitLeft();
+            else TryHitBall(ball, true);
             StartCoroutine(WaitForHitAnimation());
         }
         else if (playerHitDown)
         {
             hitDownTime = Time.time;
-            pingPong.Pause();
+            //ball.Pause();
+            ball.ballSpeed *= focusBallSpeedMultiplier;
             hardHitIndicator.FadeToBlack(focusHitMaxFrames);
         }
         //focus hit: only for SPEEDY oppponent. fade to black lasts 24 frames

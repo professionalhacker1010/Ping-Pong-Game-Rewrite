@@ -292,6 +292,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
+      propertyPath: opponentPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 7190685315303504325, guid: ddb237401552d554a8c2b25c2bd2e795, type: 3}
+    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
+      propertyPath: opponentPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 4166045634797365754, guid: 1b0df377631bb0f4b90166c29883f26f, type: 3}
+    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
+      propertyPath: opponentPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 4366197742057743190, guid: ebf88977881289e4aaa576ff1b7554f3, type: 3}
+    - target: {fileID: 8641875249295143538, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
+      propertyPath: opponentPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 9019535854417014714, guid: 59dd31350affcee43930f3c8e94f49d9, type: 3}
     - target: {fileID: 8641875249295143539, guid: c66088fdc05be814ca3c64113c6fc084, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -694,6 +710,10 @@ PrefabInstance:
     - target: {fileID: 2850858641568218818, guid: c8a06d7fe29dfd34bbdcce7c59248e73, type: 3}
       propertyPath: m_Name
       value: Transition Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2850858641568218819, guid: c8a06d7fe29dfd34bbdcce7c59248e73, type: 3}
+      propertyPath: activeScene
+      value: Game
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

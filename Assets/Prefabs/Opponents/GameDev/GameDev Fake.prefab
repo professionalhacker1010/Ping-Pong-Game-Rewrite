@@ -176,7 +176,7 @@ SpriteRenderer:
   m_SortingLayerID: 1218288287
   m_SortingLayer: 12
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4861f2e16a495a946b4eb99e4385f3e6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 390cd754f8c98cb4dbfb20e8453114f8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -849,10 +849,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 7190685315303504320}
     m_Modifications:
     - target: {fileID: 3404960323796268979, guid: 7e243658acfa1c34c85c9c08b523b805, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3404960323796268979, guid: 7e243658acfa1c34c85c9c08b523b805, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -925,10 +921,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7190685315303504320}
     m_Modifications:
-    - target: {fileID: 4903972518816026288, guid: 6e203578a704d4448b61013f12b8ae7b, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4903972518816026288, guid: 6e203578a704d4448b61013f12b8ae7b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1007,10 +999,6 @@ PrefabInstance:
       value: Desktop Screen
       objectReference: {fileID: 0}
     - target: {fileID: 5633862346023175847, guid: 98ddcbd9afd94754ba6f88faf1440766, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5633862346023175847, guid: 98ddcbd9afd94754ba6f88faf1440766, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1087,10 +1075,6 @@ PrefabInstance:
     - target: {fileID: 6833932551731790744, guid: ee5eb16fd475cf64bae3658e7bacddcb, type: 3}
       propertyPath: m_Name
       value: Trail
-      objectReference: {fileID: 0}
-    - target: {fileID: 8742856290141705121, guid: ee5eb16fd475cf64bae3658e7bacddcb, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8742856290141705121, guid: ee5eb16fd475cf64bae3658e7bacddcb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1259,10 +1243,6 @@ PrefabInstance:
     - target: {fileID: 820157858226030433, guid: a0e40c0bce5139e4b884147cb3a1f729, type: 3}
       propertyPath: m_Name
       value: Flicker
-      objectReference: {fileID: 0}
-    - target: {fileID: 2145141976702433344, guid: a0e40c0bce5139e4b884147cb3a1f729, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2145141976702433344, guid: a0e40c0bce5139e4b884147cb3a1f729, type: 3}
       propertyPath: m_LocalPosition.x
