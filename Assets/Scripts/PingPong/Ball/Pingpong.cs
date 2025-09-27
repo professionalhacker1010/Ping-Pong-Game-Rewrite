@@ -242,7 +242,7 @@ public class Pingpong : MonoBehaviour
     }
     private IEnumerator SetBallPathHelper(int startFrame, int endFrame, bool playerLose)
     {
-        print("Set ball path");
+        //print("Set ball path");
         while (startFrame < endFrame)
         {
             //translate the ball

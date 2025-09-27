@@ -1,19 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Glitch_DesktopScreen : GameDevGlitch
 {
-    [SerializeField] private float minimizedCameraSize;
+    [SerializeField] private int minimizedCameraSize;
     [SerializeField] private Vector3 minimizedCameraPosition;
     private Camera cam;
+    private PixelPerfectCamera pixelCam;
+    private Vector3 originalPos;
+    private int originalX, originalY;
 
     protected override void Start()
     {
         base.Start();
         cam = FindObjectOfType<Camera>();
-        cam.orthographicSize = minimizedCameraSize;
-        cam.transform.position = minimizedCameraPosition;
+        originalPos = cam.transform.position;
+        
+        pixelCam = FindObjectOfType<PixelPerfectCamera>();
+        originalX = pixelCam.refResolutionX;
+        originalY = pixelCam.refResolutionY;
     }
 
     private void Update()
@@ -31,17 +38,20 @@ public class Glitch_DesktopScreen : GameDevGlitch
 
     public override void TurnOn()
     {
-        print("enable");
-        cam.orthographicSize = minimizedCameraSize;
         cam.transform.position = minimizedCameraPosition;
+        pixelCam.refResolutionX = originalX * minimizedCameraSize;
+        pixelCam.refResolutionY = originalY * minimizedCameraSize;
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
     public override void TurnOff()
     {
-        cam.orthographicSize = 5.375873f;
-        cam.transform.position = new Vector3(0f, 0f, -10f);
+        cam.transform.position = originalPos;
+        pixelCam.refResolutionX = originalX;
+        pixelCam.refResolutionY = originalY;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

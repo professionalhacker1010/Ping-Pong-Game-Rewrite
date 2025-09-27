@@ -17,7 +17,7 @@ public class GameDev : Opponent
     private int hits = 0, currGlitch = 0;
 
     //gameobjects
-    [SerializeField] private GameObject buttonMash, desktopScreen, glitchOutAnimation, opponentSprite;
+    [SerializeField] private GameObject buttonMash, glitchOutAnimation, opponentSprite;
 
     //state tracking
     private bool playerHit = false;
@@ -111,8 +111,8 @@ public class GameDev : Opponent
     {
         var pingpong = GameManager.Instance.balls[0];
 
-        currGlitch = 3;
-        desktopScreen.SetActive(true);
+        currGlitch = 0;
+        glitches[currGlitch].TurnOn();
         opponentSprite.SetActive(false);
         StartCoroutine(PlayGlitchOutAnimation());
 
@@ -135,7 +135,6 @@ public class GameDev : Opponent
 
     private void SwitchGlitch()
     {
-        print("turn on glitch");
         hits = 0;
         glitches[currGlitch].TurnOff();
 
@@ -145,6 +144,7 @@ public class GameDev : Opponent
 
         StartCoroutine(PlayGlitchOutAnimation());
 
+        print("turn on glitch " + glitches[currGlitch].gameObject.name);
         glitches[currGlitch].TurnOn();
     }
 
@@ -171,7 +171,7 @@ public class GameDev : Opponent
 
     public IEnumerator UIMoveWhilePlayerServe()
     {
-        print("ui move while player serves");
+        //print("ui move while player serves");
         playerHit = false;
            
         uiGlitch.TurnOn();
@@ -180,17 +180,17 @@ public class GameDev : Opponent
             yield return new WaitForEndOfFrame();
         }
         uiGlitch.TurnOff();
-        print("end ui moves while player serves");
+        //print("end ui moves while player serves");
     }
 
     public override IEnumerator PlayServeAnimation()
     {
         yield return new WaitForSeconds(serveTime);
-        print("play serve animation");
+        //print("play serve animation");
         uiGlitch.TurnOn();
         yield return new WaitForSeconds(1.5f);
         uiGlitch.TurnOff();
-        print("end of serve animation");
+        //print("end of serve animation");
     }
 
     //other overrides

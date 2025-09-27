@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   postProcessEffect: {fileID: 11400000, guid: 4db4fe3a711e26746b3c4912750dddf3, type: 2}
-  minimizedCameraSize: 12
-  minimizedCameraPosition: {x: 0, y: 0, z: -10}
+  minimizedCameraSize: 2
+  minimizedCameraPosition: {x: 0, y: 0, z: -11}
 --- !u!1 &5633862346831155557
 GameObject:
   m_ObjectHideFlags: 0

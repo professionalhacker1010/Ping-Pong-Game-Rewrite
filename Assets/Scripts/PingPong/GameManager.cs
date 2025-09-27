@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-using System.ComponentModel;
+using UnityEngine.Rendering.Universal;
 
 
 public class GameManager : MonoBehaviour
@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     #endregion
 
     [SerializeField] private bool DEBUG = false;
+
+    [SerializeField] private Camera mainCam;
 
     public int WinRounds { get => gameMode.winRounds; }
     public BallPath PlayerBallPath { get => gameMode.playerBallPath; }
@@ -169,6 +171,8 @@ public class GameManager : MonoBehaviour
         }
 
         gameUI.SetSprites(gameMode.gameSprites);
+
+        mainCam.GetComponent<UniversalAdditionalCameraData>().SetRenderer(gameMode.rendererIndex);
     }
 
     public void MoveToGameScene(GameObject go)

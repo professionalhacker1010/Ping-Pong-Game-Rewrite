@@ -10,4 +10,5 @@ public class GameMode : ScriptableObject
     public int winRounds;
     public GameObject paddleControls;
     public BallPath playerBallPath;
+    public int rendererIndex;
 }

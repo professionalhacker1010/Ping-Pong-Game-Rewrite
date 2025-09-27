@@ -33,7 +33,7 @@ public class CameraShake : MonoBehaviour
             radius = strengthOneRadius;
         }
 
-        float Z = -10f;
+        float Z = cam.transform.position.z;
         //shake in a start pattern
         //left
         cam.transform.position = new Vector3(-1 * radius + startX, startY, Z);
