@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    private GameSprites currSprites;
-
     [Header("Score")]
     [SerializeField] private SpriteRenderer playerScore;
     [SerializeField] private SpriteRenderer playerBar;
@@ -16,6 +14,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] private SpriteRenderer THEM;
 
     [SerializeField] private GameObject playerScoreUI, opponentScoreUI;
+
+    [SerializeField] private List<Sprite> numbers;
+    [SerializeField] private List<Sprite> bars;
 
     [Header("Game Result")]
     [SerializeField] private GameObject gameLost;
@@ -45,26 +46,16 @@ public class GameUI : MonoBehaviour
         GameManager.Instance.OnGameLost += ShowGameLost;
         GameManager.Instance.OnOpponentScore += AddOpponentScoreboard;
         GameManager.Instance.OnPlayerScore += AddPlayerScoreboard;
-    }
 
-    public void SetSprites(GameSprites sprites)
-    {
-        currSprites = sprites;
-
-        playerScore.sprite = currSprites.numbers[0];
-        opponentScore.sprite = currSprites.numbers[0];
-        playerBar.sprite = currSprites.bars[0];
-        opponentBar.sprite = currSprites.bars[0];
-        YOU.sprite = currSprites.YOU;
-        THEM.sprite = currSprites.THEM;
+        StartCoroutine(ShowRoundNumber(LevelManager.chosenOpponent + 1, 1.5f));
     }
 
     public void AddPlayerScoreboard()
     {
         //print("player score +1");
         int score = GameManager.Instance.PlayerWins;
-        playerScore.sprite = currSprites.numbers[score % 10];
-        playerBar.sprite = currSprites.bars[score % 5];
+        playerScore.sprite = numbers[score % 10];
+        playerBar.sprite = bars[score % 5];
 
         //animation
         playerScoreUI.transform.localScale *= 1.2f;
@@ -77,8 +68,8 @@ public class GameUI : MonoBehaviour
     {
         //print("opponent score +1");
         int score = GameManager.Instance.OpponentWins;
-        opponentScore.sprite = currSprites.numbers[score % 10];
-        opponentBar.sprite = currSprites.bars[score % 5];
+        opponentScore.sprite = numbers[score % 10];
+        opponentBar.sprite = bars[score % 5];
 
         //animation
         opponentScoreUI.transform.localScale *= 1.2f;
@@ -103,21 +94,17 @@ public class GameUI : MonoBehaviour
 
     public IEnumerator ShowRoundNumber(int num, float time)
     {
-        number.sprite = currSprites.numbers[num];
+        yield return new WaitForSeconds(0.25f);
+
+        number.sprite = numbers[num];
         roundNum.SetActive(true);
         yield return new WaitForSeconds(time);
 
         roundNum.SetActive(false);
-    }
 
-    public void SwapToPixellated()
-    {
-        playerScore.sortingLayerName = "Opponent Paddle";
-        opponentScore.sortingLayerName = "Opponent Paddle";
-        playerBar.sortingLayerName = "Opponent Paddle";
-        opponentBar.sortingLayerName = "Opponent Paddle";
-        YOU.sortingLayerName = "Opponent Paddle";
-        THEM.sortingLayerName = "Opponent Paddle";
+        yield return new WaitForSeconds(0.25f);
+
+        TransitionManager.Instance.QuickIn();
     }
 
     private void OnDestroy()

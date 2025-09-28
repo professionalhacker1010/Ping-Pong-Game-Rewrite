@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private bool DEBUG = false;
 
+    public string GameScene { get => gameScene; }
+    [SerializeField] string gameScene = "Game";
+
     [SerializeField] private Camera mainCam;
 
     public int WinRounds { get => gameMode.winRounds; }
@@ -33,14 +36,10 @@ public class GameManager : MonoBehaviour
     public List<Pingpong> balls;
 
     public PaddleControls PaddleControls { get => paddleControls; }
-    PaddleControls paddleControls;
+    [SerializeField] PaddleControls paddleControls;
 
-    public GameUI GameUI { get => gameUI; }
-    [SerializeField] GameObject gameUIPrefab;
-    GameUI gameUI;
-
-    [SerializeField] private SpriteRenderer BG;
-    [SerializeField] private SpriteRenderer table;
+    public GameObject GameUI { get => gameUI; }
+    [SerializeField] GameObject gameUI;
 
     public PolygonCollider2D TableCollider { get => tableCollider; }
     [SerializeField] private PolygonCollider2D tableCollider;
@@ -50,50 +49,18 @@ public class GameManager : MonoBehaviour
 
     int playerWins = 0, opponentWins = 0;
 
-    public static string GameScene { get => gameScene; }
-    static string gameScene = "Game";
-
-    [HideInInspector] public Opponent opponent;
+    public Opponent opponent;
 
     public event Action OnGameWon, OnGameLost, OnOpponentScore, OnPlayerScore;
 
     private void Awake()
     {
         _instance = this;
-
-        paddleControls = Instantiate(gameMode.paddleControls).GetComponent<PaddleControls>();
-        MoveToGameScene(paddleControls.gameObject);
-
-        gameUI = Instantiate(gameUIPrefab).GetComponent<GameUI>();
-        MoveToGameScene(gameUI.gameObject);
-        gameUI.SetSprites(gameMode.gameSprites);
     }
 
     private void Start()
     {
         TransitionManager.Instance.activeScene = gameScene;
-        StartGame();
-    }
-
-    public void StartGame()
-    {
-        StartCoroutine(RoundNumberIntro());
-
-        var opponentObj = LevelManager.Instance.CreateChosenOpponent();
-        MoveToGameScene(opponentObj);
-        opponent = opponentObj.GetComponent<Opponent>();
-    }
-
-    //ROUND# INTRO
-    private IEnumerator RoundNumberIntro()
-    {
-        yield return new WaitForSeconds(0.25f);
-
-        yield return GameUI.ShowRoundNumber(LevelManager.chosenOpponent + 1, 1.5f);
-
-        yield return new WaitForSeconds(0.25f);
-
-        TransitionManager.Instance.QuickIn();
     }
 
     private void Update()
@@ -158,21 +125,6 @@ public class GameManager : MonoBehaviour
     public void SetGameMode(GameMode mode)
     {
         gameMode = mode;
-
-        BG.sprite = gameMode.gameSprites.background;
-        table.sprite = gameMode.gameSprites.table;
-
-        if (paddleControls && gameMode.paddleControls)
-        {
-            Destroy(paddleControls.gameObject);
-
-            paddleControls = Instantiate(gameMode.paddleControls).GetComponent<PaddleControls>();
-            MoveToGameScene(paddleControls.gameObject);
-        }
-
-        gameUI.SetSprites(gameMode.gameSprites);
-
-        mainCam.GetComponent<UniversalAdditionalCameraData>().SetRenderer(gameMode.rendererIndex);
     }
 
     public void MoveToGameScene(GameObject go)

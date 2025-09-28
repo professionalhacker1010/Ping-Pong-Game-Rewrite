@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f5ede5c4a2c1544f8b0a19482cd555e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  opponentPrefabs:
-  - {fileID: 4166045634797365754, guid: 1b0df377631bb0f4b90166c29883f26f, type: 3}
-  - {fileID: 4366197742057743190, guid: ebf88977881289e4aaa576ff1b7554f3, type: 3}
-  - {fileID: 9019535854417014714, guid: 59dd31350affcee43930f3c8e94f49d9, type: 3}
-  - {fileID: 7190685315303504325, guid: ddb237401552d554a8c2b25c2bd2e795, type: 3}
-  - {fileID: 4573916570662602384, guid: d77e4605e91caed48bd91945323a5b4c, type: 3}
+  opponentScenes:
+  - Game_Kevin
+  - Game_Shapeshifter
+  - Game_Speedy
+  - Game_GameDev
+  - Game_Moon

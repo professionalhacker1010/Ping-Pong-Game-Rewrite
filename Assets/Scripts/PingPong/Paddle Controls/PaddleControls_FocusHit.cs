@@ -19,13 +19,13 @@ public class PaddleControls_FocusHit : PaddleControls
     {
         base.Awake();
         hitDownTime = Time.time;
-        hardHitIndicator = Instantiate(hardHitIndicatorPrefab).GetComponent<HardHitIndicator>();
-        GameManager.Instance.MoveToGameScene(hardHitIndicator.gameObject);
     }
 
     protected override void Start()
     {
         base.Start();
+        hardHitIndicator = Instantiate(hardHitIndicatorPrefab).GetComponent<HardHitIndicator>();
+        GameManager.Instance.MoveToGameScene(hardHitIndicator.gameObject);
         GameManager.Instance.balls[0].OnExplode += ResetFocusHit;
     }
 

@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-        for (int i = 0; i < opponentPrefabs.Count; i++)
+        for (int i = 0; i < opponentScenes.Count; i++)
         {
             string playedCondition = "level_played_" + i.ToString();
             Conditions.Initialize(playedCondition, false);
@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     [Header("Opponents")]
-    [SerializeField] private List<GameObject> opponentPrefabs;
+    [SerializeField] private List<string> opponentScenes;
 
     [SerializeField]
     public static int chosenOpponent = 0; //opponent chosen from level select screen or from game's progression
@@ -51,5 +51,5 @@ public class LevelManager : MonoBehaviour
         Conditions.Set("level_won_" + level.ToString(), true);
     }
 
-    public GameObject CreateChosenOpponent() => Instantiate(opponentPrefabs[chosenOpponent]);
+    public string GetChosenOpponentScene() => opponentScenes[chosenOpponent];
 }

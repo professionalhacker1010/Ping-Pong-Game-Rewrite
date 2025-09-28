@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d8f7ca48104b44cbf69edab63d33e4, type: 3}
   m_Name: SO_GameMode_Default
   m_EditorClassIdentifier: 
-  gameSprites: {fileID: 11400000, guid: 1685372defdb7184b8eb968e6e77d57d, type: 2}
+  gameUI: {fileID: 7725633627153154598, guid: eee6807522af97344a6c8402a8743768, type: 3}
+  gameBackground: {fileID: 0}
   winRounds: 4
   paddleControls: {fileID: 6071274329273454971, guid: f716abb7de7648e40a8bef17066216a8, type: 3}
   playerBallPath: {fileID: 11400000, guid: b92f929d00671db40a5e41780609cdb6, type: 2}
+  rendererIndex: 0

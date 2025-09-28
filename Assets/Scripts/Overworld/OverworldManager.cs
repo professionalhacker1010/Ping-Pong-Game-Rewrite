@@ -83,8 +83,8 @@ public class OverworldManager : MonoBehaviour
                 sceneInfo[i].facingLeft = cc.FacingLeft;
             }
         }
-        TransitionManager.Instance.QuickOut("Game");
         LevelManager.chosenOpponent = level;
+        TransitionManager.Instance.QuickOut(LevelManager.Instance.GetChosenOpponentScene());
     }
 
     public SceneInfo GetSceneInfo()

@@ -9,8 +9,9 @@ public class Glitch_UI : GameDevGlitch
 
     public override void TurnOn()
     {
-        var playerScore = GameManager.Instance.GameUI.PlayerScoreUI;
-        var opponentScore = GameManager.Instance.GameUI.OpponentScoreUI;
+        var gameUI = GameManager.Instance.GameUI.GetComponent<GameUI>();
+        var playerScore = gameUI.PlayerScoreUI;
+        var opponentScore = gameUI.OpponentScoreUI;
         StartCoroutine(GlitchUILoop(playerScore));
         StartCoroutine(GlitchUILoop(opponentScore));
         glitchUI = true;

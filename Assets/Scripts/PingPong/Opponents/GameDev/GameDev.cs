@@ -29,7 +29,7 @@ public class GameDev : Opponent
         base.Start();
 
         //switch out to more pixellated sprites and change layering
-        GameManager.Instance.GameUI.SwapToPixellated();
+        //GameManager.Instance.GameUI.GetComponent<GameUI>().SwapToPixellated();
     }
 
     private void Update()
@@ -47,8 +47,9 @@ public class GameDev : Opponent
 
     public override Vector3 GetBallPath(int ballId, float X, float Y, bool isServing)
     {
-        var playerScore = GameManager.Instance.GameUI.PlayerScoreUI;
-        var opponentScore = GameManager.Instance.GameUI.OpponentScoreUI;
+        var gameUI = GameManager.Instance.GameUI.GetComponent<GameUI>();
+        var playerScore = gameUI.PlayerScoreUI;
+        var opponentScore = gameUI.OpponentScoreUI;
 
         playerHit = true;
         if (!introPlayed)

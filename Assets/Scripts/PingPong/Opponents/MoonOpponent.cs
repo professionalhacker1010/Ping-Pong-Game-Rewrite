@@ -39,8 +39,9 @@ public class MoonOpponent : Opponent
         public bool isBigStar = false;
     }
 
-    private void Awake()
+    private void Start()
     {
+        base.Start();
         opponentHealth.Initialize(maxOpponentHealth, smallStarDamage, largeStarDamage, hitOutDamage);
         playerHealth.Initialize(maxPlayerHealth, smallStarDamage, largeStarDamage, hitOutDamage);
     }
