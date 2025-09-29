@@ -216,7 +216,7 @@ PrefabInstance:
       objectReference: {fileID: 962775117}
     - target: {fileID: 8263442459831548746, guid: 7c24d25ca79bacb4cbb1d0a7a10a4a90, type: 3}
       propertyPath: gameScene
-      value: Game Moon
+      value: Game_Moon
       objectReference: {fileID: 0}
     - target: {fileID: 8263442459831548746, guid: 7c24d25ca79bacb4cbb1d0a7a10a4a90, type: 3}
       propertyPath: tableCollider
@@ -503,10 +503,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.10260417
     y: 0
-    width: 1
-    height: 1
+    width: 0.5
+    height: 0.35833332
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

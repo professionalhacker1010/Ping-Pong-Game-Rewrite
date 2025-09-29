@@ -76,8 +76,8 @@ public class TransitionManager : MonoBehaviour
     private IEnumerator DeactivateObject()
     {
         yield return new WaitForSecondsRealtime(3.0f);
-        yield return new WaitForSecondsRealtime(animators[0].GetCurrentAnimatorStateInfo(0).length);
-        animators.ForEach(i => i.speed = 0f);
+/*        yield return new WaitForSecondsRealtime(animators[0].GetCurrentAnimatorStateInfo(0).length);
+        animators.ForEach(i => i.speed = 0f);*/
     }
 
     private IEnumerator PlayTransition(bool value, string trigger, string scene = "")

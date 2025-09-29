@@ -697,7 +697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2850858641568218819, guid: c8a06d7fe29dfd34bbdcce7c59248e73, type: 3}
       propertyPath: activeScene
-      value: Game
+      value: LevelSelect
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -961,6 +961,10 @@ PrefabInstance:
     - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
       propertyPath: gameScene
       value: LevelSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925908055171725696, guid: a9d54d1cdf59bc345ad00a0caf1573b9, type: 3}
+      propertyPath: sceneInfo.Array.data[0].spawnPos.x
+      value: 77.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

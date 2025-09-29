@@ -216,7 +216,7 @@ PrefabInstance:
       objectReference: {fileID: 996367443}
     - target: {fileID: 8263442459831548746, guid: 7c24d25ca79bacb4cbb1d0a7a10a4a90, type: 3}
       propertyPath: gameScene
-      value: Game GameDev
+      value: Game_GameDev
       objectReference: {fileID: 0}
     - target: {fileID: 8263442459831548746, guid: 7c24d25ca79bacb4cbb1d0a7a10a4a90, type: 3}
       propertyPath: tableCollider
