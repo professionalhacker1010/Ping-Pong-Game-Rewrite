@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour
     public string GameScene { get => gameScene; }
     [SerializeField] string gameScene = "Game";
 
-    [SerializeField] private Camera mainCam;
-
     public int WinRounds { get => gameMode.winRounds; }
     public BallPath PlayerBallPath { get => gameMode.playerBallPath; }
     [SerializeField] GameMode gameMode;

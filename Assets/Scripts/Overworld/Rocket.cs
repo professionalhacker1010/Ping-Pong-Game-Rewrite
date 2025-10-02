@@ -33,7 +33,11 @@ public class Rocket : MonoBehaviour, ICanInteract
 
         var cc = FindObjectOfType<CharacterControls>();
         yield return cc.ReadjustPlayer(gameObject, .1f, (cc.transform.position.x - transform.position.x) > 0f, null);
-        cc.gameObject.SetActive(false);
+        var srs =  cc.gameObject.GetComponentsInChildren<SpriteRenderer>();
+        foreach (var sr in srs)
+        {
+            sr.enabled = false;
+        }
 
         yield return new WaitForSeconds(pauseTime);
 

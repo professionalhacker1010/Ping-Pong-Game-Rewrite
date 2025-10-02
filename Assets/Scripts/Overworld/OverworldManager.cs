@@ -110,23 +110,9 @@ public class OverworldManager : MonoBehaviour
             cc.LockCharacterControls();
         }
 
-        SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            var sprite = sprites[i];
-            sprite.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
-        }
-
         GameObject game = Instantiate(quickGame);
         MoveToGameScene(game);
         game.transform.position = new Vector3(Camera.main.gameObject.transform.position.x, game.transform.position.y, game.transform.position.z);
-
-        sprites = game.GetComponentsInChildren<SpriteRenderer>();
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            var sprite = sprites[i];
-            sprite.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-        }
 
         currentQuickGame = game;
         return game;
@@ -137,13 +123,6 @@ public class OverworldManager : MonoBehaviour
         if (currentQuickGame)
         {
             Destroy(currentQuickGame);
-        }
-
-        SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            var sprite = sprites[i];
-            sprite.maskInteraction = SpriteMaskInteraction.None;
         }
 
         var cc = FindObjectOfType<CharacterControls>();
