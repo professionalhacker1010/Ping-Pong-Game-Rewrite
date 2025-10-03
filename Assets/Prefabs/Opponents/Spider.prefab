@@ -535,7 +535,7 @@ MonoBehaviour:
   opponentHealth: {fileID: 4573916570484117323}
   playerHealth: {fileID: 4573916570967449118}
   maxOpponentHealth: 700
-  maxPlayerHealth: 100
+  maxPlayerHealth: 300
   smallStarDamage: 10
   largeStarDamage: 20
   hitOutDamage: 5

@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private bool DEBUG = false;
-
     public string GameScene { get => gameScene; }
     [SerializeField] string gameScene = "Game";
 
@@ -91,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         opponentWins++;
 
-        OnOpponentScore();
+        if (OnOpponentScore != null) OnOpponentScore();
         //Debug.Log("OPPONENT WINS: " + opponentWins.ToString());
     }
 
@@ -99,7 +97,7 @@ public class GameManager : MonoBehaviour
     {
         playerWins++;
 
-        OnPlayerScore();
+        if (OnPlayerScore != null) OnPlayerScore();
        // Debug.Log("PLAYER WINS: " + playerWins.ToString());
     }
 

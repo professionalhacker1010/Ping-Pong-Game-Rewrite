@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueView: {fileID: 1750693617490376777}
   continueActionType: 1
-  continueActionKeyCode: 32
+  continueActionKeyCode: 99
   continueActionButtonName: Jump
   continueActionOnButtonRelease: 1
 --- !u!1 &4832654826418636327

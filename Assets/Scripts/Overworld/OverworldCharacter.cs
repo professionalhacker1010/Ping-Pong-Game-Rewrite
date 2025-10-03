@@ -4,7 +4,7 @@ using UnityEngine;
 using Yarn.Unity;
 using System;
 
-public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
+public class OverworldCharacter : MonoBehaviour, ICanInteract
 {
     //dialogue
     protected enum DialogueEvent
@@ -32,7 +32,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     [SerializeField] protected List<DialogueSequence> dialogueSequences;
 
     //interaction
-    [SerializeField] protected bool turnsToPlayer, facingLeft;
+    [SerializeField] protected bool turnsToPlayer;
     [SerializeField] protected Facing facing;
 
     [System.Serializable]
@@ -56,9 +56,6 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     protected Collider2D collider2d;
     protected SpriteRenderer spriteRenderer;
     protected DialogueRunner dialogueRunner;
-
-    //events
-    //public event Action OnHitEvent;
 
     [SerializeField] protected string conditionPrefix;
 
@@ -155,11 +152,6 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract, IHittable
     public virtual void OnDeselect()
     {
         cKeyPrompt.Hide();
-    }
-
-    public virtual void OnHit()
-    {
-        //if (OnHitEvent != null) OnHitEvent();
     }
 
     #endregion

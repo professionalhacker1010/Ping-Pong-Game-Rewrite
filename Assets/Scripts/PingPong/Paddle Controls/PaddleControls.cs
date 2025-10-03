@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class PaddleControls : MonoBehaviour
 {
@@ -30,7 +32,9 @@ public class PaddleControls : MonoBehaviour
     [SerializeField] private int hitFrame = 5;
     private Animator paddlePreviewAnimation;
     private Rigidbody2D rb;
-    private CircleCollider2D circleCollider;
+    protected CircleCollider2D circleCollider;
+
+    public event Action<IHittable> OnHit;
 
     protected virtual void Awake()
     {
@@ -106,17 +110,28 @@ public class PaddleControls : MonoBehaviour
 
     protected virtual void ProcessInput()
     {
-        var gameManager = GameManager.Instance;
-        if (playerHitDown && gameManager)
+        if (playerHitDown)
         {
-            //check which ball is interactable, hit the first one and exit loop
-            foreach (var ball in gameManager.balls)
+            List<Collider2D> contacts = new List<Collider2D>();
+            circleCollider.GetContacts(contacts);
+            contacts.ForEach(contact =>
             {
-                if (ball.thisBallInteractable)
+                IHittable hittable = contact.gameObject.GetComponent<IHittable>();
+                if (hittable != null)
                 {
-                    TryHitBall(ball, false);
+                    Vector2 hitPos = contact.transform.position - circleCollider.bounds.center;
+                    float playerHitHeight = hitPos.y * factorPaddleY;
+                    float playerHitLateral = hitPos.x * factorPaddleX;
+
+                    hittable.OnHit(playerHitLateral, playerHitHeight);
+                    if (OnHit != null) OnHit(hittable);
+
+                    //animations
+                    if (hitPos.x >= 0) HitRight();
+                    else HitLeft();
+                    StartCoroutine(WaitForHitAnimation()); //lock inputs until animation is done - prevents player from spamming space
                 }
-            }
+            });
         }
     }
 
@@ -131,7 +146,7 @@ public class PaddleControls : MonoBehaviour
             float playerHitHeight = hitPos.y * factorPaddleY;
             float playerHitLateral = hitPos.x * factorPaddleX;
 
-            ball.PlayerHit(playerHitHeight, playerHitLateral);
+            ball.PlayerHit(playerHitLateral, playerHitHeight);
 
             //animations
             if (hitPos.x >= 0) HitRight();

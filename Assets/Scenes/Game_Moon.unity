@@ -503,10 +503,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.10260417
+    x: 0
     y: 0
-    width: 0.5
-    height: 0.35833332
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -698,6 +698,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8376479010384662494, guid: d77e4605e91caed48bd91945323a5b4c, type: 3}
+      propertyPath: servePositions.Array.data[0].y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376479010384662494, guid: d77e4605e91caed48bd91945323a5b4c, type: 3}
+      propertyPath: servePositions.Array.data[1].y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376479010384662494, guid: d77e4605e91caed48bd91945323a5b4c, type: 3}
+      propertyPath: servePositions.Array.data[2].y
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -756,7 +768,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -876546973899608171, guid: 58c1066ba19d8fc4c8a40afdbaa24f13, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

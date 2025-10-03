@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public class Pingpong : MonoBehaviour
+public class Pingpong : MonoBehaviour, IHittable
 {
     //variables
     #region
@@ -110,7 +110,7 @@ public class Pingpong : MonoBehaviour
     /// </summary>
     /// <param name="playerHitHeight">How much height should the ball gain/lose</param>
     /// <param name="playerHitLateral">How much lateral adjustment to ball's end pos (other side of table) </param>
-    public void PlayerHit(float playerHitHeight, float playerHitLateral)
+    public void PlayerHit(float playerHitLateral, float playerHitHeight)
     {
         if (!gameObject.activeInHierarchy) return;
 
@@ -408,5 +408,11 @@ public class Pingpong : MonoBehaviour
         shadow.speed = ballSpeed;
         SetBallPath(frameCount, currBallPath.endFrame, false);
         //Debug.Log("game resumed");
+    }
+
+    public void OnHit(float x, float y)
+    {
+        if (!thisBallInteractable) return;
+        PlayerHit(x, y);
     }
 }

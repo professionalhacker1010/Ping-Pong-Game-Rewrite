@@ -48,7 +48,7 @@ public class Rocket : MonoBehaviour, ICanInteract
             float t = 0;
             float stepTime = shakeStepTime;
             Vector3 ogPos = transform.position;
-            bool prevLeft = false, prevTop = false;
+            bool prevLeft = false;
             while (t < shakeTime)
             {
                 if (stepTime <= 0)

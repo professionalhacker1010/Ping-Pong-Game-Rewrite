@@ -11,7 +11,7 @@ public class OverworldShapeshifter : OverworldCharacter
     [SerializeField] Vector3 poofOffset = new Vector3(0f, 2.9f, 0f);
     ShapeShifterPhase currPhase;
 
-    private int phaseIdx = 0, catForm = 0;
+    private int phaseIdx = 0;
     private static bool interactedOnce = false;
     private static bool initialized = false;
 
@@ -76,8 +76,6 @@ public class OverworldShapeshifter : OverworldCharacter
 
         // on next phase
         phaseIdx++;
-
-        if (phaseIdx == 1) catForm = 0;
 
         //back to shapeshifter
         if (phaseIdx == phasePrefabs.Count)
@@ -151,31 +149,5 @@ public class OverworldShapeshifter : OverworldCharacter
         Poof();
         yield return new WaitForSeconds(4 / 24f);
         shapeshiftAnimator.gameObject.SetActive(false);
-    }
-
-    public override void OnHit()
-    {
-        if (phaseIdx == 1)
-        {
-            catForm++;
-/*            if (catForm > 3)
-            {
-                catForm = 1;
-                catAnimator.SetBool("3", false);
-                catAnimator.SetBool("2", false);
-                catAnimator.SetBool("1", false);
-                catAnimator.SetTrigger("revert");
-            }
-
-            catAnimator.SetBool(catForm.ToString(), true);*/
-        }
-        else if (phaseIdx == 2)
-        {
-
-        }
-        else if (phaseIdx == 3)
-        {
-
-        }
     }
 }

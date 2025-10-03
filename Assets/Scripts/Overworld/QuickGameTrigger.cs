@@ -12,7 +12,7 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
     string wonCondition = "";
     bool indicatorVisible = false, gamePlaying = false;
 
-    public void OnHit()
+    public void OnHit(float x, float y)
     {
         if (Conditions.Get(wonCondition))
         {

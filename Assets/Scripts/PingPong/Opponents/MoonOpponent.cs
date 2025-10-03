@@ -39,7 +39,7 @@ public class MoonOpponent : Opponent
         public bool isBigStar = false;
     }
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         opponentHealth.Initialize(maxOpponentHealth, smallStarDamage, largeStarDamage, hitOutDamage);

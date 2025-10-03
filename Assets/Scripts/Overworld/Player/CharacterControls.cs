@@ -199,7 +199,7 @@ public class CharacterControls : MonoBehaviour
     private void Hit()
     {
         if (OnHit != null) OnHit();
-        if (currHittableCandidate != null) currHittableCandidate.OnHit();
+        if (currHittableCandidate != null) currHittableCandidate.OnHit(0f, 0f);
     }
 
     private void Interact()

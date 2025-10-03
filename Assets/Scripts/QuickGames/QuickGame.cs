@@ -6,26 +6,38 @@ using UnityEngine.Rendering.Universal;
 public class QuickGame : MonoBehaviour
 {
     [SerializeField] Camera cam;
+    public PaddleControls paddleControls;
 
-    virtual protected void Start()
+    protected virtual void Start()
     {
         Camera.main.GetComponent<UniversalAdditionalCameraData>().cameraStack.Add(cam);
+        paddleControls.OnHit += OnPaddleHit;
     }
 
-    virtual protected void Update()
+    protected virtual void Update()
     {
         if (KeyCodes.Pause())
         {
-            WinGame();
+            CloseGame();
         }
     }
 
-    virtual protected void WinGame()
+    public void CloseGame()
     {
         var overworldManager = OverworldManager.Instance;
         if (overworldManager)
         {
             overworldManager.ExitQuickGame();
         }
+    }
+
+    protected virtual void OnPaddleHit(IHittable hittable)
+    {
+
+    }
+
+    private void OnDestroy()
+    {
+        paddleControls.OnHit -= OnPaddleHit;
     }
 }

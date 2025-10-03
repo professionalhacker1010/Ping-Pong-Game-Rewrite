@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3684978623488786590}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -51,27 +51,25 @@ MonoBehaviour:
     value: 1
   - name: speedy_hasDrink
     value: 0
-  - name: speedy_hasDrink
+  - name: level_played_0
     value: 0
-  - name: level_played0
+  - name: level_played_1
     value: 0
-  - name: level_played1
+  - name: level_played_2
     value: 0
-  - name: level_played2
+  - name: level_played_3
     value: 0
-  - name: level_played3
+  - name: level_played_4
     value: 0
-  - name: level_played4
+  - name: level_won_0
+    value: 1
+  - name: level_won_1
     value: 0
-  - name: level_won0
+  - name: level_won_2
     value: 0
-  - name: level_won1
+  - name: level_won_3
     value: 0
-  - name: level_won2
-    value: 0
-  - name: level_won3
-    value: 0
-  - name: level_won4
+  - name: level_won_4
     value: 0
   - name: kevin_watchingVideos
-    value: 0
+    value: 1

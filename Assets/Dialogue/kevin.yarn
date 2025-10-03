@@ -135,6 +135,11 @@ And this time, I'll DEFINITELY win!
 
 <<change_emotion Kevin Idle>>
 <<end_speaker>>
+<<transition_out>>
+<<WatchVideos Kevin>>
+<<wait 1>>
+<<transition_in>>
+
 ===
 
 

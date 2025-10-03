@@ -112,7 +112,6 @@ public class OverworldManager : MonoBehaviour
 
         GameObject game = Instantiate(quickGame);
         MoveToGameScene(game);
-        game.transform.position = new Vector3(Camera.main.gameObject.transform.position.x, game.transform.position.y, game.transform.position.z);
 
         currentQuickGame = game;
         return game;
