@@ -102,7 +102,7 @@ public class OverworldManager : MonoBehaviour
         SceneManager.MoveGameObjectToScene(go, SceneManager.GetSceneByName(gameScene));
     }
 
-    public GameObject EnterQuickGame(GameObject quickGame)
+    public GameObject CreateQuickGame(GameObject quickGame)
     {
         var cc = FindObjectOfType<CharacterControls>();
         if (cc != null)
@@ -117,7 +117,7 @@ public class OverworldManager : MonoBehaviour
         return game;
     }
 
-    public void ExitQuickGame()
+    public void DestroyQuickGame()
     {
         if (currentQuickGame)
         {

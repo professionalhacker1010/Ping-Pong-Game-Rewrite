@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ESC
+  m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
@@ -411,7 +411,7 @@ Transform:
   m_GameObject: {fileID: 4296400719192329015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 500, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -436,6 +436,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 3824734418702351381}
   paddleControls: {fileID: 5139605366663346577}
+  quickGamePixelMaterial: {fileID: 2100000, guid: 589f42f3f216dbf4fa3f1d73e24baba6, type: 2}
+  quickGameBlendMaterial: {fileID: 2100000, guid: 687651a7306bd6a4482cdc5da6d0a541, type: 2}
+  backgroundTransitionTime: 0.35
+  endSampleSize: 16
 --- !u!1 &5652970302805899463
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +468,7 @@ Transform:
   m_GameObject: {fileID: 5652970302805899463}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -15}
+  m_LocalPosition: {x: 0, y: -100, z: -155}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -538,7 +542,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 1
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 2
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1

@@ -78,13 +78,13 @@ public class Opponent : MonoBehaviour
 
     virtual public void OnPlayerHit(int ballId, float startX, float startY, Vector3 end, int hitFrame)
     {
-        transform.position = new Vector3(startX, 0f);
+        if (animator) animator.transform.localPosition = new Vector3(startX, 0f);
     }
 
     virtual public void OnHit(int ballId, float X, float Y)
     {
-        var hitFlash = Instantiate(hitFlashPrefab);
-        hitFlash.transform.position = new Vector3(X + 0.5f, Y);
+        var hitFlash = Instantiate(hitFlashPrefab, transform);
+        hitFlash.transform.localPosition = new Vector3(X + 0.5f, Y);
         Destroy(hitFlash, 6 / 24f);
     }
 

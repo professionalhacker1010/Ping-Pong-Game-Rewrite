@@ -10,7 +10,7 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
     KeyPressPrompt indicator;
 
     string wonCondition = "";
-    bool indicatorVisible = false, gamePlaying = false;
+    bool indicatorVisible = false;
 
     public void OnHit(float x, float y)
     {
@@ -24,13 +24,12 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
             indicatorVisible = true;
             indicator.Show(transform.position + indicatorOffset);
         }
-        else if (indicatorVisible && !gamePlaying)
+        else if (indicatorVisible)
         {
             indicatorVisible = false;
             indicator.Hide();
 
-            gamePlaying = true;
-            GameObject game = OverworldManager.Instance.EnterQuickGame(quickGame);
+            GameObject game = OverworldManager.Instance.CreateQuickGame(quickGame);
         }
     }
 

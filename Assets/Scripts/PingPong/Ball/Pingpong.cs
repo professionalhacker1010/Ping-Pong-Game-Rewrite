@@ -78,8 +78,8 @@ public class Pingpong : MonoBehaviour, IHittable
         ballPathInfo.y = new List<float>();
         for (int i = 0; i < tableY.Count; i++)
         {
-            ballPathInfo.x.Add(transform.position.x);
-            ballPathInfo.y.Add(transform.position.y);
+            ballPathInfo.x.Add(transform.localPosition.x);
+            ballPathInfo.y.Add(transform.localPosition.y);
         }
 
         cameraShaker = FindObjectOfType<CameraShake>();
@@ -136,7 +136,10 @@ public class Pingpong : MonoBehaviour, IHittable
         bpcPlayer.CalcBallPath(currBallPath, out ballPathInfo, playerHitHeight, playerHitLateral, startX, startY, opponentX, opponentY);
 
         //if ball bounces out of bounds on x2 frame
-        if (!GameManager.Instance.TableCollider.OverlapPoint(new Vector2(ballPathInfo.x[currBallPath.bounceFrame], ballPathInfo.y[currBallPath.bounceFrame])))
+        if (!GameManager.Instance.TableCollider.OverlapPoint(new Vector2(
+            ballPathInfo.x[currBallPath.bounceFrame] + gameObject.transform.parent.position.x, 
+            ballPathInfo.y[currBallPath.bounceFrame] + gameObject.transform.parent.position.y
+            )))
         {
             //Debug.Log("edgeball is true");
             edgeBall = true;
@@ -246,8 +249,8 @@ public class Pingpong : MonoBehaviour, IHittable
         while (startFrame < endFrame)
         {
             //translate the ball
-            ballAnimation.transform.position = new Vector3(ballPathInfo.x[startFrame], ballPathInfo.y[startFrame]);
-            shadow.transform.position = new Vector3(ballPathInfo.x[startFrame], shadow.transform.position.y);
+            ballAnimation.transform.localPosition = new Vector3(ballPathInfo.x[startFrame], ballPathInfo.y[startFrame]);
+            shadow.transform.localPosition = new Vector3(ballPathInfo.x[startFrame], shadow.transform.localPosition.y);
             startFrame++;
 
             //if player hit out of bounds, explode the ball on the frame that it bounces on
@@ -314,7 +317,7 @@ public class Pingpong : MonoBehaviour, IHittable
 
         float startX = servePosition.x;
         float startY = servePosition.y;
-        ballAnimation.transform.position = servePosition;
+        ballAnimation.transform.localPosition = servePosition;
         Vector3 opponentBallPath = opponent.GetBallPath(id, startX, startY-normalizer, true);
 
         if (paused) yield return new WaitUntil(() => !paused);
@@ -333,7 +336,7 @@ public class Pingpong : MonoBehaviour, IHittable
     {
         if (OnExplode != null) OnExplode(id, playerWin, edgeBall, netBall);
         explodeAnimation.transform.localScale = new Vector3(explosionScale, explosionScale);
-        explodeAnimation.transform.position = ballAnimation.transform.position;
+        explodeAnimation.transform.localPosition = ballAnimation.transform.localPosition;
         ballAnimation.SetTrigger("explodeBall");
         explodeAnimation.SetTrigger("explodeBall");
         shadow.SetTrigger("explodeBall");
@@ -370,7 +373,7 @@ public class Pingpong : MonoBehaviour, IHittable
         if (gameIsLost || gameIsWon)
         {
             thisBallInteractable = false;
-            ballAnimation.transform.position = new Vector3(0.0f, 0.0f);
+            ballAnimation.transform.localPosition = new Vector3(0.0f, 0.0f);
         }
     }
 
@@ -385,7 +388,7 @@ public class Pingpong : MonoBehaviour, IHittable
         frameCount = tableY.Count;
         thisBallInteractable = true; //this should never happen tho
         ballAnimation.SetTrigger("playerWaitServe");
-        ballAnimation.transform.position = playerServePos;
+        ballAnimation.transform.localPosition = playerServePos;
         for (int i = 0; i < tableY.Count; i++)
         {
             ballPathInfo.x[i] = playerServePos.x;
