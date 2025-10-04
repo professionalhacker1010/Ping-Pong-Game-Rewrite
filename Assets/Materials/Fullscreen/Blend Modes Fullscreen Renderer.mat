@@ -26,6 +26,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddOpacity: 0
+    - _QueueControl: 0
     m_Colors:
     - _AddColor: {r: 0.118934646, g: 0.061053712, b: 0.18490559, a: 0}
   m_BuildTextureStacks: []

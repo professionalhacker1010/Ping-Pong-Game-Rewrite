@@ -164,14 +164,19 @@ MonoBehaviour:
     condition: level_won_0 && !kevin_watchingVideos
     trigger: 1
     endBehavior: 1
+  - nodePrefix: postGame_help
+    numNodes: 1
+    condition: level_won_0 && shapeshifter_interactedOnce
+    trigger: 0
+    endBehavior: 0
   - nodePrefix: postGame
     numNodes: 1
     condition: level_won_0
     trigger: 0
     endBehavior: 0
   turnsToPlayer: 1
-  facingLeft: 1
   facing: 0
   level: 0
   conditionPrefix: kevin
   watchingVideosPosition: {x: 6.41, y: -1.94}
+  table: {fileID: 0}

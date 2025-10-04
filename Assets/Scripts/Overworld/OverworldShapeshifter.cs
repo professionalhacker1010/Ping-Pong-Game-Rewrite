@@ -12,14 +12,18 @@ public class OverworldShapeshifter : OverworldCharacter
     ShapeShifterPhase currPhase;
 
     private int phaseIdx = 0;
-    private static bool interactedOnce = false;
-    private static bool initialized = false;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        Conditions.Initialize(conditionPrefix + "_interactedOnce", false);
+    }
 
     protected override void Start()
     {
         base.Start();
 
-        if (!LevelManager.IsLevelPlayed(level))
+        if (!Conditions.Get(conditionPrefix + "_interactedOnce"))
         {
             shapeshiftAnimator.SetTrigger("idle");
             shapeshiftAnimator.gameObject.SetActive(false);
@@ -29,15 +33,11 @@ public class OverworldShapeshifter : OverworldCharacter
             shapeshiftAnimator.SetTrigger("idle");
         }
 
-        if (!initialized)
+        DialogueRunner dr = FindObjectOfType<DialogueRunner>();
+        if (dr)
         {
-            DialogueRunner dr = FindObjectOfType<DialogueRunner>();
-            if (dr)
-            {
-                dr.AddCommandHandler("shapeshift", Shapeshift);
-                dr.AddCommandHandler("shapeshifterIntro", Intro);
-                initialized = true;
-            }
+            dr.AddCommandHandler("shapeshift", Shapeshift);
+            dr.AddCommandHandler("shapeshifterIntro", Intro);
         }
     }
 
@@ -124,7 +124,7 @@ public class OverworldShapeshifter : OverworldCharacter
 
     public override void OnSelect()
     {
-        if (!interactedOnce)
+        if (!Conditions.Get(conditionPrefix + "_interactedOnce"))
         {
             Vector3 tablePos = TableSelectManager.Instance.GetTablePosition(level);
             cKeyPrompt.Show(new Vector3(tablePos.x, tablePos.y + 2.0f));
@@ -138,16 +138,16 @@ public class OverworldShapeshifter : OverworldCharacter
     public override void OnInteract()
     {
         base.OnInteract();
-        interactedOnce = true;
+        Conditions.Set(conditionPrefix + "_interactedOnce", true);
     }
 
-    private IEnumerator OnTableInteractCoroutine()
+    private void OnDestroy()
     {
-        shapeshiftAnimator.SetTrigger("shapeshift");
-        yield return new WaitForSeconds(22 / 24f);
-        shapeshiftAnimator.speed = 0f;
-        Poof();
-        yield return new WaitForSeconds(4 / 24f);
-        shapeshiftAnimator.gameObject.SetActive(false);
+        DialogueRunner dr = FindObjectOfType<DialogueRunner>();
+        if (dr)
+        {
+            dr.RemoveCommandHandler("shapeshift");
+            dr.RemoveCommandHandler("shapeshifterIntro");
+        }
     }
 }

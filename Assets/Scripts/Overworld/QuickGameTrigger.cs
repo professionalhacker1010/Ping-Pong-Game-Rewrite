@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 public class QuickGameTrigger : MonoBehaviour, IHittable
 {
@@ -11,6 +12,7 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
 
     string wonCondition = "";
     bool indicatorVisible = false;
+    GameObject player;
 
     public void OnHit(float x, float y)
     {
@@ -26,11 +28,16 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
         }
         else if (indicatorVisible)
         {
-            indicatorVisible = false;
-            indicator.Hide();
+            HideIndicator();
 
             GameObject game = OverworldManager.Instance.CreateQuickGame(quickGame);
         }
+    }
+
+    void HideIndicator()
+    {
+        indicatorVisible = false;
+        indicator.Hide();
     }
 
     private void Awake()
@@ -42,5 +49,28 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
     private void Start()
     {
         indicator = KeyPressPromptManager.Instance.GetKeyPressPrompt("?");
+        player = GameObject.FindWithTag("Player");
+        var dr = FindObjectOfType<DialogueRunner>();
+        if (dr)
+        {
+            dr.onDialogueStart.AddListener(HideIndicator);
+        }
+    }
+
+    private void Update()
+    {
+        if (indicatorVisible && Mathf.Abs(player.transform.position.x - transform.position.x) > 5)
+        {
+            HideIndicator();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        var dr = FindObjectOfType<DialogueRunner>();
+        if (dr)
+        {
+            dr.onDialogueStart.RemoveListener(HideIndicator);
+        }
     }
 }

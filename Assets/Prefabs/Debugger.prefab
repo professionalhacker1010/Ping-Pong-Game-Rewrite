@@ -73,3 +73,5 @@ MonoBehaviour:
     value: 0
   - name: kevin_watchingVideos
     value: 1
+  - name: shapeshifter_interactedOnce
+    value: 1

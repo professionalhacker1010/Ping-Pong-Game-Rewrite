@@ -14,9 +14,8 @@ public class DialogueBubble : MonoBehaviour
     private DialogueRunner dialogueRunner;
 
     //bubble
-    [SerializeField] private RectTransform upLeft, upRight, bottomRight, bottomLeft, width, height, tail, textTransform, preTextTransform, preText2Transform, bubbleTransform, bubbleTextTransform;
-    [SerializeField] private UnityEngine.UI.ContentSizeFitter contentSizeFitter_preText2;
-    [SerializeField] private GameObject bubbleStatic, bubbleEnterExit;
+    [SerializeField] private RectTransform upLeft, upRight, bottomRight, bottomLeft, width, height, tail, textTransform, preTextTransform, preText2Transform, bubbleTextTransform;
+    [SerializeField] private GameObject bubbleEnterExit;
     private Animator bubbleEnterExitAnimator;
     public bool isChangingSpeaker = true;
 
@@ -122,29 +121,41 @@ public class DialogueBubble : MonoBehaviour
     private IEnumerator ABHelper()
     {
         print("adjust bubble");
+        ResetText();
         yield return SetUpText();
         float widthAdjustment = calcWidthAdjustment();
         float newHeight = calcHeight();
 
-        float curveIncrement = 1f / resizeFrames;
-        Vector2 startBL = bottomLeft.anchoredPosition, endBL = new Vector2(BLx - widthAdjustment/2, newHeight);
-        Vector2 startBR = bottomRight.anchoredPosition, endBR = new Vector2(BRx + widthAdjustment/2, newHeight);
-        Vector2 startUL = upLeft.anchoredPosition, endUL = new Vector2(ULx - widthAdjustment/2, upLeft.anchoredPosition.y);
-        Vector2 startUR = upRight.anchoredPosition, endUR = new Vector2(URx + widthAdjustment/2, upRight.anchoredPosition.y);
-        Vector2 startW = width.sizeDelta, endW = new Vector2(Wx + widthAdjustment, (-1 * newHeight) + 80);
-        Vector2 startH = height.sizeDelta, endH = new Vector2(Hx + widthAdjustment, (-1 * newHeight) - 76);
+        Vector2 startBL = bottomLeft.anchoredPosition, 
+                endBL = new Vector2(BLx - widthAdjustment/2, newHeight);
+
+        Vector2 startBR = bottomRight.anchoredPosition, 
+                endBR = new Vector2(BRx + widthAdjustment/2, newHeight);
+
+        Vector2 startUL = upLeft.anchoredPosition, 
+                endUL = new Vector2(ULx - widthAdjustment/2, upLeft.anchoredPosition.y);
+
+        Vector2 startUR = upRight.anchoredPosition, 
+                endUR = new Vector2(URx + widthAdjustment/2, upRight.anchoredPosition.y);
+
+        Vector2 startW = width.sizeDelta, 
+                endW = new Vector2(Wx + widthAdjustment, (-newHeight) + 80);
+
+        Vector2 startH = height.sizeDelta, 
+                endH = new Vector2(Hx + widthAdjustment, (-newHeight) - 76);
+
         for (int i = 0; i <= resizeFrames; i++)
         {
-            bottomLeft.anchoredPosition = Vector2.Lerp(startBL, endBL, calcCurve(curveIncrement * i));
-            bottomRight.anchoredPosition = Vector2.Lerp(startBR, endBR, calcCurve(curveIncrement * i));
-            upLeft.anchoredPosition = Vector2.Lerp(startUL, endUL, calcCurve(curveIncrement * i));
-            upRight.anchoredPosition = Vector2.Lerp(startUR, endUR, calcCurve(curveIncrement * i));
-            width.sizeDelta = Vector2.Lerp(startW, endW, calcCurve(curveIncrement * i));
-            height.sizeDelta = Vector2.Lerp(startH, endH, calcCurve(curveIncrement * i));
-            yield return new WaitForSeconds(1 / 30f);
+            float l = calcCurve((float)i / resizeFrames);
+            bottomLeft.anchoredPosition = Vector2.Lerp(startBL, endBL, l);
+            bottomRight.anchoredPosition = Vector2.Lerp(startBR, endBR, l);
+            upLeft.anchoredPosition = Vector2.Lerp(startUL, endUL, l);
+            upRight.anchoredPosition = Vector2.Lerp(startUR, endUR, l);
+            width.sizeDelta = Vector2.Lerp(startW, endW, l);
+            height.sizeDelta = Vector2.Lerp(startH, endH, l);
+            yield return new WaitForSeconds(1 / 24f);
         }
 
-        ResetText();
         text.SetActive(true);
     }
 
@@ -193,11 +204,13 @@ public class DialogueBubble : MonoBehaviour
     private IEnumerator SetUpText()
     {
         textTransform.anchoredPosition = new Vector2(20f, textTransform.anchoredPosition.y);
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         if (dialogueRunner.CurrentLine == null) yield break;
         preText.text = dialogueRunner.CurrentLine.Text.Text;
         preText2.text = dialogueRunner.CurrentLine.Text.Text;
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
         yield return AdjustPretext();
     }
 
@@ -222,35 +235,35 @@ public class DialogueBubble : MonoBehaviour
     private float calcHeight()
     {
         int lines = preText.textInfo.lineCount;
-        float h = -1f;
+        float h = 0;
 
         if (lines == 1)
         {
             textTransform.anchoredPosition = oneLinePosition;
-            h *= oneLineHeight;
+            h = oneLineHeight;
         }
         else
         {
             textTransform.anchoredPosition = multiLinePosition;
             if (lines == 2)
             {
-                h *= twoLineHeight;
+                h = twoLineHeight;
             }
             else if (lines == 3)
             {
-                h *= threeLineHeight;
+                h = threeLineHeight;
             }
             else if (lines == 4)
             {
-                h *= fourLineHeight;
+                h = fourLineHeight;
             }
             else if (lines == 5)
             {
-                h *= fiveLineHeight;
+                h = fiveLineHeight;
             }
         }
-
-        return h;
+        Debug.Log("height: " + h);
+        return -h;
     }
 
 
@@ -258,14 +271,16 @@ public class DialogueBubble : MonoBehaviour
     {
         int lines = preText.textInfo.lineCount;
         int lastLineChars = preText.textInfo.lineInfo[lines-1].characterCount;
-        if (lines > 1 && lastLineChars < 7)
+        if ((lines > 1 && lastLineChars < 8) || lines > 5)
         {
-            while (preText.textInfo.lineCount == lines)
+            while (preText.textInfo.lineCount == lines || preText.textInfo.lineCount > 5)
             {
                 preTextTransform.sizeDelta = new Vector2(preTextTransform.sizeDelta.x + 30, preTextTransform.sizeDelta.y);
-                yield return new WaitForSeconds(.02f);
+                yield return new WaitForEndOfFrame();
+                yield return new WaitForEndOfFrame();
             }
         }
+        Debug.Log("pretext lines adjusted to: " + preText.textInfo.lineCount);
         textTransform.sizeDelta = preTextTransform.sizeDelta;
     }
 

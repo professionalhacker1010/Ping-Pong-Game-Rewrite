@@ -11,8 +11,12 @@ public class QuickGame : MonoBehaviour
     [Header("Background Transition")]
     [SerializeField] Material quickGamePixelMaterial;
     [SerializeField] Material quickGameBlendMaterial;
-    [SerializeField] float backgroundTransitionTime;
+    [SerializeField] SpriteRenderer baseGameOverlay;
     [SerializeField] float endSampleSize;
+    [SerializeField] float endBlendOpacity;
+    [SerializeField] float startRotation;
+    [SerializeField] float backgroundTransitionTime;
+    [SerializeField] int transitionFrameRate;
 
     protected virtual void Start()
     {
@@ -31,18 +35,49 @@ public class QuickGame : MonoBehaviour
 
     IEnumerator OpenGame()
     {
-        DOTween.To(() => quickGamePixelMaterial.GetFloat("_ResampleSize"), f => quickGamePixelMaterial.SetFloat("_ResampleSize", f), endSampleSize, backgroundTransitionTime).SetEase(Ease.OutCubic);
-        DOTween.To(() => quickGameBlendMaterial.GetFloat("_AddOpacity"), f => quickGameBlendMaterial.SetFloat("_AddOpacity", f), .5f, backgroundTransitionTime);
-        cam.transform.DOLocalMove(new Vector3(0, 0, -15), backgroundTransitionTime).SetEase(Ease.OutExpo);
-        yield return new WaitForSeconds(backgroundTransitionTime);
+        Vector3 startPos = cam.transform.localPosition, endPos = new Vector3(0, 0, -15);
+
+        cam.transform.localRotation = Quaternion.Euler(0, 0, startRotation);
+
+        float t = 0, lerpExpo = 0, lerpCubic = 0, lerp = 0;
+        DOTween.To(() => lerpExpo, f => lerpExpo = f, 1, backgroundTransitionTime).SetEase(Ease.OutExpo);
+        DOTween.To(() => lerpCubic, f => lerpCubic = f, 1, backgroundTransitionTime).SetEase(Ease.OutCubic);
+        DOTween.To(() => lerp, f => lerp = f, 1, backgroundTransitionTime);
+        while (t < backgroundTransitionTime)
+        {
+            cam.transform.localPosition = Vector3.Lerp(startPos, endPos, lerpExpo);
+            cam.transform.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(startRotation, 0, lerpExpo));
+            quickGamePixelMaterial.SetFloat("_ResampleSize", Mathf.Lerp(1, endSampleSize, lerpCubic));
+            quickGameBlendMaterial.SetFloat("_AddOpacity", Mathf.Lerp(0, endBlendOpacity, lerp));
+            baseGameOverlay.color = Color.Lerp(Color.white, Color.clear, lerp);
+
+            float startTime = Time.time;
+            yield return new WaitForSeconds(1f/ transitionFrameRate);
+            t += Time.time - startTime;
+        }
+        cam.transform.localPosition = endPos;
+        cam.transform.localRotation = Quaternion.identity;
+        baseGameOverlay.color = Color.clear;
     }
 
     IEnumerator CloseGame()
     {
-        DOTween.To(() => quickGamePixelMaterial.GetFloat("_ResampleSize"), f => quickGamePixelMaterial.SetFloat("_ResampleSize", f), 1, backgroundTransitionTime).SetEase(Ease.InCubic);
-        DOTween.To(() => quickGameBlendMaterial.GetFloat("_AddOpacity"), f => quickGameBlendMaterial.SetFloat("_AddOpacity", f), 0f, backgroundTransitionTime);
-        cam.transform.DOLocalMove(new Vector3(0, 100, -155), backgroundTransitionTime).SetEase(Ease.InExpo);
-        yield return new WaitForSeconds(backgroundTransitionTime);
+        Vector3 startPos = new Vector3(0, 0, -15), endPos = new Vector3(0, 0, -13);
+
+        float t = 0, lerpCubic = 0, lerp = 0;
+        DOTween.To(() => lerpCubic, f => lerpCubic = f, 1, backgroundTransitionTime).SetEase(Ease.InCubic);
+        DOTween.To(() => lerp, f => lerp = f, 1, backgroundTransitionTime);
+        while (t < backgroundTransitionTime)
+        {
+            cam.transform.localPosition = Vector3.Lerp(startPos, endPos, lerp);
+            quickGamePixelMaterial.SetFloat("_ResampleSize", Mathf.Lerp(endSampleSize, 1, lerpCubic));
+            quickGameBlendMaterial.SetFloat("_AddOpacity", Mathf.Lerp(endBlendOpacity, 0, lerp));
+            baseGameOverlay.color = Color.Lerp(Color.clear, Color.white, lerp);
+
+            float startTime = Time.time;
+            yield return new WaitForSeconds(1f / transitionFrameRate);
+            t += Time.time - startTime;
+        }
 
         quickGamePixelMaterial.SetFloat("_ResampleSize", 1);
         quickGameBlendMaterial.SetFloat("_AddOpacity", 0f);

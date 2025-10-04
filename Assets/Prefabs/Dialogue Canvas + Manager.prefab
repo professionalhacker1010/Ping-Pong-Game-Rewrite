@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46
+  m_fontSize: 40
   m_fontSizeBase: 46
   m_fontWeight: 400
   m_enableAutoSizing: 0
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -87.05243, y: -29.924133, z: -89.79138, w: -180.92958}
+  m_margin: {x: -82.88458, y: -29.924133, z: -89.79138, w: -180.92958}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -838,11 +838,11 @@ MonoBehaviour:
   bubbleStatic: {fileID: 4832654826068838243}
   bubbleEnterExit: {fileID: 4832654825877175153}
   isChangingSpeaker: 1
-  oneLineHeight: 100
-  twoLineHeight: 110
-  threeLineHeight: 160
-  fourLineHeight: 220
-  fiveLineHeight: 260
+  oneLineHeight: 85
+  twoLineHeight: 95
+  threeLineHeight: 130
+  fourLineHeight: 185
+  fiveLineHeight: 225
   bubbleHeight: 6.25
   overshootHeight: 20
   oneLinePosition: {x: 20, y: -150}
@@ -1079,14 +1079,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46
-  m_fontSizeBase: 46
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueView: {fileID: 1750693617490376777}
   continueActionType: 1
-  continueActionKeyCode: 99
+  continueActionKeyCode: 32
   continueActionButtonName: Jump
   continueActionOnButtonRelease: 1
 --- !u!1 &4832654826418636327
@@ -1788,8 +1788,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46
-  m_fontSizeBase: 46
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

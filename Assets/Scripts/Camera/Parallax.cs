@@ -17,7 +17,7 @@ public class Parallax : MonoBehaviour
 
     private void Start()
     {
-        cam = FindObjectOfType<Camera>();
+        cam = Camera.main;
 
         minMaxCameraX = OverworldManager.Instance.GetSceneInfo().minMaxCameraX;
 

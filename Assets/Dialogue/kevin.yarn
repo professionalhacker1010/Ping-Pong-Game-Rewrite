@@ -107,7 +107,7 @@ I pulled every trick in the book. #line:05107fb
 And still I get beat out by the FIRST person I play. #line:07336cd 
 Ghhh I'm a loser!! #line:068a54d 
 I... #line:069337a 
-D-don't look at me! #line:0fdc57c 
+Don't look at me! #line:0fdc57c 
 
 -> Comfort
 	<<change_speaker Player>>
@@ -152,7 +152,8 @@ So, you've come to challenge me again? #line:0a3b4b9
 
 -> Yes.
 	How very bold of you. #line:04ac1aa 
-	Meet me at the table when you're ready to get CREAMED. #line:07ce9ad
+	But as you can see, I'm BUSY.
+	In my place I've deployed The Kevin Clone. Feel free to hash it out with him.
 -> What are you watching?
 	Oh, this? #line:0a003dd 
 	It's a video compilation of EPIC WINS. #line:0cbba24 
@@ -162,3 +163,37 @@ So, you've come to challenge me again? #line:0a3b4b9
 ===
 
 
+
+title: kevin_postGame_help1
+tags:
+---
+<<start_speaker Kevin>>
+So, you've come to challenge me again?
+
+-> Yes.
+	How very bold of you.
+	But as you can see, I'm BUSY.
+	In my place I've deployed The Kevin Clone. Feel free to hash it out with him.
+-> Search internet on Kevin's phone
+	-> shapeshifter weakness
+		<<start_speaker Player>>
+		"Beware of shapeshifters, as they often take the form of strange monsters"
+		"or even worse, YOU!"
+		"I guess they think it's funny. That's why I'm always cracking jokes"
+		"They get thrown off if you make them giggle."
+		"And by the way their taste in humor is objectively BAD."
+		"Stay safe."
+	-> caffeine effect on pingpong
+		<<start_speaker Player>>
+		"Caffeine is under review as an illegal performance-altering substance in ping-pong"
+		"Users report time dilation and heightened risk-taking behavior. With two caffeinated players"
+		"it essentially becomes a game of who can hit the ball closest to the edge without getting out"
+		"Which gets extremely repetitive to watch."
+	-> owl guy game reviews
+		<<start_speaker Player>>
+		"i cried from emotions I haven't felt since I was a child gluing the soles of my shoes back on"
+		"my computer is totally bricked so totally thanks *sarcasm*"
+		"why r the graphics intentionally 240p uggly af"
+
+<<end_speaker>>
+===
