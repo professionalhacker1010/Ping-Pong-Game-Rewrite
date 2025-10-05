@@ -342,7 +342,7 @@ public class Pingpong : MonoBehaviour, IHittable
         shadow.SetTrigger("explodeBall");
         yield return new WaitForSeconds(0.25f);
 
-        cameraShaker.ShakeCamera(shakeStrength);
+        cameraShaker.Shake(shakeStrength);
         yield return new WaitForSeconds(.75f);
 
         if (OnExplodeFinished != null) OnExplodeFinished(id, playerWin, edgeBall, netBall);

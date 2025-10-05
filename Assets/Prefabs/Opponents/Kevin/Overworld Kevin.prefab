@@ -164,6 +164,16 @@ MonoBehaviour:
     condition: level_won_0 && !kevin_watchingVideos
     trigger: 1
     endBehavior: 1
+  - nodePrefix: postGame_gotPhone
+    numNodes: 1
+    condition: quickGame_trashRat_won
+    trigger: 0
+    endBehavior: 0
+  - nodePrefix: postGame_stolenPhone
+    numNodes: 2
+    condition: level_won_0 && level_won_1 && level_won_2 && level_won_3
+    trigger: 0
+    endBehavior: 0
   - nodePrefix: postGame_help
     numNodes: 1
     condition: level_won_0 && shapeshifter_interactedOnce
@@ -180,3 +190,4 @@ MonoBehaviour:
   conditionPrefix: kevin
   watchingVideosPosition: {x: 6.41, y: -1.94}
   table: {fileID: 0}
+  trashCan: {fileID: 0}

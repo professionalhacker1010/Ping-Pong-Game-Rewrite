@@ -23,7 +23,7 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract
         //[SerializeField] public DialogueSequenceID id;
         [SerializeField] public string nodePrefix;
         [SerializeField] public int numNodes;
-        [SerializeField] public string condition;
+        [TextArea][SerializeField] public string condition;
         [SerializeField] public DialogueEvent trigger;
         [SerializeField] public DialogueSequenceEnd endBehavior;
         public string GetNodeName(int n) => nodePrefix + n.ToString();

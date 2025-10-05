@@ -152,17 +152,17 @@ MonoBehaviour:
   dialogueSequences:
   - nodePrefix: preGame
     numNodes: 3
-    condition: '!level_won_2 && !speedy_hasDrink'
+    condition: '!level_won_2 && !quickGame_vendingMachine_won'
     trigger: 0
     endBehavior: 0
   - nodePrefix: preGame_hasDrink
     numNodes: 1
-    condition: '!level_won_2 && speedy_hasDrink'
+    condition: '!level_won_2 && quickGame_vendingMachine_won'
     trigger: 0
     endBehavior: 0
   - nodePrefix: postGame_start
     numNodes: 1
-    condition: level_won_2
+    condition: level_won_2 && !ignoreStartNodes
     trigger: 1
     endBehavior: 1
   - nodePrefix: postGame
@@ -171,7 +171,6 @@ MonoBehaviour:
     trigger: 0
     endBehavior: 0
   turnsToPlayer: 0
-  facingLeft: 0
   facing: 1
   level: 2
   conditionPrefix: speedy

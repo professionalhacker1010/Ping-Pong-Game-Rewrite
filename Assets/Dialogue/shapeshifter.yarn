@@ -12,14 +12,9 @@ Anyone here? #line:05b657c
 Whoa!!! Nice entrance! #line:0440110 
 
 <<change_speaker Shapeshifter>>
-:3 #line:03a71ff 
+;) #line:03a71ff 
 
 <<change_speaker Player>>
-
--> :3
-	:3 #line:0be3afe 
--> (*^_^)~
-	(*^_^)~ #line:0c53271 
 
 I'll come see you when I'm ready! #line:0111766 
 <<end_speaker>>
@@ -34,7 +29,7 @@ title: shapeshifter_preGame2
 I guess you're gonna use magic against me? Is that allowed? #line:030391d 
 
 <<change_speaker Shapeshifter>>
-... :) #line:0d9b2f4 
+... 8) #line:0d9b2f4 
 
 <<start_speaker Player>>
 Well I don't know any magic so... #line:0d59e12 
@@ -77,7 +72,7 @@ Like it's just a ping pong game!! #line:053a879
 It about having a good time, not winning! #line:0458ba1 
 
 <<change_speaker Shapeshifter>>
-:/ #line:0bf692f 
+8/ #line:0bf692f 
 
 <<change_speaker Player>>
 Yeah. It's fine though. #line:0ae9f66 

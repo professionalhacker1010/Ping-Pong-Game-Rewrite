@@ -262,7 +262,6 @@ public class DialogueBubble : MonoBehaviour
                 h = fiveLineHeight;
             }
         }
-        Debug.Log("height: " + h);
         return -h;
     }
 
@@ -280,7 +279,6 @@ public class DialogueBubble : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
-        Debug.Log("pretext lines adjusted to: " + preText.textInfo.lineCount);
         textTransform.sizeDelta = preTextTransform.sizeDelta;
     }
 

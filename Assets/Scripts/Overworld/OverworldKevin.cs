@@ -5,7 +5,7 @@ using UnityEngine;
 public class OverworldKevin : OverworldCharacter
 {
     [SerializeField] Vector2 watchingVideosPosition;
-    [SerializeField] GameObject table;
+    [SerializeField] GameObject table, trashCan;
     //For kevin, make tables not selectable until you talk to him for the first time
     //after you beat him and the outro dialogue plays, he will sit in the corner watching youtube videos for the rest of the game
 
@@ -34,6 +34,13 @@ public class OverworldKevin : OverworldCharacter
             QuickGameTrigger qgt = table.GetComponent<QuickGameTrigger>();
             qgt.enabled = true;
         }
+    }
+
+    [Yarn.Unity.YarnCommand]
+    public void EnableTrashGame()
+    {
+        QuickGameTrigger qgt = trashCan.GetComponent<QuickGameTrigger>();
+        qgt.enabled = true;
     }
 
     public override void OnInteract()

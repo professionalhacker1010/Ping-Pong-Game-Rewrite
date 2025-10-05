@@ -99,7 +99,7 @@ MonoBehaviour:
     endBehavior: 1
   - nodePrefix: postGame_start
     numNodes: 1
-    condition: level_won_3
+    condition: level_won_3 && !ignoreStartNodes
     trigger: 1
     endBehavior: 1
   - nodePrefix: postGame
@@ -108,7 +108,6 @@ MonoBehaviour:
     trigger: 0
     endBehavior: 0
   turnsToPlayer: 0
-  facingLeft: 0
   facing: 2
   level: 3
   conditionPrefix: gameDev

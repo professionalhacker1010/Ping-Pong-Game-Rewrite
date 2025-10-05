@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    private Camera cam;
     [SerializeField] float strengthZeroRadius, strengthOneRadius;
     [SerializeField] float shakeIntervalTime;
     private float startX, startY;
     // Start is called before the first frame update
     void Start()
     {
-        cam = GetComponent<Camera>();
         startX = transform.position.x;
         startY = transform.position.y;
     }
 
-    public void ShakeCamera(int strength)
+    public void Shake(int strength)
     {
         StartCoroutine(ShakeCameraHelper(strength));
     }
@@ -33,28 +31,28 @@ public class CameraShake : MonoBehaviour
             radius = strengthOneRadius;
         }
 
-        float Z = cam.transform.position.z;
+        float Z = transform.position.z;
         //shake in a start pattern
         //left
-        cam.transform.position = new Vector3(-1 * radius + startX, startY, Z);
+        transform.position = new Vector3(-1 * radius + startX, startY, Z);
         yield return new WaitForSeconds(shakeIntervalTime);
 
         //right
-        cam.transform.position = new Vector3(radius + startX, startY, Z);
+        transform.position = new Vector3(radius + startX, startY, Z);
         yield return new WaitForSeconds(shakeIntervalTime);
 
         //bottom left
-        cam.transform.position = new Vector3(-1 * radius + startX, -1 * radius + startY, Z);
+        transform.position = new Vector3(-1 * radius + startX, -1 * radius + startY, Z);
         yield return new WaitForSeconds(shakeIntervalTime);
 
         //up
-        cam.transform.position = new Vector3(startX, radius + startY, Z);
+        transform.position = new Vector3(startX, radius + startY, Z);
         yield return new WaitForSeconds(shakeIntervalTime);
 
         //bottom right (half radius)
-        cam.transform.position = new Vector3(radius/2 + startX, -1 * radius/2 + startY, Z);
+        transform.position = new Vector3(radius/2 + startX, -1 * radius/2 + startY, Z);
         yield return new WaitForSeconds(shakeIntervalTime);
 
-        cam.transform.position = new Vector3(startX, startY, Z);
+        transform.position = new Vector3(startX, startY, Z);
     }
 }

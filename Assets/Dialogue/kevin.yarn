@@ -115,10 +115,8 @@ Don't look at me! #line:0fdc57c
 -> Discomfort
 	<<change_speaker Player>>
 	You're only technically a loser! #line:011b57a 
-
 	<<change_speaker Kevin>>
 	Ghhhhhhhhhhhhhh... #line:0fb32ac 
-
 	<<change_speaker Player>>
 
 Do you need... some Fried and Fancy chicken?
@@ -176,7 +174,7 @@ So, you've come to challenge me again?
 	In my place I've deployed The Kevin Clone. Feel free to hash it out with him.
 -> Search internet on Kevin's phone
 	-> shapeshifter weakness
-		<<start_speaker Player>>
+		<<change_speaker Player>>
 		"Beware of shapeshifters, as they often take the form of strange monsters"
 		"or even worse, YOU!"
 		"I guess they think it's funny. That's why I'm always cracking jokes"
@@ -184,16 +182,54 @@ So, you've come to challenge me again?
 		"And by the way their taste in humor is objectively BAD."
 		"Stay safe."
 	-> caffeine effect on pingpong
-		<<start_speaker Player>>
+		<<change_speaker Player>>
 		"Caffeine is under review as an illegal performance-altering substance in ping-pong"
 		"Users report time dilation and heightened risk-taking behavior. With two caffeinated players"
 		"it essentially becomes a game of who can hit the ball closest to the edge without getting out"
 		"Which gets extremely repetitive to watch."
 	-> owl guy game reviews
-		<<start_speaker Player>>
-		"i cried from emotions I haven't felt since I was a child gluing the soles of my shoes back on"
+		<<change_speaker Player>>
 		"my computer is totally bricked so totally thanks *sarcasm*"
+		"I haven't felt this miserable since I was a child gluing the soles of my shoes back on"
 		"why r the graphics intentionally 240p uggly af"
+
+<<end_speaker>>
+===
+
+title: kevin_postGame_stolenPhone1
+---
+<<start_speaker Player>>
+Hey can I borrow your phone?
+I don't know how to turn on the rocket
+
+<<change_speaker Kevin>>
+No... GAH. A stupid friggin RAT took it.
+
+<<change_speaker Player>>
+A rat took your phone??
+
+<<change_speaker Kevin>>
+IN THE TRASH CAN
+
+<<change_speaker Player>>
+I'll handle this
+
+<<EnableTrashGame Kevin>>
+<<end_speaker>>
+===
+
+title: kevin_postGame_stolenPhone2
+---
+<<start_speaker Kevin>>
+DESTROY IT!
+<<end_speaker>>
+===
+
+title: kevin_postGame_gotPhone1
+---
+<<start_speaker Kevin>>
+My entire life is stored on this phone
+In that sense, I owe you my life
 
 <<end_speaker>>
 ===

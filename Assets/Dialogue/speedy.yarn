@@ -94,19 +94,16 @@ tags:
 What's up? #line:061f423 
 
 -> Nothing
+	<<end_speaker>>
 -> So what brought you here?
 	I dunno. Ping pong's cool I guess.
-
 	<<change_speaker Player>>
 	Yeah, and look at that giant bucket of fried chicken!
-
 	<<change_speaker Speedy>>
 	Ew, no.
 	People get heart attacks from eating too much of that stuff.
-
 	<<change_speaker Player>>
 	And not-
-
 	<<change_speaker Speedy>>
 	Do NOT go there.
 

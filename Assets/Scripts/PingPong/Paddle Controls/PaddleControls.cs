@@ -112,6 +112,7 @@ public class PaddleControls : MonoBehaviour
     {
         if (playerHitDown)
         {
+            bool hit = false;
             List<Collider2D> contacts = new List<Collider2D>();
             circleCollider.GetContacts(contacts);
             contacts.ForEach(contact =>
@@ -119,6 +120,8 @@ public class PaddleControls : MonoBehaviour
                 IHittable hittable = contact.gameObject.GetComponent<IHittable>();
                 if (hittable != null)
                 {
+                    hit = true;
+
                     Vector2 hitPos = contact.transform.position - circleCollider.bounds.center;
                     float playerHitHeight = hitPos.y * factorPaddleY;
                     float playerHitLateral = hitPos.x * factorPaddleX;
@@ -132,6 +135,11 @@ public class PaddleControls : MonoBehaviour
                     StartCoroutine(WaitForHitAnimation()); //lock inputs until animation is done - prevents player from spamming space
                 }
             });
+
+            if (!hit)
+            {
+                HitLeft();
+            }
         }
     }
 

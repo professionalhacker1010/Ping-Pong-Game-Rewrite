@@ -336,10 +336,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2888140232472861805, guid: 0d8b9dc0eb4b8314180cd56aa6d70bd1, type: 3}
-      propertyPath: m_MaskInteraction
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4296400719192329015, guid: 0d8b9dc0eb4b8314180cd56aa6d70bd1, type: 3}
       propertyPath: m_Name
       value: QuickGame_Practice

@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Yarn.Unity;
+using UnityEngine.Events;
 
 public class QuickGameTrigger : MonoBehaviour, IHittable
 {
     [SerializeField] GameObject quickGame;
     [SerializeField] Vector3 indicatorOffset;
+    public UnityEvent OnQuickGameWon;
 
     KeyPressPrompt indicator;
 
@@ -16,7 +18,7 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
 
     public void OnHit(float x, float y)
     {
-        if (Conditions.Get(wonCondition))
+        if (Conditions.Get(wonCondition) || !enabled)
         {
             return;
         }
@@ -31,7 +33,21 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
             HideIndicator();
 
             GameObject game = OverworldManager.Instance.CreateQuickGame(quickGame);
+            game.GetComponent<QuickGame>().OnQuickGameWon +=
+                () =>
+                {
+                    Conditions.Set(wonCondition, true);
+                    OnQuickGameWon.Invoke();
+                };
         }
+    }
+
+    public void PlayDialogue(string node)
+    {
+        StartCoroutine(Util.VoidCallbackTimer(
+            1.0f,
+            () => DialogueManager.Instance.StartDialogue(node)
+            ));
     }
 
     void HideIndicator()
@@ -42,7 +58,7 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
 
     private void Awake()
     {
-        wonCondition = "QuickGame_" + quickGame.name + "_Won";
+        wonCondition = quickGame.name + "_won";
         Conditions.Initialize(wonCondition, false);
     }
 

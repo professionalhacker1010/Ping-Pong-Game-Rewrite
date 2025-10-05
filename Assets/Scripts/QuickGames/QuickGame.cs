@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
+using System;
+
 public class QuickGame : MonoBehaviour
 {
     [SerializeField] Camera cam;
@@ -18,18 +20,20 @@ public class QuickGame : MonoBehaviour
     [SerializeField] float backgroundTransitionTime;
     [SerializeField] int transitionFrameRate;
 
-    protected virtual void Start()
+    public event Action OnQuickGameWon;
+
+    void Start()
     {
         Camera.main.GetComponent<UniversalAdditionalCameraData>().cameraStack.Add(cam);
-        paddleControls.OnHit += OnPaddleHit;
+        baseGameOverlay.gameObject.SetActive(true);
         StartCoroutine(OpenGame());
     }
 
-    protected virtual void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            StartCoroutine(CloseGame());
+            StartCoroutine(CloseGame(false));
         }
     }
 
@@ -60,8 +64,10 @@ public class QuickGame : MonoBehaviour
         baseGameOverlay.color = Color.clear;
     }
 
-    IEnumerator CloseGame()
+    public IEnumerator CloseGame(bool won)
     {
+        if (won && OnQuickGameWon != null) OnQuickGameWon(); 
+
         Vector3 startPos = new Vector3(0, 0, -15), endPos = new Vector3(0, 0, -13);
 
         float t = 0, lerpCubic = 0, lerp = 0;
@@ -89,15 +95,10 @@ public class QuickGame : MonoBehaviour
         }
     }
 
-    protected virtual void OnPaddleHit(IHittable hittable)
-    {
-
-    }
-
     private void OnDestroy()
     {
-        paddleControls.OnHit -= OnPaddleHit;
         quickGamePixelMaterial.SetFloat("_ResampleSize", 1);
         quickGameBlendMaterial.SetFloat("_AddOpacity", 0f);
+        Camera.main.GetComponent<UniversalAdditionalCameraData>().cameraStack.Remove(cam);
     }
 }
