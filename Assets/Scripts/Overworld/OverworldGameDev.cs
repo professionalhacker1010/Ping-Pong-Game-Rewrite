@@ -4,8 +4,4 @@ using UnityEngine;
 
 public class OverworldGameDev : OverworldCharacter
 {
-    public override void OnInteract()
-    {
-        base.OnInteract();
-    }
 }

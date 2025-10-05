@@ -934,6 +934,9 @@ MonoBehaviour:
   OnQuickGameWon:
     m_PersistentCalls:
       m_Calls: []
+  OnDeinitialize:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &349455763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3430,10 +3433,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kevin
       objectReference: {fileID: 0}
-    - target: {fileID: 4834428394409793098, guid: d09f2b3f781a1b5489233953892c2c8a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3534,10 +3533,6 @@ PrefabInstance:
     - target: {fileID: 2462856704863877285, guid: a280039221b93d34abd4f988f6e1da96, type: 3}
       propertyPath: m_Name
       value: Shapeshifter
-      objectReference: {fileID: 0}
-    - target: {fileID: 2462856704863877285, guid: a280039221b93d34abd4f988f6e1da96, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2462856704863877289, guid: a280039221b93d34abd4f988f6e1da96, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3702,6 +3697,9 @@ MonoBehaviour:
   quickGame: {fileID: 8999768670741302874, guid: 5e04be980233ae34895219dab0ecf7db, type: 3}
   indicatorOffset: {x: 0, y: 2, z: 0}
   OnQuickGameWon:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeinitialize:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1486534356}
@@ -4346,6 +4344,9 @@ MonoBehaviour:
           m_StringArgument: quickGame_trashRat_won
           m_BoolArgument: 0
         m_CallState: 2
+  OnDeinitialize:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1762790113
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5235,10 +5236,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameDev
       objectReference: {fileID: 0}
-    - target: {fileID: 2231067340473873584, guid: 3ed611ec9177f1647b8fda19c04d8f46, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3104573218722973675, guid: 3ed611ec9177f1647b8fda19c04d8f46, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70.5
@@ -5295,10 +5292,6 @@ PrefabInstance:
     - target: {fileID: 1067710699473145744, guid: 38d2e2d39e47fff4cafaf13ac17935f2, type: 3}
       propertyPath: m_Name
       value: Speedy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1067710699473145744, guid: 38d2e2d39e47fff4cafaf13ac17935f2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1067710699473145747, guid: 38d2e2d39e47fff4cafaf13ac17935f2, type: 3}
       propertyPath: m_LocalPosition.x

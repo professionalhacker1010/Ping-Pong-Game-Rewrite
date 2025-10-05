@@ -62,7 +62,11 @@ public class OverworldCharacter : MonoBehaviour, ICanInteract
     //ICanInteract
     public int InteractPriority { get => 1; }
     public Vector2 InteractPos { get => transform.position; }
-    public bool IsInteractable { get => isInteractable; }
+    public bool IsInteractable { get {
+            if (FindNextNode(DialogueEvent.INTERACT) == "") return false;
+            return isInteractable; 
+        }
+    }
     private bool isInteractable = true;
 
     protected virtual void Awake()

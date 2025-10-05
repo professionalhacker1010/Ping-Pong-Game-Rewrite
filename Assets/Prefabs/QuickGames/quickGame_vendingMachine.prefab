@@ -156,6 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8803777930652231572}
   - component: {fileID: 8662503819957805244}
+  - component: {fileID: 5023715689293221741}
   m_Layer: 0
   m_Name: vendingmachine
   m_TagString: Untagged
@@ -230,6 +231,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
+--- !u!114 &5023715689293221741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152806876970930025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f579709f315184baac2ecfb1feb47e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strengthZeroRadius: 0.2
+  strengthOneRadius: 0.5
+  shakeIntervalTime: 0.05
 --- !u!1001 &5150561462531949933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,7 +256,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4296400719192329015, guid: 0d8b9dc0eb4b8314180cd56aa6d70bd1, type: 3}
       propertyPath: m_Name
-      value: QuickGame_VendingMachine
+      value: quickGame_vendingMachine
       objectReference: {fileID: 0}
     - target: {fileID: 8784483612738397993, guid: 0d8b9dc0eb4b8314180cd56aa6d70bd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -254,7 +270,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5900712063613064693, guid: 0d8b9dc0eb4b8314180cd56aa6d70bd1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8784483612738397993, guid: 0d8b9dc0eb4b8314180cd56aa6d70bd1, type: 3}

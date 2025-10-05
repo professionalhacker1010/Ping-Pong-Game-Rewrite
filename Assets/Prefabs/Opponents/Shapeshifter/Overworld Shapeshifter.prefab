@@ -152,21 +152,23 @@ MonoBehaviour:
     condition: '!level_won_1'
     trigger: 0
     endBehavior: 0
+  - nodePrefix: postGame_start
+    numNodes: 1
+    condition: level_won_1 && !ignoreStartNodes
+    trigger: 1
+    endBehavior: 1
   - nodePrefix: postGame
-    numNodes: 3
+    numNodes: 2
     condition: level_won_1
     trigger: 0
     endBehavior: 0
   turnsToPlayer: 0
-  facingLeft: 1
   facing: 2
   level: 1
   conditionPrefix: shapeshifter
   shapeshiftAnimator: {fileID: 2462856704240535933}
   phasePrefabs:
-  - {fileID: 8740075363017259741, guid: 3bc18c2d64a729b478c10554c80b3e93, type: 3}
-  - {fileID: 6623637422923418114, guid: bb2e5318c7122d9419f856854b18550d, type: 3}
-  - {fileID: 8506727967192215410, guid: 22059c60d325af04591ea8aba332556a, type: 3}
+  - {fileID: 6434549132154967656, guid: c70a4fcf700857b4ebeff04eb75eb5ad, type: 3}
   - {fileID: 5056136497010616405, guid: 01aa7541fd8840a48a674a2bf4f1ae49, type: 3}
-  poofPrefab: {fileID: 1288147394776459297, guid: cfae55891da4d4642b1170bc327e8d2b, type: 3}
-  poofOffset: {x: 0, y: 2.9, z: 0}
+  poofPrefab: {fileID: 6253850312778392826, guid: dfebed92a2d400e4fa6c76a8dd2e6538, type: 3}
+  poofOffset: {x: 0, y: 3.5, z: 0}

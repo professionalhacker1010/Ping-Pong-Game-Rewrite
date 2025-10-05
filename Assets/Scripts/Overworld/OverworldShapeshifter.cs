@@ -8,10 +8,9 @@ public class OverworldShapeshifter : OverworldCharacter
     [SerializeField] private Animator shapeshiftAnimator;
     [SerializeField] private List<GameObject> phasePrefabs;
     [SerializeField] private GameObject poofPrefab;
-    [SerializeField] Vector3 poofOffset = new Vector3(0f, 2.9f, 0f);
-    ShapeShifterPhase currPhase;
+    GameObject currPhase;
 
-    private int phaseIdx = 0;
+    private int phaseIdx = -1;
 
     protected override void Awake()
     {
@@ -48,7 +47,7 @@ public class OverworldShapeshifter : OverworldCharacter
     {
         yield return new WaitForSeconds(0.5f);
 
-        if (phaseIdx == 0)
+        if (phaseIdx == -1)
         {
             shapeshiftAnimator.SetTrigger("shapeshift"); //start shapeshift animation
             yield return new WaitForSeconds(22 / 24f); // wait for length of animation -3 frames
@@ -62,7 +61,7 @@ public class OverworldShapeshifter : OverworldCharacter
         shapeshiftAnimator.gameObject.SetActive(true);
 
         //transition to shapeshifter inbetween forms
-        if (phaseIdx != 0 && phaseIdx != phasePrefabs.Count - 1) 
+        if (phaseIdx != -1 && phaseIdx != phasePrefabs.Count - 1) 
         {
 
             shapeshiftAnimator.SetTrigger("shapeshift");
@@ -80,17 +79,21 @@ public class OverworldShapeshifter : OverworldCharacter
         //back to shapeshifter
         if (phaseIdx == phasePrefabs.Count)
         {
-            phaseIdx = 0;
+            phaseIdx = -1;
             shapeshiftAnimator.SetTrigger("idle");
         }
         //new form
         else
         {
-            currPhase = Instantiate(phasePrefabs[phaseIdx], shapeshiftAnimator.transform.position, Quaternion.identity).GetComponent<ShapeShifterPhase>();
-            if (phaseIdx == phasePrefabs.Count - 1) currPhase.transform.position = new Vector2(transform.position.x, FindObjectOfType<CharacterControls>().transform.position.y);
-            OverworldManager.Instance.MoveToGameScene(currPhase.gameObject);
-            currPhase.GetComponent<SpriteRenderer>().sortingLayerID = spriteRenderer.sortingLayerID;
-
+            currPhase = Instantiate(phasePrefabs[phaseIdx], transform);
+            if (phaseIdx == phasePrefabs.Count - 1)
+            {
+                StartCoroutine(Util.VoidCallbackNextFrame(() =>
+                {
+                    currPhase.transform.position = new Vector2(transform.position.x, FindObjectOfType<CharacterControls>().transform.position.y);
+                }));
+                
+            }
         }
 
         yield return new WaitForSeconds(15 / 24f);
@@ -116,9 +119,7 @@ public class OverworldShapeshifter : OverworldCharacter
 
     public void Poof()
     {
-        var poofObj = Instantiate(poofPrefab, shapeshiftAnimator.transform.position + poofOffset, Quaternion.identity);
-        OverworldManager.Instance.MoveToGameScene(poofObj);
-        poofObj.GetComponent<SpriteRenderer>().sortingLayerID = spriteRenderer.sortingLayerID;
+        var poofObj = Instantiate(poofPrefab, transform);
     }
     #endregion
 

@@ -64,14 +64,16 @@ MonoBehaviour:
   - name: level_won_0
     value: 1
   - name: level_won_1
-    value: 0
+    value: 1
   - name: level_won_2
-    value: 0
+    value: 1
   - name: level_won_3
-    value: 0
+    value: 1
   - name: level_won_4
     value: 0
   - name: kevin_watchingVideos
     value: 1
   - name: shapeshifter_interactedOnce
+    value: 1
+  - name: ignoreStartNodes
     value: 1

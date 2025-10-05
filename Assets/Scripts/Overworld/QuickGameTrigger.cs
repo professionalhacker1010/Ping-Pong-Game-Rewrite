@@ -9,6 +9,7 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
     [SerializeField] GameObject quickGame;
     [SerializeField] Vector3 indicatorOffset;
     public UnityEvent OnQuickGameWon;
+    public UnityEvent OnDeinitialize;
 
     KeyPressPrompt indicator;
 
@@ -38,6 +39,7 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
                 {
                     Conditions.Set(wonCondition, true);
                     OnQuickGameWon.Invoke();
+                    OnDeinitialize.Invoke();
                 };
         }
     }
@@ -70,6 +72,11 @@ public class QuickGameTrigger : MonoBehaviour, IHittable
         if (dr)
         {
             dr.onDialogueStart.AddListener(HideIndicator);
+        }
+
+        if (Conditions.Get(wonCondition))
+        {
+            OnDeinitialize.Invoke();
         }
     }
 

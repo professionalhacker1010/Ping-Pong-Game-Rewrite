@@ -55,7 +55,7 @@ Maybe I should ask someone else for tips on how to beat this guy. #line:08de1c4
 
 
 
-title: shapeshifter_postGame1
+title: shapeshifter_postGame_start1
 tags:
 ---
 <<start_speaker Player>>
@@ -80,7 +80,7 @@ Yeah. It's fine though. #line:0ae9f66
 
 
 
-title: shapeshifter_postGame2
+title: shapeshifter_postGame1
 tags:
 ---
 <<start_speaker Player>>
@@ -96,7 +96,7 @@ Can I ask you something? #line:0dfa8b5
 
 
 
-title: shapeshifter_postGame3
+title: shapeshifter_postGame2
 tags:
 ---
 <<start_speaker Player>>

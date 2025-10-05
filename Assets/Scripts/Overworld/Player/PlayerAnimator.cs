@@ -64,7 +64,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (OverworldManager.Instance && playerControls)
+        if (playerControls)
         {
             playerControls.OnFaceRight -= FaceRight;
             playerControls.OnFaceLeft -= FaceLeft;

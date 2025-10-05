@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        Conditions.Initialize("ignoreStartNodes", false); //used in Debugger
     }
     #endregion
 

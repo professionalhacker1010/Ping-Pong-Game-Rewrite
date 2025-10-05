@@ -928,26 +928,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1706395613386917471, guid: 273bd4ec073d3b34580e895534442172, type: 3}
       propertyPath: conditions.Array.size
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1706395613386917471, guid: 273bd4ec073d3b34580e895534442172, type: 3}
-      propertyPath: conditions.Array.data[15].name
-      value: ignoreStartNodes
-      objectReference: {fileID: 0}
-    - target: {fileID: 1706395613386917471, guid: 273bd4ec073d3b34580e895534442172, type: 3}
-      propertyPath: conditions.Array.data[9].value
-      value: 1
+      propertyPath: conditions.Array.data[16].name
+      value: quickGame_vendingMachine_won
       objectReference: {fileID: 0}
     - target: {fileID: 1706395613386917471, guid: 273bd4ec073d3b34580e895534442172, type: 3}
       propertyPath: conditions.Array.data[10].value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1706395613386917471, guid: 273bd4ec073d3b34580e895534442172, type: 3}
-      propertyPath: conditions.Array.data[11].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1706395613386917471, guid: 273bd4ec073d3b34580e895534442172, type: 3}
-      propertyPath: conditions.Array.data[15].value
+      propertyPath: conditions.Array.data[16].value
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2603610271012878728, guid: 273bd4ec073d3b34580e895534442172, type: 3}
