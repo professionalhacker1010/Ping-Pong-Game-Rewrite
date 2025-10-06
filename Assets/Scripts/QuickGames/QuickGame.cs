@@ -99,6 +99,8 @@ public class QuickGame : MonoBehaviour
     {
         quickGamePixelMaterial.SetFloat("_ResampleSize", 1);
         quickGameBlendMaterial.SetFloat("_AddOpacity", 0f);
-        Camera.main.GetComponent<UniversalAdditionalCameraData>().cameraStack.Remove(cam);
+        if (!Camera.main) return;
+        var camData = Camera.main.GetComponent<UniversalAdditionalCameraData>();
+        if (camData) camData.cameraStack.Remove(cam);
     }
 }

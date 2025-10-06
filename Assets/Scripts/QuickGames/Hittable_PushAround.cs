@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Hittable_PushAround : MonoBehaviour, IHittable
 {
-    static float drag = .9f;
     Vector3 force = Vector3.zero;
     Rigidbody2D rb;
 
@@ -22,8 +21,5 @@ public class Hittable_PushAround : MonoBehaviour, IHittable
     {
         rb.AddForce(force);
         force = Vector2.zero;
-        //force *= drag;
-
-        //if (force.magnitude < 0.01f) force = Vector3.zero;
     }
 }

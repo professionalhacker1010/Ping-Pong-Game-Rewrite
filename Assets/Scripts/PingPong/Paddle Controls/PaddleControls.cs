@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using static UnityEngine.UI.CanvasScaler;
 
@@ -33,6 +34,10 @@ public class PaddleControls : MonoBehaviour
     private Animator paddlePreviewAnimation;
     private Rigidbody2D rb;
     protected CircleCollider2D circleCollider;
+
+    //custom behavior
+    [SerializeField] bool closestHitOnly;
+    [SerializeField] int maxClosestHits;
 
     public event Action<IHittable> OnHit;
 
@@ -70,7 +75,8 @@ public class PaddleControls : MonoBehaviour
 
         if (PauseMenu.gameIsPaused || LockedInputs) return;
 
-        ProcessInput();
+        if (closestHitOnly) ProcessClosestHitOnly();
+        else ProcessInput();
     }
 
     protected void DetectInput()
@@ -111,10 +117,11 @@ public class PaddleControls : MonoBehaviour
     protected virtual void ProcessInput()
     {
         if (playerHitDown)
-        {
+        {   
             bool hit = false;
             List<Collider2D> contacts = new List<Collider2D>();
             circleCollider.GetContacts(contacts);
+
             contacts.ForEach(contact =>
             {
                 IHittable hittable = contact.gameObject.GetComponent<IHittable>();
@@ -139,6 +146,73 @@ public class PaddleControls : MonoBehaviour
             if (!hit)
             {
                 HitLeft();
+                StartCoroutine(WaitForHitAnimation());
+            }
+        }
+    }
+
+    void ProcessClosestHitOnly()
+    {
+
+        if (playerHitDown)
+        {
+            List<Collider2D> contacts = new List<Collider2D>();
+            circleCollider.GetContacts(contacts);
+
+           //filter out contacts that are overlapped by a higher layer sprite
+            List<Collider2D> contactsCopy = new List<Collider2D>(contacts);
+            contacts.RemoveAll(new Predicate<Collider2D>(target =>
+            {
+                bool overlapped = false;
+                var targetSprite = target.GetComponent<SpriteRenderer>();
+                targetSprite.color = Color.white;
+                contactsCopy.ForEach(contact =>
+                {
+                    var contactSprite = contact.GetComponent<SpriteRenderer>();
+                    if (contactSprite.sortingOrder > targetSprite.sortingOrder && contact.OverlapPoint(target.bounds.center))
+                    {
+                        overlapped = true;
+                        targetSprite.color = Color.red;
+                    }
+                });
+                return overlapped;
+            }));
+
+            //closest hittable that is not overlapped by a higher layer sprite is targeted
+            contacts.Sort((a, b) =>
+            {
+                float distA = Vector3.Distance(circleCollider.bounds.center, a.bounds.center);
+                float distB = Vector3.Distance(circleCollider.bounds.center, b.bounds.center);
+                if (distA < distB) return -1;
+                return 1;
+            });
+
+            int count = 0;
+            for (int i = 0; i < contacts.Count; i++)
+            {
+                IHittable hittable = contacts[i].GetComponent<IHittable>();
+                if (hittable==null) continue;
+
+                Vector2 hitPos = contacts[i].transform.position - circleCollider.bounds.center;
+                float playerHitHeight = hitPos.y * factorPaddleY;
+                float playerHitLateral = hitPos.x * factorPaddleX;
+
+                hittable.OnHit(playerHitLateral, playerHitHeight);
+                if (OnHit != null) OnHit(hittable);
+
+                //animations
+                if (hitPos.x >= 0) HitRight();
+                else HitLeft();
+                StartCoroutine(WaitForHitAnimation()); //lock inputs until animation is done - prevents player from spamming space
+
+                count++;
+                if (count == maxClosestHits) break;
+            }
+
+            if (count == 0)
+            {
+                HitLeft();
+                StartCoroutine(WaitForHitAnimation());
             }
         }
     }
