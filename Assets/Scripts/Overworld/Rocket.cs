@@ -13,6 +13,8 @@ public class Rocket : MonoBehaviour, ICanInteract
     private KeyPressPrompt cKeyPrompt;
     [SerializeField] private float cKeyPromptHeight;
 
+    [SerializeField] string dialogueNode;
+
     [SerializeField] private Vector3 shakeRadius;
     [SerializeField] private float shakeTime;
     [SerializeField] private float shakeStepTime;
@@ -24,7 +26,14 @@ public class Rocket : MonoBehaviour, ICanInteract
 
     public void OnInteract()
     {
-        StartCoroutine(Transition());
+        if (!Conditions.Get("quickGame_trashRat_won"))
+        {
+            DialogueManager.Instance.StartDialogue(dialogueNode);
+        }
+        else
+        {
+            StartCoroutine(Transition());
+        }
     }
 
     private IEnumerator Transition()

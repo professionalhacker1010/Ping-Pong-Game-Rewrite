@@ -4143,6 +4143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cKeyPromptHeight: 1.5
+  dialogueNode: levelSelect_rocketIntro
   shakeRadius: {x: 0.3, y: 0.1, z: 0}
   shakeTime: 3
   shakeStepTime: 0.1

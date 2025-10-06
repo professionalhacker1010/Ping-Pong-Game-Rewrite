@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 using System;
+using UnityEngine.Events;
 
 public class QuickGame : MonoBehaviour
 {
@@ -66,7 +67,10 @@ public class QuickGame : MonoBehaviour
 
     public IEnumerator CloseGame(bool won)
     {
-        if (won && OnQuickGameWon != null) OnQuickGameWon(); 
+        if (won && OnQuickGameWon != null)
+        {
+            OnQuickGameWon();
+        }
 
         Vector3 startPos = new Vector3(0, 0, -15), endPos = new Vector3(0, 0, -13);
 

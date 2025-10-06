@@ -8,6 +8,7 @@ public class QuickGame_TrashRat : MonoBehaviour, IHittable
     [SerializeField] int hitsToBreak;
     [SerializeField] Sprite KOsprite;
     [SerializeField] int maxContactColliders;
+    [SerializeField] GameObject successText;
     int hits = 0;
 
     public void OnHit(float hitX, float hitY)
@@ -23,6 +24,7 @@ public class QuickGame_TrashRat : MonoBehaviour, IHittable
         {
             GetComponent<SpriteRenderer>().sprite = KOsprite;
             GetComponent<CameraShake>().Shake(1);
+            successText.SetActive(true);
             StartCoroutine(Util.VoidCallbackTimer(
                 2.0f,
                 () => StartCoroutine(game.CloseGame(true))

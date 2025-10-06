@@ -165,14 +165,12 @@ public class PaddleControls : MonoBehaviour
             {
                 bool overlapped = false;
                 var targetSprite = target.GetComponent<SpriteRenderer>();
-                targetSprite.color = Color.white;
                 contactsCopy.ForEach(contact =>
                 {
                     var contactSprite = contact.GetComponent<SpriteRenderer>();
                     if (contactSprite.sortingOrder > targetSprite.sortingOrder && contact.OverlapPoint(target.bounds.center))
                     {
                         overlapped = true;
-                        targetSprite.color = Color.red;
                     }
                 });
                 return overlapped;
